@@ -11,7 +11,7 @@ import positionVertically from './sankeyLayout/verticalJustified.js'
 import prepareNodePorts from './sankeyLayout/prepare-subdivisions.js'
 import orderLinks from './sankeyLayout/link-ordering.js'
 import layoutLinks from './sankeyLayout/layout-links.js'
-import { buildGraph } from './util.js'
+import { Graph } from 'graphlib'
 
 function defaultNodes (graph) {
   return graph.nodes
@@ -30,19 +30,19 @@ function defaultNodeBackwards (d) {
 }
 
 function defaultSourceId (d) {
-  // return typeof d.source === 'object' ? d.source.id : d.source
-  return {
-    id: typeof d.source === 'object' ? d.source.id : d.source,
-    port: typeof d.sourcePort === 'object' ? d.sourcePort.id : d.sourcePort
-  }
+  return typeof d.source === 'object' ? d.source.id : d.source
 }
 
 function defaultTargetId (d) {
-  // return typeof d.target === 'object' ? d.target.id : d.target
-  return {
-    id: typeof d.target === 'object' ? d.target.id : d.target,
-    port: typeof d.targetPort === 'object' ? d.targetPort.id : d.targetPort
-  }
+  return typeof d.target === 'object' ? d.target.id : d.target
+}
+
+function defaultSourcePort (d) {
+  return typeof d.sourcePort === 'object' ? d.sourcePort.id : d.sourcePort
+}
+
+function defaultTargetPort (d) {
+  return typeof d.targetPort === 'object' ? d.targetPort.id : d.targetPort
 }
 
 function defaultLinkType (d) {
@@ -63,6 +63,8 @@ export default function sankeyLayout () {
   var nodeBackwards = defaultNodeBackwards
   var sourceId = defaultSourceId
   var targetId = defaultTargetId
+  var sourcePort = defaultSourcePort
+  var targetPort = defaultTargetPort
   var linkType = defaultLinkType
   var ordering = null
   var rankSets = []
@@ -86,7 +88,7 @@ export default function sankeyLayout () {
 
   function sankey () {
     var graph = {nodes: nodes.apply(null, arguments), links: links.apply(null, arguments)}
-    var G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
+    var G = buildGraph(graph)
 
     setNodeValues(G, linkValue)
 
@@ -149,7 +151,7 @@ export default function sankeyLayout () {
   }
 
   sankey.update = function (graph, doOrderLinks) {
-    var G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
+    var G = buildGraph(graph)
     setNodeValues(G, linkValue)
     const nested = nestGraph(G.nodes().map(u => G.node(u)))
     maybeScaleToFit(G, nested)
@@ -222,6 +224,22 @@ export default function sankeyLayout () {
       return sankey
     }
     return targetId
+  }
+
+  sankey.sourcePort = function (x) {
+    if (arguments.length) {
+      sourcePort = required(x)
+      return sankey
+    }
+    return sourcePort
+  }
+
+  sankey.targetPort = function (x) {
+    if (arguments.length) {
+      targetPort = required(x)
+      return sankey
+    }
+    return targetPort
   }
 
   sankey.linkType = function (x) {
@@ -339,6 +357,55 @@ export default function sankeyLayout () {
         }
       })
     })
+  }
+
+  function buildGraph (graph) {
+    var G = new Graph({ directed: true, multigraph: true })
+    graph.nodes.forEach(function (node, i) {
+      const id = nodeId(node, i)
+      if (G.hasNode(id)) throw new Error('duplicate: ' + id)
+      G.setNode(id, {
+        data: node,
+        index: i,
+        backwards: nodeBackwards(node, i),
+        // XXX don't need these now have nodePositions?
+        x0: node.x0,
+        x1: node.x1,
+        y: node.y0
+      })
+    })
+
+    graph.links.forEach(function (link, i) {
+      const v = idAndPort(sourceId, sourcePort, link, i)
+      const w = idAndPort(targetId, targetPort, link, i)
+      var label = {
+        data: link,
+        sourcePortId: v.port,
+        targetPortId: w.port,
+        index: i,
+        points: [],
+        value: linkValue(link, i),
+        type: linkType(link, i)
+      }
+      if (!G.hasNode(v.id)) throw new Error('missing: ' + v.id)
+      if (!G.hasNode(w.id)) throw new Error('missing: ' + w.id)
+      G.setEdge(v.id, w.id, label, linkType(link, i))
+    })
+
+    G.setGraph({})
+
+    return G
+
+    function idAndPort (func, portFunc, link, i) {
+      const x = func(link, i)
+      // DEPRECATED: old style to return object with {id, port}
+      if (typeof x === 'object') return x
+      // New style
+      return {
+        id: x,
+        port: portFunc(link, (G.node(x) || {}).data, i),
+      }
+    }
   }
 
   return sankey

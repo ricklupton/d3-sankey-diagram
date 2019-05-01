@@ -1,7 +1,13 @@
+/**
+  * These tests check the layout of "ports", i.e. vertical subdivisions of the
+  * nodes to which the links attach
+  */
+
 import sankey from '../src/sankey.js'
 import tape from 'tape'
 import { assertAlmostEqual } from './assert-almost-equal'
 
+// Basic test of port alignment
 tape('sankey() aligns ports', test => {
   const graph = {
     nodes: [
@@ -46,6 +52,53 @@ tape('sankey() aligns ports', test => {
     { id: 'b', y: 0, dy: 2 },
     { id: 'a', y: 2, dy: 4 }
   ], 'ports again')
+
+  test.end()
+})
+
+// Check the customisation of source port / target port
+tape('sankey() aligns ports with custom accessor', test => {
+  function buildGraph () {
+    return {
+      nodes: [
+        {id: '0'},
+        {id: '1'},
+        {id: '2'}
+      ],
+      links: [
+        {source: '0', target: '2', fred: 'a', type: '02a', value: 5},
+        {source: '0', target: '2', fred: 'b', type: '02b', value: 5},
+        {source: '1', target: '2', fred: 'a', type: '12a', value: 5}
+      ]
+    }
+  }
+
+  function testLinkOrder (graph) {
+    // Order at node 2 should be link 0, 2, 1
+    const n2 = graph.nodes[2]
+    assertAlmostEqual(test, graph.links[0].points[1].y, n2.y0 + 1, 1e-3, 'l0')
+    assertAlmostEqual(test, graph.links[1].points[1].y, n2.y0 + 5, 1e-3, 'l1')
+    assertAlmostEqual(test, graph.links[2].points[1].y, n2.y0 + 3, 1e-3, 'l2')
+  }
+
+  const ordering = [['0', '1'], ['2']]
+  var layout
+
+  // First test -- new behaviour using targetPort()
+  layout = sankey()
+    .size([2, 12])
+    .ordering(ordering)
+    .targetPort(function (link, node) { return link.fred; })
+    .sortPorts(function (a, b) { return a.id.localeCompare(b.id) })
+  testLinkOrder(layout(buildGraph()))
+
+  // Second test -- old behaviour (DEPRECATED)
+  layout = sankey()
+    .size([2, 12])
+    .ordering(ordering)
+    .targetId(function (link) { return { id: link.target, port: link.fred }; })
+    .sortPorts(function (a, b) { return a.id.localeCompare(b.id) })
+  testLinkOrder(layout(buildGraph()))
 
   test.end()
 })
