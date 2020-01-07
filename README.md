@@ -426,6 +426,14 @@ MIT licence.
 
 - Modified code to assign `type` and `value` attributes to `link` objects
   (thanks @harisbal)
+- New sourcePort/targetPort accessors to control link alignment: Previously you
+  could choose to align link types globally, by overriding the source() and
+  target() accessors to return a `port` key, but really this should be a
+  node-by-node choice about alignment. This change splits the `port`
+  configuration out into new functions `sourcePort` and `targetPort`, with the
+  previous behaviour being deprecated. In these new functions the source/target
+  node is passed as an argument so alignment can be customized depending on node
+  properties.
 
 ### v0.7.3
 
