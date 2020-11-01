@@ -14,6 +14,30 @@ export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, li
       x1: node.x1,
       y: node.y0
     })
+
+    // These are for "short" links in/out of a node
+    if (node.from_elsewhere && node.from_elsewhere.length > 0) {
+      G.setNode("__from_elsewhere_" + id, {
+        elsewhere: true
+      })
+      node.from_elsewhere.forEach(function (link, i) {
+        let label = {
+          data: link,
+          sourcePortId: null,
+          targetPortId: "__from_elsewhere",
+          index: i,
+          points: [],
+          value: linkValue(link, i),
+          type: linkType(link, i)
+        }
+        G.setEdge("__from_elsewhere_" + id, id, label, linkType(link))
+      })
+    }
+    if (node.to_elsewhere && node.to_elsewhere.length > 0) {
+      G.setNode("__to_elsewhere_" + id, {
+        elsewhere: true
+      })
+    }
   })
 
   graph.links.forEach(function (link, i) {

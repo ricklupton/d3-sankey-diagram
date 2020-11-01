@@ -39,7 +39,9 @@ export default function sortNodes (G, maxIterations = 25) {
 function getRanks (G) {
   const ranks = []
   G.nodes().forEach(u => {
-    const r = G.node(u).rank || 0
+    const node = G.node(u)
+    if (node.elsewhere) return
+    const r = node.rank || 0
     while (r >= ranks.length) ranks.push([])
     ranks[r].push(u)
   })

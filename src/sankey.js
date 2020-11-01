@@ -372,14 +372,19 @@ function required (f) {
 function addLinkEndpoints (G) {
   G.edges().forEach(e => {
     const edge = G.edge(e)
-    edge.points.unshift({x: edge.x0, y: edge.y0, ro: edge.r0, d: edge.d0})
+    if (edge.targetPortId !== "__from_elsewhere") {
+      edge.points.unshift({x: edge.x0, y: edge.y0, ro: edge.r0, d: edge.d0})
+    }
     edge.points.push({x: edge.x1, y: edge.y1, ri: edge.r1, d: edge.d1})
+    console.log('add endpoints', edge)
   })
 }
 
 function copyResultsToGraph (G, graph) {
   G.nodes().forEach(u => {
     const node = G.node(u)
+
+    if (!node.data) return;  // dummy elsewhere nodes
 
     // Build lists of edge data objects
     node.data.incoming = []
@@ -405,19 +410,34 @@ function copyResultsToGraph (G, graph) {
 
   G.edges().forEach(e => {
     const edge = G.edge(e)
-    edge.data.source = G.node(e.v).data
-    edge.data.target = G.node(e.w).data
-    edge.data.sourcePort = edge.sourcePort
-    edge.data.targetPort = edge.targetPort
-    // console.log(edge)
-    edge.data.source.outgoing.push(edge.data)
-    edge.data.target.incoming.push(edge.data)
-    if (edge.data.sourcePort) edge.data.sourcePort.outgoing.push(edge.data)
-    if (edge.data.targetPort) edge.data.targetPort.incoming.push(edge.data)
+
+    const source = G.node(e.v)
+    const target = G.node(e.w)
+
     edge.data.value = edge.value
     edge.data.type = edge.type
     edge.data.dy = edge.dy
     edge.data.points = edge.points || []
     // edge.data.id = `${e.v}-${e.w}-${e.name}`
+ 
+    // false for "from elsewhere" edges
+    if (source.data) {
+      edge.data.source = source.data
+      edge.data.sourcePort = edge.sourcePort
+      edge.data.source.outgoing.push(edge.data)
+      if (edge.data.sourcePort) edge.data.sourcePort.outgoing.push(edge.data)
+    } else {
+      edge.data.source = { id: "__from_elsewhere" }
+    }
+
+    // false for "to elsewhere" edges
+    if (target.data) {
+      edge.data.target = target.data
+      edge.data.targetPort = edge.targetPort
+      edge.data.target.incoming.push(edge.data)
+      if (edge.data.targetPort) edge.data.targetPort.incoming.push(edge.data)
+    } else {
+      edge.data.target = { id: "__to_elsewhere" }
+    }
   })
 }

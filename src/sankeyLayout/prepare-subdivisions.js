@@ -48,6 +48,11 @@ export default function prepareNodePorts (G, sortPorts) {
         const link = G.edge(e)
         link.x1 = x
         link.y1 = node.y + port.y + link.dy / 2
+
+        if (port.id == "__from_elsewhere") {
+          // needs to be initialised somewhere...
+          link.y0 = node.y + port.y - link.dy
+        }
       })
       y[port.side] += port.dy
       i[port.side] += 1

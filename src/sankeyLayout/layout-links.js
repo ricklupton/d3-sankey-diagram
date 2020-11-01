@@ -29,6 +29,11 @@ function setEdgeEndpoints (G) {
         link.d0 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
         sy += link.dy
+
+        if (port.id == "__to_elsewhere") {
+          // needs to be initialised somewhere...
+          link.y1 = link.y0 + link.dy
+        }
       })
 
       port.incoming.forEach(e => {
@@ -38,6 +43,11 @@ function setEdgeEndpoints (G) {
         link.d1 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
         ty += link.dy
+
+        if (port.id == "__from_elsewhere") {
+          // needs to be initialised somewhere...
+          link.y0 = link.y1 - link.dy
+        }
       })
     })
   })
@@ -57,7 +67,11 @@ function maximumRadiusOfCurvature (link) {
   var Dx = link.x1 - link.x0
   var Dy = link.y1 - link.y0
   if (link.d0 !== link.d1) {
+    // change of direction
     return Math.abs(Dy) / 2.1
+  } else if (isNaN(Dx) || isNaN(Dy)) {
+    // elsewhere edge
+    return Infinity
   } else {
     return (Dy !== 0) ? (Dx * Dx + Dy * Dy) / Math.abs(4 * Dy) : Infinity
   }

@@ -17,6 +17,7 @@ export default function initialOrdering (G, ranks) {
   })
 
   alg.preorder(G, start).forEach(u => {
+    if (G.node(u).elsewhere) return
     order[nodeRanks.get(u)].push(u)
   })
 

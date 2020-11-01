@@ -105,3 +105,19 @@ tape('rank assignment: groupedGraph() sets delta on self-loops to 0', (test) => 
   test.deepEqual(testGroupedGraphLoop('l').edge('0', '0'), {delta: 0}, 'r')
   test.end()
 })
+
+tape('rank assignment: groupedGraph() ignores "elsewhere" nodes', (test) => {
+  const graph = new Graph({ directed: true, multigraph: true })
+  graph.setNode('a', {})
+  graph.setNode('b', {})
+  graph.setNode('c', { elsewhere: true })
+  graph.setEdge('a', 'b', {})
+  graph.setEdge('a', 'c', {})
+  const GG = groupedGraph(graph)
+
+  test.deepEqual(GG.nodes(), ['0', '1'])
+  test.deepEqual(GG.node('0'), {type: 'min', nodes: ['a']})
+  test.deepEqual(GG.node('1'), {type: 'same', nodes: ['b']})
+  test.deepEqual(GG.edges(), [{v: '0', w: '1'}])
+  test.end()
+})

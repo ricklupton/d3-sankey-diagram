@@ -11,7 +11,7 @@ export default function nestGraph (nodes) {
     .key(d => d.rank || 0)
     .key(d => d.band || 0)
     .sortValues((a, b) => a.depth - b.depth)
-    .map(nodes)
+    .map(nodes.filter(d => !d.elsewhere))
 
   const result = new Array(maxRank + 1)
   let rank

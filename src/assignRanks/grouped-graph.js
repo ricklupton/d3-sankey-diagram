@@ -35,6 +35,7 @@ export default function groupedGraph (G, rankSets = []) {
   var nodes = G.nodes()
   G.nodes().forEach(u => {
     const d = G.node(u)
+    if (d.elsewhere) return
     if (!nodeSets.has(u)) {
       id = '' + (i++)
       set = { type: 'same', nodes: [u] }
@@ -48,6 +49,7 @@ export default function groupedGraph (G, rankSets = []) {
     const d = G.edge(e)
     const sourceSet = nodeSets.get(e.v)
     const targetSet = nodeSets.get(e.w)
+    if (!sourceSet || !targetSet) return
 
     // Minimum edge length depends on direction of nodes:
     //  -> to -> : 1
