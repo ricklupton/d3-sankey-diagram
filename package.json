@@ -45,7 +45,7 @@
     "d3-timer": "^1.0.7",
     "defined": "^1.0.0",
     "faucet": "0.0.1",
-    "jsdom": "^11.1.0",
+    "jsdom": "^16.5.0",
     "os-homedir": "^1.0.2",
     "prettier": "2.1.2",
     "reify": "^0.4.4",
