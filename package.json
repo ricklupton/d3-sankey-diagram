@@ -1,13 +1,14 @@
 {
-  "name": "d3-sankey-diagram",
+  "name": "d3-sankey-awesome",
   "version": "0.8.0",
-  "description": "Sankey diagram d3 plugin",
-  "author": "Rick Lupton",
+  "description": "Sankey diagram d3 plugin on steroids",
+  "author": "Purplecrow",
   "keywords": [
     "d3",
     "d3-module",
     "sankey",
-    "diagram"
+    "diagram",
+    "d3-sankey-awesome"
   ],
   "license": "MIT",
   "main": "build/d3-sankey-diagram.cjs.js",
@@ -16,7 +17,7 @@
   "homepage": "https://github.com/ricklupton/d3-sankey-diagram",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ricklupton/d3-sankey-diagram.git"
+    "url": "https://github.com/akshatVurbalize/d3-sankey-diagram.git"
   },
   "scripts": {
     "build": "rm -rf build && mkdir build && rollup -c",
