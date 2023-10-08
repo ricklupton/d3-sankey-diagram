@@ -65,6 +65,11 @@ export default function () {
   // const outerRadius = 40;
   const waterLikeSvg = 'M0,0 C20,10 40,10 60,0 Q70,20 60,40 L0,40 Z';
 
+  const dAttribute = `
+    M1,2 h20 q15,0 15,15 v50 q0,0 0,0 h-50 z
+    M0,67 v100 h36 v-100 h-20 z
+  `;
+
   // Create the quarter circle arc
   // const arc = d3.arc()
   //   .innerRadius(0)
@@ -106,7 +111,7 @@ export default function () {
       selection.append('path')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('d', waterLikeSvg);      
+        .attr('d', dAttribute)    
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
