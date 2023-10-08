@@ -24,11 +24,11 @@ export default function () {
         .attr('dy', '.35em')
       selection.append('rect')
         .attr('class', 'node-click-target')
-        .attr('x', -5)
-        .attr('y', -5)
-        .attr('width', 10)
+        .attr('x', -15)
+        .attr('y', -15)
+        .attr('width', 100)
         .style('fill', 'none')
-        .style('visibility', 'hidden')
+        .style('visibility', 'visible')
         .style('pointer-events', 'all')
 
       selection
