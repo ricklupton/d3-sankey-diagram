@@ -42,7 +42,8 @@ export default function () {
       selection.append('rect')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('stroke-width', 50)  
+        .attr('width', 20)  
+        .attr('height', 20)
 
       selection
         .attr('transform', nodeTransform)
