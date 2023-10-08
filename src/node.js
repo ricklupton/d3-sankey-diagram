@@ -50,7 +50,7 @@ export default function () {
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
       let clickTarget = select(this).select('.node-click-target')
-      // d.x1 = d.x0 + 100;
+      d.x1 = d.x0 + 100;
 
       // Local var for title position of each node
       const layoutData = titlePosition(d)
