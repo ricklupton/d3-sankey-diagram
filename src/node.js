@@ -1,4 +1,5 @@
 import { select } from 'd3-selection'
+import * as d3 from 'd3';
 
 export default function () {
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
