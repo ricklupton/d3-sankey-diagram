@@ -15,6 +15,8 @@ export default function () {
       selection.append('line')
         .attr('x1', 0)
         .attr('x2', 0)
+        .attr('stroke-width', 100)
+        .attr('fill', 'blue')
       selection.append('rect')
         .attr('class', 'node-body')
         .attr('width', 250)
