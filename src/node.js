@@ -161,8 +161,9 @@ export default function () {
       }
 
       // dropoff NOde
+      const dropoffOffset = d.y1 - d.y0;
       dropoff
-        .attr('transform', 'translate(100, 0)')
+        .attr('transform', `translate(100, ${dropoffOffset})`)
 
 
       // Update  translate(' + d.x0 + ',' + d.y0 + ')'
