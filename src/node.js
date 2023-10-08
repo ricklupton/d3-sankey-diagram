@@ -1,6 +1,64 @@
 import { select } from 'd3-selection'
 import * as d3 from 'd3';
 
+
+
+function createTire(width) {
+  // Define the SVG dimensions based on the width
+  const diameter = width * 2;
+  const radius = width;
+
+  // Create an SVG container
+  const svg = d3.create('svg')
+    .attr('width', diameter)
+    .attr('height', diameter);
+
+  // Calculate the inner radius based on the width
+  const innerRadius = width / 2;
+
+  // Create the outer arc for the tire
+  const outerArc = d3.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(radius)
+    .startAngle(0)
+    .endAngle(Math.PI); // Create a semi-circle
+
+  // Create the inner arc to create the empty center
+  const innerArc = d3.arc()
+    .innerRadius(0)
+    .outerRadius(innerRadius)
+    .startAngle(0)
+    .endAngle(Math.PI); // Create a semi-circle
+
+  // Append the path elements to the SVG to create the tire
+  svg.append('path')
+    .attr('d', outerArc)
+    .attr('fill', 'blue');
+
+  svg.append('path')
+    .attr('d', innerArc)
+    .attr('fill', 'white'); // Set the inner circle color
+
+  // Return the SVG element
+  return svg.node();
+}
+
+function createTireSVG(innerRadius: number, outerRadius: number): string {
+  // Calculate the SVG dimensions based on the outer radius
+  const diameter = outerRadius * 2;
+
+  // Create the SVG string
+  const svgString = `
+    <svg width="${diameter}" height="${diameter}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="${outerRadius}" cy="${outerRadius}" r="${outerRadius}" fill="blue" />
+      <circle cx="${outerRadius}" cy="${outerRadius}" r="${innerRadius}" fill="white" />
+    </svg>
+  `;
+
+  return `data:image/svg+xml;base64,${btoa(svgString)}`;
+}
+
+
 export default function () {
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
   let nodeValue = (d) => null
@@ -18,6 +76,11 @@ export default function () {
   const radius = 80;   // Radius of the arc
   const startAngle = 0; // Starting angle in radians
   const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
+
+  const innerRadius = 20;
+  const outerRadius = 40;
+  const tireSVGDataUri = createTireSVG(innerRadius, outerRadius);
+
 
   // Create the quarter circle arc
   const arc = d3.arc()
@@ -59,8 +122,8 @@ export default function () {
         .style('pointer-events', 'all')
       selection.append('path')
         .attr('class', 'dropoff')
-        .attr('fill', 'red')
-        .attr('d', arc);      
+        // .attr('fill', 'red')
+        .attr('fill', `url(${tireSVGDataUri})`);  
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
