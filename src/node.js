@@ -41,7 +41,7 @@ export default function () {
         .style('pointer-events', 'all')
       selection.append('rect')
         .attr('class', 'dropoff')
-        .attr('fill', red)
+        .attr('fill', 'red')
         .attr('stroke-width', 50)  
 
       selection
