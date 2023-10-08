@@ -23,12 +23,6 @@ export default function () {
         .attr('height', 350)
         .attr('fill', 'green')
         .attr('stroke-width', 100)
-        .attr('text-anchor', 'middle') // Center-align the text
-        .attr('dy', '.35em')
-        .text(function(d) {
-          // You can set the text content dynamically based on your data
-          return 'Your Text Here';
-        });
       selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
