@@ -5,7 +5,7 @@ export default function () {
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
 
-  function sankeyNode(context) {
+  function sankeyNode(context) { 
 
     console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
@@ -19,7 +19,10 @@ export default function () {
         .attr('class', 'node-body')
         .attr('width', 250)
         .attr('height', 350)
-        .attr('stroke-width', 50)
+        .attr('fill', 'red')
+        .attr('x', 100)
+        .attr('y', 100)
+        .attr('stroke-width', 100)
       selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
