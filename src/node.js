@@ -5,7 +5,9 @@ export default function () {
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
 
-  function sankeyNode (context) {
+  function sankeyNode(context) {
+
+    console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
 
     if (selection.select('text').empty()) {
@@ -49,7 +51,7 @@ export default function () {
 
       const separateValue = (d.x1 - d.x0) > 2
       const titleText = nodeTitle(d) + ((!separateValue && nodeValue(d))
-                                        ? ' (' + nodeValue(d) + ')' : '')
+        ? ' (' + nodeValue(d) + ')' : '')
 
       // Update un-transitioned
       title
@@ -87,8 +89,8 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
-        .attr('width', function (d) { return d.x1 - d.x0 })
-        .attr('height', function (d) { return layoutData.dy })
+        .attr('width', function (d) { return 100 })   //d.x1 - d.x0
+        .attr('height', function (d) { return 230 })    // layoutData.dy
 
       text
         .attr('transform', textTransform)
@@ -105,7 +107,7 @@ export default function () {
           return 'translate(' + (dx / 2) + ',' + (dy / 2) + ') rotate(' + theta + ')'
         })
 
-      function textTransform (d) {
+      function textTransform(d) {
         const layout = layoutData
         const y = layout.titleAbove ? -10 : (d.y1 - d.y0) / 2
         let x
@@ -120,14 +122,16 @@ export default function () {
   }
 
   sankeyNode.nodeVisible = function (x) {
+    console.log("nodeVisible-2", x)
     if (arguments.length) {
-      nodeVisible = required(x)
+      nodeVisible = required(300)
       return sankeyNode
     }
     return nodeVisible
   }
 
   sankeyNode.nodeTitle = function (x) {
+    console.log("nodeTitle-3", x)
     if (arguments.length) {
       nodeTitle = required(x)
       return sankeyNode
@@ -136,6 +140,7 @@ export default function () {
   }
 
   sankeyNode.nodeValue = function (x) {
+    console.log("nodeValue-4", x)
     if (arguments.length) {
       nodeValue = required(x)
       return sankeyNode
@@ -146,11 +151,13 @@ export default function () {
   return sankeyNode
 }
 
-function nodeTransform (d) {
+function nodeTransform(d) {
+  console.log("nodeTransform-5", d)
   return 'translate(' + d.x0 + ',' + d.y0 + ')'
 }
 
-function titlePosition (d) {
+function titlePosition(d) {
+  console.log("titlePosition-6", d)
   let titleAbove = false
   let right = false
 
@@ -169,10 +176,12 @@ function titlePosition (d) {
     titleAbove = false
   }
 
-  return {titleAbove, right}
+  return { titleAbove, right }
 }
 
-function wrap (d, width) {
+function wrap(d, width) {
+  console.log("wrap-7", d)
+
   var text = select(this)
   var lines = text.text().split(/\n/)
   var lineHeight = 1.1 // ems
@@ -186,7 +195,9 @@ function wrap (d, width) {
   })
 }
 
-function required (f) {
+function required(f) {
+  console.log("required-8", f)
+
   if (typeof f !== 'function') throw new Error()
   return f
 }
