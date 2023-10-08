@@ -35,7 +35,7 @@ function setEdgeEndpoints (G) {
 
       port.outgoing.forEach(e => {
         const link = G.edge(e)
-        // link.x0 = node.x1
+        link.x0 = node.x1 + 100
         link.y0 = sy + link.dy / 2
         link.d0 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
@@ -44,7 +44,7 @@ function setEdgeEndpoints (G) {
 
       port.incoming.forEach(e => {
         const link = G.edge(e)
-        // link.x1 = node.x0
+        link.x1 = node.x0 - 100
         link.y1 = ty + link.dy / 2
         link.d1 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
