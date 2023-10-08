@@ -115,8 +115,9 @@ export default function () {
         // .style('font-size', function (d) { return Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4) + 'px' })
         .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
-          // const dx = d.x1 - d.x0
-          // const dy = d.y1 - d.y0
+          const dx = d.x1 - d.x0
+          const dy = d.y1 - d.y0
+          console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
           return 'translate(' + (dx / 2) + ',' + (dy / 2) + ')'
           // rotate(' + theta + ')'
