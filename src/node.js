@@ -42,8 +42,7 @@ export default function () {
       selection.append('path')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('d', 'M10 20 C10 10, 30 10, 30 20 Q30 30, 20 40 Q10 50, 10 60 C10 70, 30 70, 30 60 Q30 50, 20 40 Q10 30, 10 20 Z');
-      
+        .attr('d', 'M10 20 Q20 0, 30 20 T50 20');      
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
