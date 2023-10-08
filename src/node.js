@@ -27,6 +27,7 @@ export default function () {
         .attr('class', 'node-value')
         .attr('dy', '.35em')
         .attr('text-anchor', 'middle')
+        .text('hello')
       selection.append('text')
         .attr('class', 'node-title')
         .attr('dy', '.35em')
@@ -65,7 +66,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text(nodeValue)
+        .text("hello world , i am here")
         .style('display', separateValue ? 'inline' : 'none')
 
       text
