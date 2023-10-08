@@ -22,8 +22,6 @@ export default function () {
         .attr('width', 250)
         .attr('height', 350)
         .attr('fill', 'green')
-        .attr('x', 100)
-        .attr('y', 100)
         .attr('stroke-width', 100)
       selection.append('text')
         .attr('class', 'node-value')
