@@ -89,8 +89,8 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
-        .attr('width', function (d) { return 100 })   //d.x1 - d.x0
-        .attr('height', function (d) { return 230 })    // layoutData.dy
+        .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
+        .attr('height', function (d) { return layoutData.dy })    // layoutData.dy
 
       text
         .attr('transform', textTransform)
@@ -124,7 +124,7 @@ export default function () {
   sankeyNode.nodeVisible = function (x) {
     console.log("nodeVisible-2", x)
     if (arguments.length) {
-      nodeVisible = required(300)
+      nodeVisible = required(x)
       return sankeyNode
     }
     return nodeVisible
