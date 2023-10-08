@@ -66,7 +66,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text("hello world , i am here")
+        .text(nodeValue)
         .style('display', separateValue ? 'inline' : 'none')
 
       text
