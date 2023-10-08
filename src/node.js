@@ -39,11 +39,16 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
-      selection.append('rect')
+      selection.append('path')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('width', 20)  
-        .attr('height', 20)
+        .attr('d', 'M10 20 C10 10, 30 10, 30 20 Q30 30, 20 40 Q10 50, 10 60 C10 70, 30 70, 30 60 Q30 50, 20 40 Q10 30, 10 20 Z');
+      
+      // selection.append('rect')
+      //   .attr('class', 'dropoff')
+      //   .attr('fill', 'red')
+      //   .attr('width', 20)  
+      //   .attr('height', 20)
 
       selection
         .attr('transform', nodeTransform)
