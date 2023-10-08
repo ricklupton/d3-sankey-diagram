@@ -55,27 +55,23 @@ export default function () {
 
 
       // Define the arc properties
-  // const centerX = 100; // X-coordinate of the center
-  // const centerY = 100; // Y-coordinate of the center
-  // const radius = 80;   // Radius of the arc
-  // const startAngle = 0; // Starting angle in radians
-  // const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
+  const centerX = 100; // X-coordinate of the center
+  const centerY = 100; // Y-coordinate of the center
+  const radius = 80;   // Radius of the arc
+  const startAngle = 0; // Starting angle in radians
+  const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
 
-  // const innerRadius = 20;
-  // const outerRadius = 40;
-  const waterLikeSvg = 'M0,0 C20,10 40,10 60,0 Q70,20 60,40 L0,40 Z';
+  const innerRadius = 20;
+  const outerRadius = 40;
 
-  const dAttribute = `
-    M1,2 h20 q15,0 15,15 v50 q0,0 0,0 h-50 z
-    M0,67 v100 h36 v-100 h-20 z
-  `;
+
 
   // Create the quarter circle arc
-  // const arc = d3.arc()
-  //   .innerRadius(0)
-  //   .outerRadius(radius)
-  //   .startAngle(startAngle)
-  //   .endAngle(endAngle);
+  const arc = d3.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius)
+    .startAngle(startAngle)
+    .endAngle(endAngle);
 
 
 
@@ -111,7 +107,7 @@ export default function () {
       selection.append('path')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('d', dAttribute)    
+        .attr('d', arc)    
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
