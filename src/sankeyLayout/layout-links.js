@@ -88,6 +88,7 @@ function setEdgeEndCurvatures (links, rr) {
   links.forEach(link => {
     // const link = (i < 0) ? link.segments[link.segments.length + i] : link.segments[i]
     link.Rmax = maximumRadiusOfCurvature(link)
+    link.dy = link.dy * 0.5;
     link[rr] = Math.max(link.dy / 2, (link.d0 === link.d1 ? link.Rmax * 0.6 : (5 + link.dy / 2)))
   })
 
