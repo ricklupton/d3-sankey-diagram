@@ -66,8 +66,10 @@ export default function () {
         .text(titleText)
 
       value
-        .text(nodeValue)
+        .text("topic A 70%")
         .style('display', separateValue ? 'inline' : 'none')
+        .style('fill', 'red') // Set the font color to red
+        .style('font-size', '12px'); 
 
       text
         .attr('text-anchor', layoutData.right ? 'end' : 'start')
