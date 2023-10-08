@@ -39,6 +39,10 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
+      selection.append('rect')
+        .attr('class', 'dropoff')
+        .attr('fill', red)
+        .attr('stroke-width', 50)  
 
       selection
         .attr('transform', nodeTransform)
@@ -51,6 +55,8 @@ export default function () {
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
       let clickTarget = select(this).select('.node-click-target')
+      // select the dropoff and apply styles
+      const dropoff = select(this).select('.dropoff')
       d.x1 = d.x0 + 100;
 
       // Local var for title position of each node
@@ -84,9 +90,16 @@ export default function () {
         clickTarget = clickTarget.transition(context)
       }
 
-      // Update
+      // dropoff NOde
+      dropoff
+        .attr('transform', 'translate(100, 0)')
+
+
+      // Update  translate(' + d.x0 + ',' + d.y0 + ')'
       context
         .attr('transform', nodeTransform)
+
+
 
       line
         .attr('y1', function (d) { return layoutData.titleAbove ? -5 : 0 })
