@@ -43,22 +43,6 @@ function createTire(width) {
   return svg.node();
 }
 
-function createTireSVG(innerRadius: number, outerRadius: number): string {
-  // Calculate the SVG dimensions based on the outer radius
-  const diameter = outerRadius * 2;
-
-  // Create the SVG string
-  const svgString = `
-    <svg width="${diameter}" height="${diameter}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="${outerRadius}" cy="${outerRadius}" r="${outerRadius}" fill="blue" />
-      <circle cx="${outerRadius}" cy="${outerRadius}" r="${innerRadius}" fill="white" />
-    </svg>
-  `;
-
-  return `data:image/svg+xml;base64,${btoa(svgString)}`;
-}
-
-
 export default function () {
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
   let nodeValue = (d) => null
@@ -71,23 +55,22 @@ export default function () {
 
 
       // Define the arc properties
-  const centerX = 100; // X-coordinate of the center
-  const centerY = 100; // Y-coordinate of the center
-  const radius = 80;   // Radius of the arc
-  const startAngle = 0; // Starting angle in radians
-  const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
+  // const centerX = 100; // X-coordinate of the center
+  // const centerY = 100; // Y-coordinate of the center
+  // const radius = 80;   // Radius of the arc
+  // const startAngle = 0; // Starting angle in radians
+  // const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
 
-  const innerRadius = 20;
-  const outerRadius = 40;
-  const tireSVGDataUri = createTireSVG(innerRadius, outerRadius);
-
+  // const innerRadius = 20;
+  // const outerRadius = 40;
+  const waterLikeSvg = 'M0,0 C20,10 40,10 60,0 Q70,20 60,40 L0,40 Z';
 
   // Create the quarter circle arc
-  const arc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(radius)
-    .startAngle(startAngle)
-    .endAngle(endAngle);
+  // const arc = d3.arc()
+  //   .innerRadius(0)
+  //   .outerRadius(radius)
+  //   .startAngle(startAngle)
+  //   .endAngle(endAngle);
 
 
 
@@ -122,8 +105,8 @@ export default function () {
         .style('pointer-events', 'all')
       selection.append('path')
         .attr('class', 'dropoff')
-        // .attr('fill', 'red')
-        .attr('fill', `url(${tireSVGDataUri})`);  
+        .attr('fill', 'red')
+        .attr('d', waterLikeSvg);      
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
