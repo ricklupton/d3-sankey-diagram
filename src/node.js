@@ -21,7 +21,8 @@ export default function () {
         .attr('height', 350)
         .attr('x', 100)
         .attr('y', 100)
-        .attr('fill', 'red')
+        .attr('fill', 'blue')
+        .attr('stroke-width', 50)
       selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
@@ -49,6 +50,7 @@ export default function () {
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
       let clickTarget = select(this).select('.node-click-target')
+      d.x1 = d.x0 + 100;
 
       // Local var for title position of each node
       const layoutData = titlePosition(d)
@@ -94,6 +96,7 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
+        // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('height', function (d) { return layoutData.dy })    // layoutData.dy
 
