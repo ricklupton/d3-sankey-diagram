@@ -83,7 +83,7 @@ export default function sankeyDiagram () {
         Array.prototype.push.apply(links, node.fromElsewhere || [])
         Array.prototype.push.apply(links, node.toElsewhere || [])
       })
-
+      console.log("NODES", G.nodes)
       // Render
       updateNodes(sankey, context, G.nodes)
       updateLinks(sankey, context, links)
