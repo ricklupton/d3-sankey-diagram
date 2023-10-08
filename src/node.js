@@ -10,6 +10,23 @@ export default function () {
     console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
 
+
+      // Define the arc properties
+  const centerX = 100; // X-coordinate of the center
+  const centerY = 100; // Y-coordinate of the center
+  const radius = 80;   // Radius of the arc
+  const startAngle = 0; // Starting angle in radians
+  const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
+
+  // Create the quarter circle arc
+  const arc = d3.arc()
+    .innerRadius(0)
+    .outerRadius(radius)
+    .startAngle(startAngle)
+    .endAngle(endAngle);
+
+
+
     if (selection.select('text').empty()) {
       selection.append('title')
       selection.append('line')
@@ -42,7 +59,7 @@ export default function () {
       selection.append('path')
         .attr('class', 'dropoff')
         .attr('fill', 'red')
-        .attr('d', 'M10 20 Q20 0, 30 20 T50 20');      
+        .attr('d', arc);      
       // selection.append('rect')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
