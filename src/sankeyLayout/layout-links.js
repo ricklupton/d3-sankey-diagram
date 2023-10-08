@@ -91,20 +91,9 @@ function setEdgeEndCurvatures (links, rr) {
 
 
     const middleY = (link.y0 + link.y1) / 2;
-    const distanceFromMiddle = Math.abs(middleY - link.y0); 
-    const maxDistance = Math.abs(link.y1 - link.y0); // Total distance from source to target
+    // const distanceFromMiddle = Math.abs(middleY - link.y0); 
+    // const maxDistance = Math.abs(link.y1 - link.y0); // Total distance from source to target
     let thicknessFactor = 1;
-
-    if (middleY < link.y0) {
-      // Approaching the source node, decrease thickness
-      thicknessFactor = distanceFromMiddle / (maxDistance / 2);
-    } else if (middleY > link.y0 && middleY < link.y1) {
-      // In the middle, maintain full thickness
-      thicknessFactor = 1;
-    } else {
-      // Approaching the target node, decrease thickness
-      thicknessFactor = (maxDistance - distanceFromMiddle) / (maxDistance / 2);
-    }
 
     link.dy = link.dy * thicknessFactor;
     
