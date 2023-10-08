@@ -19,7 +19,7 @@ export default function () {
         .attr('class', 'node-body')
         .attr('width', 250)
         .attr('height', 350)
-        .attr('fill', 'red')
+        .attr('fill', 'green')
         .attr('x', 100)
         .attr('y', 100)
         .attr('stroke-width', 100)
