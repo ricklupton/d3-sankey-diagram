@@ -62,14 +62,14 @@ export default function sankeyLink() {
       return bfLink(d);
     }
 
-    // Calculate the center of the link
-    var centerX = (x0 + x1) / 2;
+    // // Calculate the center of the link
+    // var centerX = (x0 + x1) / 2;
     
-    // Calculate the radius at the center (half of the width)
-    var centerRadius = h / 2;
+    // // Calculate the radius at the center (half of the width)
+    // var centerRadius = h / 2;
     
-    // Calculate the radius at the ends (full width)
-    var endRadius = h;
+    // // Calculate the radius at the ends (full width)
+    // var endRadius = h;
 
     // Minimum thickness 2px
     var h = Math.max(minWidth(d), d.dy) / 2,
@@ -119,25 +119,25 @@ export default function sankeyLink() {
     }
 
 
-    if (centerX < x0) {
-      // Link is in the first half of the path
-      x2 = x0;
-      x3 = centerX;
-      r0 = endRadius;
-      r1 = interpolate(centerRadius, endRadius)(centerX / x0);
-    } else if (centerX > x1) {
-      // Link is in the second half of the path
-      x2 = centerX;
-      x3 = x1;
-      r0 = interpolate(centerRadius, endRadius)((centerX - x1) / (x0 - x1));
-      r1 = endRadius;
-    } else {
-      // Link is in the center
-      x2 = centerX - centerRadius;
-      x3 = centerX + centerRadius;
-      r0 = centerRadius;
-      r1 = centerRadius;
-    }
+    // if (centerX < x0) {
+    //   // Link is in the first half of the path
+    //   x2 = x0;
+    //   x3 = centerX;
+    //   r0 = endRadius;
+    //   r1 = interpolate(centerRadius, endRadius)(centerX / x0);
+    // } else if (centerX > x1) {
+    //   // Link is in the second half of the path
+    //   x2 = centerX;
+    //   x3 = x1;
+    //   r0 = interpolate(centerRadius, endRadius)((centerX - x1) / (x0 - x1));
+    //   r1 = endRadius;
+    // } else {
+    //   // Link is in the center
+    //   x2 = centerX - centerRadius;
+    //   x3 = centerX + centerRadius;
+    //   r0 = centerRadius;
+    //   r1 = centerRadius;
+    // }
 
     function arc(dir, r) {
       var f = ( dir * (y1-y0) > 0) ? 1 : 0,
@@ -181,9 +181,9 @@ export default function sankeyLink() {
     }
 
     return ("M"     + [x0+0.1, y0-h] + " " +
-            arc(+1) + [x0-0.1, y0-h] + " " +
+            arc(+1) + [x0-0.5, y0-h] + " " +
             "L"     + [x0-0.1, y0+h] + " " +
-            arc(-1) + [x0+0.1, y0+h] + " " +
+            arc(-1) + [x0+0.6, y0+h] + " " +
             "Z");
   }
 
