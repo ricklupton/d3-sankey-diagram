@@ -153,7 +153,7 @@ export default function () {
         .style('font-weight', 'bold'); 
 
       value2
-        .text("➡")
+        .text(`➡ ${d.population}%`)
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
@@ -175,7 +175,6 @@ export default function () {
 
       // dropoff NOde
       const dropoffOffset = (d.y1 - d.y0 ) * (1- d.dropoff/100);
-      console.log("dropofff", d.dropoff);
       dropoff
         .attr('transform', `translate(125, ${dropoffOffset})`)
         .attr('width', 10)
