@@ -220,7 +220,7 @@ export default function () {
           const dy = d.y1 - d.y0
           // console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
-          return 'translate(' + (dx / 2) + ',' + ((dy / 2) - 20) + ')'
+          return 'translate(' + (dx / 2) + ',' + ((dy / 2) -  Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4))) + ')'
           // rotate(' + theta + ')'
         })
 
@@ -233,7 +233,7 @@ export default function () {
           const dy = d.y1 - d.y0
           // console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
-          return 'translate(' + (dx / 2) + ',' + ((dy / 2) + 20 ) + ')'
+          return 'translate(' + (dx / 2) + ',' + ((dy / 2) + (Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4))) ) + ')'
           // rotate(' + theta + ')'
         })
 
