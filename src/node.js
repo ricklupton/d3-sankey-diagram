@@ -49,6 +49,7 @@ export default function () {
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
 
+
   function sankeyNode(context) { 
 
     // console.log("sankeyNode-1", context)
@@ -249,6 +250,17 @@ export default function () {
     }
     return nodeValue
   }
+
+  sankeyNode.dropoff = function (x) {
+    // console.log("nodeValue-4", x)
+    // if (arguments.length) {
+    //   nodeValue = required(x)
+    //   return sankeyNode
+    // }
+    // return nodeValue
+    return 20;
+  }
+
 
   return sankeyNode
 }
