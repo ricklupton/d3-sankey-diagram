@@ -46,6 +46,8 @@ function createTire(width) {
 export default function () {
   // console.log("from inside the function", d);
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
+  const dropoff = (d) => d.dropoff);
+  console.log("DROPOFF -------", dropoff)
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
 
@@ -54,17 +56,15 @@ export default function () {
 
     // console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
+        // Define the arc properties
+    const centerX = 100; // X-coordinate of the center
+    const centerY = 100; // Y-coordinate of the center
+    const radius = 80;   // Radius of the arc
+    const startAngle = 0; // Starting angle in radians
+    const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
 
-
-      // Define the arc properties
-  const centerX = 100; // X-coordinate of the center
-  const centerY = 100; // Y-coordinate of the center
-  const radius = 80;   // Radius of the arc
-  const startAngle = 0; // Starting angle in radians
-  const endAngle = Math.PI / 2; // Ending angle in radians (quarter circle)
-
-  const innerRadius = 20;
-  const outerRadius = 40;
+    const innerRadius = 20;
+    const outerRadius = 40;
 
 
 
@@ -260,7 +260,6 @@ export default function () {
     // return nodeValue
     return 20;
   }
-
 
   return sankeyNode
 }
