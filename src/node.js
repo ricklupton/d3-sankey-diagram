@@ -44,6 +44,7 @@ function createTire(width) {
 }
 
 export default function () {
+  console.log("from inside the function", d);
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
