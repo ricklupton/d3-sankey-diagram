@@ -89,11 +89,11 @@ export default function () {
         .attr('fill', 'rgb(169,206,127)')
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
-      selection.append('text')
+      selection.append('tspan')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
         .attr('text-anchor', 'middle')
-        .text('hello')
+        // .text('hello')
       // selection.append('text')
       //   .attr('class', 'node-title')
       //   .attr('dy', '.35em')
@@ -142,8 +142,11 @@ export default function () {
       title
         .text(titleText)
 
+
+        // .text(titleText)
+
       value
-        .text(titleText)
+        .html("a <br/> b <br/> c <br/> d")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
