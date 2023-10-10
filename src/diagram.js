@@ -236,6 +236,11 @@ export default function sankeyDiagram () {
       .attr('y', -25)
       .style('font-weight', 'bold'); 
 
+    enter.append('text')
+      .attr('x', -10)
+      .attr('y', -25)
+      .style('font-weight', 'bold'); 
+
     group = group.merge(enter)
 
     group
