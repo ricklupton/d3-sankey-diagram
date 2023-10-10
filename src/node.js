@@ -86,7 +86,7 @@ export default function () {
         .attr('class', 'node-body')
         // .attr('width', 250)
         // .attr('height', 350)
-        .attr('fill', 'rgb (169, 206, 127)')
+        .attr('fill', 'rgb(169,206,127)')
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
       selection.append('text')
@@ -112,10 +112,6 @@ export default function () {
       selection.append('rect')
         .attr('class', 'dropoff')
         .attr('fill', 'rgb(227,69,64)')
-
-      selection.append('path')
-        .attr('fill', 'rgb(223,125,110)') // Match the fill color
-        .attr('d', 'M100,0 A10,10 0 0,1 90,10 L100,10 Z');
         // .attr('width', 20)  
         // .attr('height', 20)
 
