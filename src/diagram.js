@@ -236,10 +236,12 @@ export default function sankeyDiagram () {
       .attr('y', -25)
       .style('font-weight', 'bold'); 
 
-    enter.append('text')
-      .attr('x', -10)
-      .attr('y', -25)
+    enter.append('tspan')
+      .text('hello')
+      .attr('x', -50)
+      .attr('y', -105)
       .style('font-weight', 'bold'); 
+
 
     group = group.merge(enter)
 
