@@ -143,7 +143,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text("topic A 70%")
+        .text("topic A  \n 70%")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'red') // Set the font color to red
         .style('font-size', '12px'); 
