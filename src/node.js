@@ -145,8 +145,11 @@ export default function () {
       value
         .text(titleText)
         .style('display', separateValue ? 'inline' : 'none')
-        .style('fill', 'blue') // Set the font color to red
-        .style('font-size', '12px'); 
+        .style('fill', 'black') // sets the text inside box
+        .style('font-size', '12px')
+        .style('font-weight', 'bold'); 
+
+        
 
       text
         .attr('text-anchor', layoutData.right ? 'end' : 'start')
