@@ -101,7 +101,7 @@ export default function () {
         .attr('class', 'node-click-target')
         .attr('x', -15)
         .attr('y', -15)
-        .attr('width', 300)
+        .attr('width', 100)
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
@@ -128,7 +128,7 @@ export default function () {
       let clickTarget = select(this).select('.node-click-target')
       // select the dropoff and apply styles
       const dropoff = select(this).select('.dropoff')
-      d.x1 = d.x0 + 101;
+      d.x1 = d.x0 + 201;
 
       // Local var for title position of each node
       const layoutData = titlePosition(d)
