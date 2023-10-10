@@ -89,14 +89,16 @@ export default function () {
         .attr('fill', 'rgb(169,206,127)')
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
-      selection.append('div')
+      selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
         .attr('text-anchor', 'middle')
-        // .text('hello')
-      // selection.append('text')
-      //   .attr('class', 'node-title')
-      //   .attr('dy', '.35em')
+      
+      selection.append('text')
+        .attr('class', 'node-value2')
+        .attr('dy', '.35em')
+        .attr('text-anchor', 'middle')
+     
       selection.append('rect')
         .attr('class', 'node-click-target')
         .attr('x', -15)
@@ -122,6 +124,7 @@ export default function () {
     selection.each(function (d) {
       let title = select(this).select('title')
       let value = select(this).select('.node-value')
+      let value2 = select(this).select('.node-value2');
       let text = select(this).select('.node-title')
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
@@ -142,17 +145,20 @@ export default function () {
       title
         .text(titleText)
 
-
-        // .text(titleText)
-
       value
-        .html("a <br/> b <br/> c <br/> d")
+        .text(titleText)
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
         .style('font-weight', 'bold'); 
 
-        
+      value2
+        .text(titleText)
+        .style('display', separateValue ? 'inline' : 'none')
+        .style('fill', 'black') // sets the text inside box
+        .style('font-size', '12px')
+        .style('font-weight', 'bold'); 
+
 
       text
         .attr('text-anchor', layoutData.right ? 'end' : 'start')
@@ -214,7 +220,20 @@ export default function () {
           const dy = d.y1 - d.y0
           // console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
-          return 'translate(' + (dx / 2) + ',' + (dy / 2) + ')'
+          return 'translate(' + (dx / 2) + ',' + ((dy / 2) - 20) + ')'
+          // rotate(' + theta + ')'
+        })
+
+
+        value2
+        .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
+        // .style('font-size', function (d) { return 14 + 'px' })
+        .attr('transform', function (d) {
+          const dx = d.x1 - d.x0
+          const dy = d.y1 - d.y0
+          // console.log("dx", dx, "dy", dy);
+          // const theta = dx > dy ? 0 : -90
+          return 'translate(' + (dx / 2) + ',' + ((dy / 2) + 20 ) + ')'
           // rotate(' + theta + ')'
         })
 
