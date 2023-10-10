@@ -89,7 +89,7 @@ export default function () {
         .attr('fill', 'rgb(169,206,127)')
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
-      selection.append('tspan')
+      selection.append('div')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
         .attr('text-anchor', 'middle')
