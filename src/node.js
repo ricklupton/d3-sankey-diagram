@@ -153,7 +153,7 @@ export default function () {
         .style('font-weight', 'bold'); 
 
       value2
-        .text(titleText)
+        .text("➡")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
@@ -227,7 +227,7 @@ export default function () {
 
         value2
         .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
-        .style('display', (d.y1-d.y0) > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10 ? "display"  : 'none')
+        .style('display', (d.y1-d.y0) > 2 * Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10 ? "display"  : 'none')
         // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
