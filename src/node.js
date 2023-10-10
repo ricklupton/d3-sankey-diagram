@@ -191,7 +191,7 @@ export default function () {
         })
 
       clickTarget
-        .attr('height', function (d) { return layoutData.dy + 5 })
+        .attr('height', function (d) { return layoutData.dy + 100 })
 
       body
         // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
