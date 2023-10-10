@@ -143,7 +143,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text("topic A  \n 70%")
+        .text("topic A 70%")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'blue') // Set the font color to red
         .style('font-size', '12px'); 
@@ -201,8 +201,8 @@ export default function () {
 
       //  use this to bring things in the center ( text inside the div -> font size transform etc)
       value
-        // .style('font-size', function (d) { return Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4) + 'px' })
-        .style('font-size', function (d) { return 14 + 'px' })
+        .style('font-size', function (d) { return Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4) + 'px' })
+        // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
           const dy = d.y1 - d.y0
