@@ -227,6 +227,7 @@ export default function () {
 
         value2
         .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
+        .style('display', dy > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) ? "display"  : 'none')
         // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
@@ -236,6 +237,7 @@ export default function () {
           return 'translate(' + (dx / 2) + ',' + ((dy / 2) + (Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4))) ) + ')'
           // rotate(' + theta + ')'
         })
+        
 
       function textTransform(d) {
         const layout = layoutData
