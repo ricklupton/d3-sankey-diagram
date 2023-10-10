@@ -145,7 +145,7 @@ export default function () {
       value
         .text("topic A  \n 70%")
         .style('display', separateValue ? 'inline' : 'none')
-        .style('fill', 'red') // Set the font color to red
+        .style('fill', 'blue') // Set the font color to red
         .style('font-size', '12px'); 
 
       text
