@@ -236,12 +236,11 @@ export default function sankeyDiagram () {
       .attr('y', -50)
       .style('font-weight', 'bold'); 
 
-
-
         // Add the second text element below the first one
       enter.append('text')
       .attr('x', -10)
       .attr('y', -25); // Adjust the y-coordinate as needed for spacing
+      .style('font-size', '10px')
 
 
     group = group.merge(enter)
