@@ -163,7 +163,7 @@ export default function () {
         .text(`➡ ${d.population}%`)
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
-        .style('font-size', '12px')
+        .style('font-size', '6px')
         .style('font-weight', 'bold'); 
 
 
@@ -232,7 +232,7 @@ export default function () {
 
 
         value2
-        .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
+        .style('font-size', function (d) { return Math.min(11,  Math.floor(Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) * 0.4) + 'px' })
         .style('display', (d.y1-d.y0) > 2 * Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10 ? "display"  : 'none')
         // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
