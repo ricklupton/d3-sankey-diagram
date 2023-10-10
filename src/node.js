@@ -128,7 +128,7 @@ export default function () {
       let clickTarget = select(this).select('.node-click-target')
       // select the dropoff and apply styles
       const dropoff = select(this).select('.dropoff')
-      d.x1 = d.x0 + 201;
+      d.x1 = d.x0 + 125; // width of node
 
       // Local var for title position of each node
       const layoutData = titlePosition(d)
