@@ -220,14 +220,14 @@ export default function () {
           const dy = d.y1 - d.y0
           // console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
-          return 'translate(' + (dx / 2) + ',' + ((dy / 2) -  Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4))) + ')'
+          return 'translate(' + (dx / 2) + ',' + ((dy / 2) -  ((d.y1-d.y0) > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10  ? Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) : 0)) + ')'
           // rotate(' + theta + ')'
         })
 
 
         value2
         .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
-        .style('display', (d.y1-d.y0) > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) ? "display"  : 'none')
+        .style('display', (d.y1-d.y0) > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10 ? "display"  : 'none')
         // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
