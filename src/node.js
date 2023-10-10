@@ -44,7 +44,7 @@ function createTire(width) {
 }
 
 export default function () {
-  console.log("from inside the function", d);
+  // console.log("from inside the function", d);
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
@@ -120,6 +120,7 @@ export default function () {
     }
 
     selection.each(function (d) {
+      console.log("ddddddddddddd", d);
       let title = select(this).select('title')
       let value = select(this).select('.node-value')
       let text = select(this).select('.node-title')
