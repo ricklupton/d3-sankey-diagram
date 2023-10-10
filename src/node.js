@@ -168,7 +168,7 @@ export default function () {
       const dropoffOffset = (d.y1 - d.y0 ) * (1- d.dropoff/100);
       console.log("dropofff", d.dropoff);
       dropoff
-        .attr('transform', `translate(100, ${dropoffOffset})`)
+        .attr('transform', `translate(125, ${dropoffOffset})`)
         .attr('width', 10)
         .attr('height', ((d.dropoff) * (d.dy))/100)
         
