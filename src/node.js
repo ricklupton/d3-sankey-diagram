@@ -104,15 +104,23 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
-      selection.append('path')
-        .attr('class', 'dropoff')
-        .attr('fill', 'red')
-        .attr('d', arc)    
-      // selection.append('rect')
+      selection.append('rect')
+        .attr('class', 'dropff')
+        // .attr('x', -15)
+        // .attr('y', -15)
+        .attr('width', 100)
+        .style('fill', 'none')
+        .style('visibility', 'visible')
+        .style('pointer-events', 'all')
+      // selection.append('path')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
-      //   .attr('width', 20)  
-      //   .attr('height', 20)
+      //   .attr('d', arc)    
+      selection.append('rect')
+        .attr('class', 'dropoff')
+        .attr('fill', 'red')
+        // .attr('width', 20)  
+        // .attr('height', 20)
 
       selection
         .attr('transform', nodeTransform)
@@ -165,6 +173,8 @@ export default function () {
       const dropoffOffset = d.y1 - d.y0;
       dropoff
         .attr('transform', `translate(100, ${dropoffOffset})`)
+        .attr('width', 100)
+        .attr('height', d.dropoff)
 
 
       // Update  translate(' + d.x0 + ',' + d.y0 + ')'
