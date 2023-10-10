@@ -84,10 +84,11 @@ export default function () {
         .attr('fill', 'blue')
       selection.append('rect')
         .attr('class', 'node-body')
-        .attr('width', 250)
-        .attr('height', 350)
-        .attr('fill', 'green')
-        .attr('stroke-width', 100)
+        // .attr('width', 250)
+        // .attr('height', 350)
+        .attr('fill', 'white')
+        .attr('stroke', 'black') // Border color
+        .attr('stroke-width', '2');
       selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
@@ -111,8 +112,6 @@ export default function () {
       selection.append('rect')
         .attr('class', 'dropoff')
         .attr('fill', 'rgb(223,125,110)')
-        .attr('rx', '50%')
-        .attr('ry', '50%');
         // .attr('width', 20)  
         // .attr('height', 20)
 
@@ -169,6 +168,7 @@ export default function () {
         .attr('transform', `translate(100, ${dropoffOffset})`)
         .attr('width', 10)
         .attr('height', ((d.dropoff) * (d.dy))/100)
+        
 
 
       // Update  translate(' + d.x0 + ',' + d.y0 + ')'
