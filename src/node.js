@@ -101,7 +101,7 @@ export default function () {
         .attr('class', 'node-click-target')
         .attr('x', -15)
         .attr('y', -15)
-        .attr('width', 100)
+        .attr('width', 300)
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
