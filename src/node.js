@@ -104,14 +104,6 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
-      selection.append('rect')
-        .attr('class', 'dropff')
-        // .attr('x', -15)
-        // .attr('y', -15)
-        .attr('width', 100)
-        .style('fill', 'none')
-        .style('visibility', 'visible')
-        .style('pointer-events', 'all')
       // selection.append('path')
       //   .attr('class', 'dropoff')
       //   .attr('fill', 'red')
@@ -135,7 +127,7 @@ export default function () {
       let clickTarget = select(this).select('.node-click-target')
       // select the dropoff and apply styles
       const dropoff = select(this).select('.dropoff')
-      d.x1 = d.x0 + 100;
+      d.x1 = d.x0 + 200;
 
       // Local var for title position of each node
       const layoutData = titlePosition(d)
@@ -191,7 +183,7 @@ export default function () {
         })
 
       clickTarget
-        .attr('height', function (d) { return layoutData.dy + 100 })
+        .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
         // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
