@@ -143,7 +143,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text(titleText)
+        .html("FIRST LINE <br> SECOND LINE")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
