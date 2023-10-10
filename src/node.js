@@ -107,10 +107,7 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
-      // selection.append('path')
-      //   .attr('class', 'dropoff')
-      //   .attr('fill', 'red')
-      //   .attr('d', arc)    
+    
       selection.append('rect')
         .attr('class', 'dropoff')
         .attr('fill', 'rgb(227,69,64)')
@@ -146,7 +143,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text(titleText)
+        .text(d.value > 0 ? titleText:  "")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
