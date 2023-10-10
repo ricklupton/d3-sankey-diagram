@@ -160,7 +160,7 @@ export default function () {
       // .style('font-weight', 'bold'); 
 
       value2
-        .text(`➡ ${d.population.toFixed(2)}%`)
+        .text(`➡ ${d.population && d.population.toFixed(2)}%`)
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '6px')
