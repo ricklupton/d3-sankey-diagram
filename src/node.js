@@ -51,7 +51,7 @@ export default function () {
 
   function sankeyNode(context) { 
 
-    console.log("sankeyNode-1", context)
+    // console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
 
 
@@ -203,7 +203,7 @@ export default function () {
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
           const dy = d.y1 - d.y0
-          console.log("dx", dx, "dy", dy);
+          // console.log("dx", dx, "dy", dy);
           // const theta = dx > dy ? 0 : -90
           return 'translate(' + (dx / 2) + ',' + (dy / 2) + ')'
           // rotate(' + theta + ')'
@@ -224,7 +224,7 @@ export default function () {
   }
 
   sankeyNode.nodeVisible = function (x) {
-    console.log("nodeVisible-2", x)
+    // console.log("nodeVisible-2", x)
     if (arguments.length) {
       nodeVisible = required(x)
       return sankeyNode
@@ -233,7 +233,7 @@ export default function () {
   }
 
   sankeyNode.nodeTitle = function (x) {
-    console.log("nodeTitle-3", x)
+    // console.log("nodeTitle-3", x)
     if (arguments.length) {
       nodeTitle = required(x)
       return sankeyNode
@@ -242,7 +242,7 @@ export default function () {
   }
 
   sankeyNode.nodeValue = function (x) {
-    console.log("nodeValue-4", x)
+    // console.log("nodeValue-4", x)
     if (arguments.length) {
       nodeValue = required(x)
       return sankeyNode
@@ -254,12 +254,12 @@ export default function () {
 }
 
 function nodeTransform(d) {
-  console.log("nodeTransform-5", d)
+  // console.log("nodeTransform-5", d)
   return 'translate(' + d.x0 + ',' + d.y0 + ')'
 }
 
 function titlePosition(d) {
-  console.log("titlePosition-6", d)
+  // console.log("titlePosition-6", d)
   let titleAbove = false
   let right = false
 
@@ -282,7 +282,7 @@ function titlePosition(d) {
 }
 
 function wrap(d, width) {
-  console.log("wrap-7", d)
+  // console.log("wrap-7", d)
 
   var text = select(this)
   var lines = text.text().split(/\n/)
@@ -298,7 +298,7 @@ function wrap(d, width) {
 }
 
 function required(f) {
-  console.log("required-8", f)
+  // console.log("required-8", f)
 
   if (typeof f !== 'function') throw new Error()
   return f
