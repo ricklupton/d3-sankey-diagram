@@ -186,6 +186,7 @@ export default function () {
         .attr('transform', `translate(125, ${dropoffOffset})`)
         .attr('width', 10)
         .attr('height', ((d.dropoff) * (d.dy))/100)
+        .attr('fill', d.dropoff_color)
         
 
 

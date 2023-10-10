@@ -16,6 +16,7 @@ export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, li
       x1: node.x1,
       y: node.y0,
       dropoff: node.dropoff,
+      dropoff_color: node.dropoff_color,
       population: node.population,
     })
   })
