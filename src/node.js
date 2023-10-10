@@ -46,8 +46,6 @@ function createTire(width) {
 export default function () {
   // console.log("from inside the function", d);
   let nodeTitle = (d) => d.title !== undefined ? d.title : d.id
-  const dropoff = (d) => d.dropoff;
-  console.log("DROPOFF -------", dropoff)
   let nodeValue = (d) => null
   let nodeVisible = (d) => !!nodeTitle(d)
 
@@ -135,7 +133,7 @@ export default function () {
       // Local var for title position of each node
       const layoutData = titlePosition(d)
       layoutData.dy = (d.y0 === d.y1) ? 0 : Math.max(1, d.y1 - d.y0)
-
+      
       const separateValue = (d.x1 - d.x0) > 2
       const titleText = nodeTitle(d) + ((!separateValue && nodeValue(d))
         ? ' (' + nodeValue(d) + ')' : '')
@@ -252,7 +250,7 @@ export default function () {
   }
 
   sankeyNode.dropoff = function (x) {
-    // console.log("nodeValue-4", x)
+    console.log("nodeValue-4", x)
     // if (arguments.length) {
     //   nodeValue = required(x)
     //   return sankeyNode
