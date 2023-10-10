@@ -152,19 +152,19 @@ export default function () {
         .style('font-size', '12px')
         .style('font-weight', 'bold'); 
 
-      value2
-      .text(titleText)
-      .style('display', separateValue ? 'inline' : 'none')
-      .style('fill', 'black') // sets the text inside box
-      .style('font-size', '12px')
-      .style('font-weight', 'bold'); 
-
       // value2
-      //   .text(`➡ ${d.population}%`)
-      //   .style('display', separateValue ? 'inline' : 'none')
-      //   .style('fill', 'black') // sets the text inside box
-      //   .style('font-size', '12px')
-      //   .style('font-weight', 'bold'); 
+      // .text(titleText)
+      // .style('display', separateValue ? 'inline' : 'none')
+      // .style('fill', 'black') // sets the text inside box
+      // .style('font-size', '12px')
+      // .style('font-weight', 'bold'); 
+
+      value2
+        .text(`➡ ${d.population}%`)
+        .style('display', separateValue ? 'inline' : 'none')
+        .style('fill', 'black') // sets the text inside box
+        .style('font-size', '12px')
+        .style('font-weight', 'bold'); 
 
 
       text
