@@ -110,7 +110,8 @@ export default function () {
       //   .attr('d', arc)    
       selection.append('rect')
         .attr('class', 'dropoff')
-        .attr('fill', 'red')
+        .attr('fill', 'rgb(223,125,110)')
+        .style('border-top-right-radius', '50%');
         // .attr('width', 20)  
         // .attr('height', 20)
 
