@@ -143,7 +143,7 @@ export default function () {
         .text(titleText)
 
       value
-        .text(title)
+        .text(titleText)
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'blue') // Set the font color to red
         .style('font-size', '12px'); 
