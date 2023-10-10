@@ -175,7 +175,7 @@ export default function () {
       dropoff
         .attr('transform', `translate(100, ${dropoffOffset})`)
         .attr('width', 100)
-        .attr('height', d.dropoff)
+        .attr('height', (d.dropoff) * (d.y1-d.y0))
 
 
       // Update  translate(' + d.x0 + ',' + d.y0 + ')'
