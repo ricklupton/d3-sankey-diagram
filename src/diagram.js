@@ -230,10 +230,11 @@ export default function sankeyDiagram () {
             .attr('class', 'group')
             // .on('click', selectGroup);
 
-    enter.append('rect')
+    // enter.append('rect')
     enter.append('text')
       .attr('x', -10)
       .attr('y', -25)
+      .style('font-weight', 'bold'); 
 
     group = group.merge(enter)
 
