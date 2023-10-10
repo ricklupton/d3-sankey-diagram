@@ -236,11 +236,12 @@ export default function sankeyDiagram () {
       .attr('y', -25)
       .style('font-weight', 'bold'); 
 
-    enter.append('tspan')
-      .text('hello')
-      .attr('x', -50)
-      .attr('y', -105)
-      .style('font-weight', 'bold'); 
+
+
+        // Add the second text element below the first one
+      enter.append('text')
+      .attr('x', -10)
+      .attr('y', -50); // Adjust the y-coordinate as needed for spacing
 
 
     group = group.merge(enter)
@@ -254,8 +255,13 @@ export default function sankeyDiagram () {
       .attr('width', d => d.rect.right - d.rect.left + 20)
       .attr('height', d => d.rect.bottom - d.rect.top + 30)
 
-    group.select('text')
-      .text(d => d.title)
+    // group.select('text')
+    //   .text(d => d.title)
+    group.select('text:nth-child(1)')
+    .text(d => d.title);
+
+    group.select('text:nth-child(2)')
+    .text(d => "hell");
   }
 
   function interpolateLink (b) {
