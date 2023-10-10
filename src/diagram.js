@@ -233,7 +233,7 @@ export default function sankeyDiagram () {
     // enter.append('rect')
     enter.append('text')
       .attr('x', -10)
-      .attr('y', -25)
+      .attr('y', -50)
       .style('font-weight', 'bold'); 
 
 
@@ -241,7 +241,7 @@ export default function sankeyDiagram () {
         // Add the second text element below the first one
       enter.append('text')
       .attr('x', -10)
-      .attr('y', -50); // Adjust the y-coordinate as needed for spacing
+      .attr('y', -25); // Adjust the y-coordinate as needed for spacing
 
 
     group = group.merge(enter)
@@ -258,10 +258,10 @@ export default function sankeyDiagram () {
     // group.select('text')
     //   .text(d => d.title)
     group.select('text:nth-child(1)')
-    .text(d => d.title);
+    .text(d => d.title.split('$$')[0]);
 
     group.select('text:nth-child(2)')
-    .text(d => "hell");
+    .text(d => d.title.split('$$')[1]);
   }
 
   function interpolateLink (b) {
