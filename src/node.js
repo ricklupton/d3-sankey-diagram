@@ -127,7 +127,6 @@ export default function () {
     }
 
     selection.each(function (d) {
-      console.log("ddddddddddddd", d);
       let title = select(this).select('title')
       let value = select(this).select('.node-value')
       let text = select(this).select('.node-title')
@@ -174,7 +173,7 @@ export default function () {
       console.log("dropofff", d.dropoff);
       dropoff
         .attr('transform', `translate(100, ${dropoffOffset})`)
-        .attr('width', 100)
+        .attr('width', 10)
         .attr('height', ((d.dropoff) * (d.dy))/100)
 
 
@@ -275,7 +274,7 @@ export default function () {
 
 function nodeTransform(d) {
   // console.log("nodeTransform-5", d)
-  return 'translate(' + d.x0 + ',' + d.y0 + ')'
+  return 'translate(' + d.x0  + ',' + d.y0 + ')'
 }
 
 function titlePosition(d) {
