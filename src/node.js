@@ -1,47 +1,5 @@
 import { select } from 'd3-selection'
-import * as d3 from 'd3';
 
-
-
-function createTire(width) {
-  // Define the SVG dimensions based on the width
-  const diameter = width * 2;
-  const radius = width;
-
-  // Create an SVG container
-  const svg = d3.create('svg')
-    .attr('width', diameter)
-    .attr('height', diameter);
-
-  // Calculate the inner radius based on the width
-  const innerRadius = width / 2;
-
-  // Create the outer arc for the tire
-  const outerArc = d3.arc()
-    .innerRadius(innerRadius)
-    .outerRadius(radius)
-    .startAngle(0)
-    .endAngle(Math.PI); // Create a semi-circle
-
-  // Create the inner arc to create the empty center
-  const innerArc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(innerRadius)
-    .startAngle(0)
-    .endAngle(Math.PI); // Create a semi-circle
-
-  // Append the path elements to the SVG to create the tire
-  svg.append('path')
-    .attr('d', outerArc)
-    .attr('fill', 'blue');
-
-  svg.append('path')
-    .attr('d', innerArc)
-    .attr('fill', 'white'); // Set the inner circle color
-
-  // Return the SVG element
-  return svg.node();
-}
 
 export default function () {
   // console.log("from inside the function", d);
@@ -52,7 +10,6 @@ export default function () {
 
   function sankeyNode(context) { 
 
-    // console.log("sankeyNode-1", context)
     const selection = context.selection ? context.selection() : context
         // Define the arc properties
     const centerX = 100; // X-coordinate of the center
@@ -63,17 +20,6 @@ export default function () {
 
     const innerRadius = 20;
     const outerRadius = 40;
-
-
-
-  // Create the quarter circle arc
-  const arc = d3.arc()
-    .innerRadius(innerRadius)
-    .outerRadius(outerRadius)
-    .startAngle(startAngle)
-    .endAngle(endAngle);
-
-
 
     if (selection.select('text').empty()) {
       selection.append('title')
@@ -299,7 +245,7 @@ export default function () {
 
 function nodeTransform(d) {
   // console.log("nodeTransform-5", d)
-  return 'translate(' + d.x0  + ',' + d.y0 + ')'
+  return 'translate(' + 0 + ',' + d.y0 + ')'
 }
 
 function titlePosition(d) {
