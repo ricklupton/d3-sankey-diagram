@@ -245,7 +245,7 @@ export default function () {
 
 function nodeTransform(d) {
   // console.log("nodeTransform-5", d)
-  return 'translate(' + 0 + ',' + d.y0 + ')'
+  return 'translate(' + d.x0 + ',' + d.y0 + ')'
 }
 
 function titlePosition(d) {

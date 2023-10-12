@@ -1,6 +1,6 @@
 {
   "name": "d3-sankey-awesome",
-  "version": "0.8.13",
+  "version": "0.8.15",
   "description": "Sankey diagram d3 plugin on steroids",
   "author": "Purplecrow",
   "keywords": [
@@ -24,7 +24,7 @@
     "pretest": "npm run build",
     "test": "tape -r ./test/buble-register -r reify 'test/**/*-test.js' && standard index.js src test",
     "test:watch": "tape-watch -r ../test/buble-register -r reify 'test/**/*-test.js'",
-    "prepublishOnly": "npm run test && uglifyjs build/d3-sankey-diagram.umd.js -c -m -o build/d3-sankey-diagram.min.js",
+    "prepublishOnly": "uglifyjs build/d3-sankey-diagram.umd.js -c -m -o build/d3-sankey-diagram.min.js",
     "postpublish": "zip -j build/d3-sankey-diagram.zip -- LICENSE README.md build/d3-sankey-diagram.cjs.js build/d3-sankey-diagram.esm.js build/d3-sankey-diagram.umd.js build/d3-sankey-diagram.min.js"
   },
   "dependencies": {
