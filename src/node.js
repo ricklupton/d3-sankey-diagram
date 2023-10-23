@@ -83,7 +83,7 @@ export default function () {
       
       const separateValue = (d.x1 - d.x0) > 2
       const titleText = nodeTitle(d) + ((!separateValue && nodeValue(d))
-        ? ' (' + nodeValue(d) + ')' : '')
+        ? ' (adadasdsasdad' + nodeValue(d) + ')' : '')
 
       // Update un-transitioned
       title
