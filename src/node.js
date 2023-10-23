@@ -56,7 +56,8 @@ export default function () {
     
       selection.append('rect')
         .attr('class', 'dropoff')
-        .attr('fill', 'rgb(227,69,64)')
+        .attr('fill', 'green')
+        // .attr('fill', 'rgb(227,69,64)')
         // .attr('width', 20)  
         // .attr('height', 20)
 
