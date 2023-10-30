@@ -296,12 +296,14 @@ export default function sankeyDiagram () {
 
   function selectLink (d) {
     event.stopPropagation()
+    console.log("link is selected");
     var el = select(this).node()
     listeners.call('selectLink', el, d)
   }
 
   function selectNode (d) {
     event.stopPropagation()
+    console.log("node is selected");
     var el = select(this).node()
     listeners.call('selectNode', el, d)
   }

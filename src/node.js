@@ -22,7 +22,33 @@ export default function () {
     const outerRadius = 40;
 
     if (selection.select('text').empty()) {
-      selection.append('title')
+      // selection.append('title')
+      // selection.append("rect")
+      // .attr("class", "tooltip")
+      // .attr("width", 200)
+      // .attr("height", 100)
+      // .attr('fill', 'red')
+      // .attr("rx", 10) // Horizontal corner radius
+      // .attr("ry", 10) 
+      // .style('display', "none")
+
+      // .style("display", "none")
+      // .style("background", "rgba(69,77,93,.9)")
+      // .style("border-radius", ".2rem")
+      // .style("color", "#fff")
+      // .style("padding", ".6rem")
+      // .style("position", "absolute")
+      // .style("text-overflow", "ellipsis")
+      // .style("white-space", "pre")
+      // .style("line-height", "1em")
+      // .style("z-index", "300")
+      
+
+      // selection.append("rect")
+      // .attr('width', 1000)
+      // .style('fill', 'red')
+
+
       selection.append('line')
         .attr('x1', 0)
         .attr('x2', 0)
@@ -33,6 +59,7 @@ export default function () {
         // .attr('width', 250)
         // .attr('height', 350)
         .attr('fill', 'rgb(169,206,127)')
+        // .attr('fill', nodeBackgroundColor)
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
       selection.append('text')
@@ -56,8 +83,7 @@ export default function () {
     
       selection.append('rect')
         .attr('class', 'dropoff')
-        .attr('fill', 'green')
-        // .attr('fill', 'rgb(227,69,64)')
+        .attr('fill', 'rgb(227,69,64)')
         // .attr('width', 20)  
         // .attr('height', 20)
 
@@ -67,6 +93,7 @@ export default function () {
 
     selection.each(function (d) {
       let title = select(this).select('title')
+      let tooltip = select(this).select('.tooltip')
       let value = select(this).select('.node-value')
       let value2 = select(this).select('.node-value2');
       let text = select(this).select('.node-title')
@@ -83,18 +110,36 @@ export default function () {
       
       const separateValue = (d.x1 - d.x0) > 2
       const titleText = nodeTitle(d) + ((!separateValue && nodeValue(d))
-        ? ' (adadasdsasdad' + nodeValue(d) + ')' : '')
+        ? ' (' + nodeValue(d) + ')' : '')
 
       // Update un-transitioned
-      title
-        .text(titleText)
+      // title
+      //   .attr('fill', 'yellow')
+      //   .attr('stroke', 'red')
+      //   .attr('width', '200px')
+      //   .text('wewe')
+
+
+
+      selection.on('mouseover', () => {
+        console.log('movus is over');
+        tooltip.style("display", "block")
+      });
+
+      selection.on('mouseout', () => {
+        console.log('mouse is out');
+        tooltip.style("display", "none")
+      });
+        
 
       value
         .text(d.value > 0 ? titleText:  "")
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '12px')
-        .style('font-weight', 'bold'); 
+        .style('font-weight', 'bold')
+        .style('font-family', 'Poppins')
+        .style('opacity', d.opacity);
 
       // value2
       // .text(titleText)
@@ -108,7 +153,9 @@ export default function () {
         .style('display', separateValue ? 'inline' : 'none')
         .style('fill', 'black') // sets the text inside box
         .style('font-size', '6px')
-        .style('font-weight', 'bold'); 
+        .style('font-weight', 'bold')
+        .style('opacity', d.opacity);
+
 
 
       text
@@ -121,6 +168,8 @@ export default function () {
         text = text.transition(context)
         line = line.transition(context)
         body = body.transition(context)
+        tooltip = tooltip.transition(context)
+
         clickTarget = clickTarget.transition(context)
       }
 
@@ -151,6 +200,9 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
+        .attr('fill', d.backgroundColor)
+        // .attr('stroke-opacity', 0.5)
+        // .attr('fill-opacity', 0.5)
         // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('height', function (d) { return layoutData.dy })    // layoutData.dy

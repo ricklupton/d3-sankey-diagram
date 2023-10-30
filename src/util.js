@@ -18,6 +18,9 @@ export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, li
       dropoff: node.dropoff,
       dropoff_color: node.dropoff_color,
       population: node.population,
+      backgroundColor: node.backgroundColor,
+      color: node.color,
+      opacity: node.opacity,
     })
   })
 
