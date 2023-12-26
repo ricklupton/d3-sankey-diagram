@@ -58,20 +58,24 @@ export default function () {
         .attr('class', 'node-body')
         // .attr('width', 250)
         // .attr('height', 350)
-        .attr('fill', 'rgb(169,206,127)')
+        .attr('stroke', 'rgb(169,206,127)')
+        .attr('stroke-linejoin', 'round')
+        .style('stroke-width', '5')
         // .attr('fill', nodeBackgroundColor)
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
       selection.append('text')
         .attr('class', 'node-value')
         .attr('dy', '.35em')
+        .attr('dx', '0')
         .attr('text-anchor', 'middle')
-      
+      /*
       selection.append('text')
         .attr('class', 'node-value2')
-        .attr('dy', '.35em')
+        .attr('dx', '-50')
+        .attr('dy', '1.50em')
         .attr('text-anchor', 'middle')
-     
+      
       selection.append('rect')
         .attr('class', 'node-click-target')
         .attr('x', -15)
@@ -80,13 +84,15 @@ export default function () {
         .style('fill', 'none')
         .style('visibility', 'visible')
         .style('pointer-events', 'all')
-    
-      selection.append('rect')
+ */  
+        selection.append('rect')
         .attr('class', 'dropoff')
         .attr('fill', 'rgb(227,69,64)')
+        .attr('stroke-linejoin', 'round')
+        .style('stroke-width', '7')
         // .attr('width', 20)  
         // .attr('height', 20)
-
+ 
       selection
         .attr('transform', nodeTransform)
     }
@@ -102,8 +108,9 @@ export default function () {
       let clickTarget = select(this).select('.node-click-target')
       // select the dropoff and apply styles
       const dropoff = select(this).select('.dropoff')
-      d.x1 = d.x0 + 125; // width of node
-
+      const dropoff2 = select(this).select('.dropoff2')
+      d.x1 = d.x0 + 5; // width of node
+      
       // Local var for title position of each node
       const layoutData = titlePosition(d)
       layoutData.dy = (d.y0 === d.y1) ? 0 : Math.max(1, d.y1 - d.y0)
@@ -139,7 +146,8 @@ export default function () {
         .style('font-size', '12px')
         .style('font-weight', 'bold')
         .style('font-family', 'Poppins')
-        .style('opacity', d.opacity);
+        .style('opacity', d.opacity)
+        .attr('dy', - 10);
 
       // value2
       // .text(titleText)
@@ -156,8 +164,6 @@ export default function () {
         .style('font-weight', 'bold')
         .style('opacity', d.opacity);
 
-
-
       text
         .attr('text-anchor', layoutData.right ? 'end' : 'start')
         .text(titleText)
@@ -173,15 +179,20 @@ export default function () {
         clickTarget = clickTarget.transition(context)
       }
 
-      // dropoff NOde
-      const dropoffOffset = (d.y1 - d.y0 ) * (1- d.dropoff/100);
+      const dropoffOffset = ((d.y1 - d.y0 ) * (1- d.dropoff/100));
+  
       dropoff
-        .attr('transform', `translate(125, ${dropoffOffset})`)
-        .attr('width', 10)
-        .attr('height', ((d.dropoff) * (d.dy))/100)
+        .attr('transform', `translate(11, ${dropoffOffset})`)
+        .attr('width', 5)
+        .style('stroke-width', '5')
+        .attr('height', (((d.dropoff) * (d.dy))/100))
         .attr('fill', d.dropoff_color)
-        
-
+        .attr('stroke', d.dropoff_color)
+      //  .attr('d', getCurve(10, dropoffOffset, 10, (d.y1 - d.y0 )))
+        .attr("y0", d.y0)
+        .attr("y1", d.y1)
+            
+ 
 
       // Update  translate(' + d.x0 + ',' + d.y0 + ')'
       context
@@ -200,7 +211,7 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
-        .attr('fill', d.backgroundColor)
+        .attr('stroke', d.backgroundColor)
         // .attr('stroke-opacity', 0.5)
         // .attr('fill-opacity', 0.5)
         // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
@@ -216,8 +227,9 @@ export default function () {
 
       //  use this to bring things in the center ( text inside the div -> font size transform etc)
       value
-        .style('font-size', function (d) { return Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
+        .style('font-size', function (d) { return Math.max(12,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 'px' })
         // .style('font-size', function (d) { return 14 + 'px' })
+        /*
         .attr('transform', function (d) {
           const dx = d.x1 - d.x0
           const dy = d.y1 - d.y0
@@ -226,10 +238,11 @@ export default function () {
           return 'translate(' + (dx / 2) + ',' + ((dy / 2) -  ((d.y1-d.y0) > 2 *Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10  ? Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) : 0)) + ')'
           // rotate(' + theta + ')'
         })
+        */
 
 
         value2
-        .style('font-size', function (d) { return Math.min(11,  Math.floor(Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) * 0.4) + 'px' })
+        .style('font-size', function (d) { return Math.max(12,  Math.floor(Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) * 0.4) + 'px' })
         .style('display', (d.y1-d.y0) > 2 * Math.min(11,   Math.min(d.x1 - d.x0 - 4, d.y1 - d.y0 - 4)) + 10 ? "display"  : 'none')
         // .style('font-size', function (d) { return 14 + 'px' })
         .attr('transform', function (d) {
@@ -284,7 +297,7 @@ export default function () {
   }
 
   sankeyNode.dropoff = function (x) {
-    console.log("nodeValue-4", x)
+   // console.log("nodeValue-4", x)
     // if (arguments.length) {
     //   nodeValue = required(x)
     //   return sankeyNode

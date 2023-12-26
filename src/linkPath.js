@@ -29,7 +29,7 @@ export default function sankeyLink() {
     var seg
     for (var i = 0; i < d.points.length - 1; ++i) {
       seg = {
-        x0: d.points[i].x,
+        x0: d.points[i].x - 116,
         y0: d.points[i].y,
         x1: d.points[i + 1].x,
         y1: d.points[i + 1].y,
@@ -149,25 +149,27 @@ export default function sankeyLink() {
     }
 
     var path;
+
+    
     var top = 0;
     var bottom = 0;
     var width =  (y1+h) - (y1-h);
-    if (y0 > y1 && h > 10) {
+    if (y0 > y1 && h > 15) {
       // Flow bottom to top
-      var calc = (40 * width) / 100;
+      var calc = (10 * width) / 100;
       top = calc;
       bottom = -(calc);
     }
-    else if (y1 > y0 && h > 10) {
+    else if (y1 > y0 && h > 15) {
       // Flow top to bottom
-      var calc = (40 * width) / 100;
+      var calc = (10 * width) / 100;
       
       top = ((y1-h) - (y3-hc) > 20)?-(calc):0;
       bottom = ((y2+hc) - (y0+h) > 20)?calc:0;
     }
     // if (fx * (x2 - x3) < 0 || Math.abs(y1 - y0) > 4*h) {
     // XXX this causes juddering during transitions
-
+/*
     path =  ("M"     + [x0,    y0-h ] + " " +
               arc(+1, r0) + [x2+hs+top, y2-hc] + " " +
             "L"     + [x3+hs+top, y3-hc] + " " +
@@ -176,7 +178,26 @@ export default function sankeyLink() {
               arc(+1, r1) + [x3-hs+bottom, y3+hc] + " " +
             "L"     + [x2-hs+bottom, y2+hc] + " " +
               arc(-1, r0) + [x0,    y0+h ] + " " +
-            "Z");
+            "Z" + h + " " + theta);
+
+    path =  ("M"     + [x0,    y0-h ] + " " +
+            arc(+1, r0) + [x2+hs+top, y2-hc] + " " +
+          "L"     + [x3+hs+top, y3-hc] + " " +
+            arc(-1, r1) + [x1,    y1-h ] + " " +
+          "L"     + [x1,    y1+h ] + " " +
+            arc(+1, r1) + [x3-hs+bottom, y3+hc] + " " +
+          "L"     + [x2-hs+bottom, y2+hc] + " " +
+            arc(-1, r0) + [x0,    y0+h ] + " " +
+          "Z" + h + " " + theta);
+    */
+   
+    path =  ("M"     + [x0,    y0-h ] + " " +
+            "C" + [((x0 + x1)/2)+top, (y0-h)+top] + " " + [((x0 + x1)/2)+top, (y1-h)+top] + " " +[x1, y1-h] + " " +
+          "L"     + [x1,    y1+h ] + " " +
+          "C" + [((x0 + x1)/2)+bottom, (y1+h)+bottom] + " " + [((x0 + x1)/2)+bottom, (y0+h)+bottom] + " " + [x0, (y0+h)] + " " +
+          "L" + [x0, (y0+h)] + " " +
+          "Z" + " " + top);
+    
 
     // path = ("M" + [x0, y0 - h] + " " +
     //       arc(+1, radius) + [centerX, y0] + " " +
