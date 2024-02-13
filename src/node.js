@@ -61,6 +61,13 @@ export default function () {
         .attr('stroke', 'rgb(169,206,127)')
         .attr('stroke-linejoin', 'round')
         .style('stroke-width', '5')
+      selection.append('title')
+        .attr('class', 'node-body-title')
+        // .attr('width', 250)
+        // .attr('height', 350)
+        .attr('stroke', 'rgb(169,206,127)')
+        .attr('stroke-linejoin', 'round')
+        .style('stroke-width', '5')
         // .attr('fill', nodeBackgroundColor)
         // .attr('stroke', 'black') // Border color
         // .attr('stroke-width', '1');
@@ -92,6 +99,13 @@ export default function () {
         .style('stroke-width', '7')
         // .attr('width', 20)  
         // .attr('height', 20)
+      selection.append('title')
+        .attr('class', 'node-dropoff-title')
+        // .attr('width', 250)
+        // .attr('height', 350)
+        .attr('stroke', 'rgb(227,69,64)')
+        .attr('stroke-linejoin', 'round')
+        .style('stroke-width', '7')
  
       selection
         .attr('transform', nodeTransform)
@@ -103,6 +117,8 @@ export default function () {
       let value = select(this).select('.node-value')
       let value2 = select(this).select('.node-value2');
       let text = select(this).select('.node-title')
+      let node_body_title = select(this).select('title.node-body-title')
+      let node_dropoff_title = select(this).select('title.node-dropoff-title')
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
       let clickTarget = select(this).select('.node-click-target')
@@ -138,7 +154,7 @@ export default function () {
         tooltip.style("display", "none")
       });
         
-
+      
       value
         .text(d.value > 0 ? titleText:  "")
         .style('display', separateValue ? 'inline' : 'none')
@@ -211,13 +227,19 @@ export default function () {
         .attr('height', function (d) { return layoutData.dy + 5 })
 
       body
-        .attr('stroke', d.backgroundColor)
-        // .attr('stroke-opacity', 0.5)
+      .attr('stroke', d.backgroundColor)
+      // .attr('stroke-opacity', 0.5)
         // .attr('fill-opacity', 0.5)
         // .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('width', function (d) { return d.x1 - d.x0 })   //d.x1 - d.x0
         .attr('height', function (d) { return layoutData.dy })    // layoutData.dy
 
+      node_body_title
+      .text(d.tooltipText)
+
+      node_dropoff_title
+      .text(d.tooltipTextDropoff)
+      
       text
         .attr('transform', textTransform)
         .style('display', function (d) {

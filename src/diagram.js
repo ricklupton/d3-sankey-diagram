@@ -13,15 +13,9 @@ import {map} from 'd3-collection'
 
 export function linkTitleGenerator (nodeTitle, typeTitle, fmt) {
   return function (d) {
-    const parts = []
-    const sourceTitle = nodeTitle(d.source)
-    const targetTitle = nodeTitle(d.target)
-    const matTitle = typeTitle(d)
-
-    parts.push(`${sourceTitle} → ${targetTitle}`)
-    if (matTitle) parts.push(matTitle)
-    parts.push(fmt(d.value))
-    return parts.join('\n')
+    //var html = nodeTitle(d.tooltipText)
+    var html = d.tooltipText;
+    return html
   }
 }
 
@@ -38,6 +32,8 @@ export default function sankeyDiagram () {
   const link = sankeyLink()
 
   let linkColor = d => null
+  let prevColor = d => null
+  let opacity = d => null
   let linkTitle = linkTitleGenerator(node.nodeTitle(), d => d.type, fmt)
   let linkLabel = defaultLinkLabel
 
@@ -141,7 +137,7 @@ export default function sankeyDiagram () {
 
     linkEnter.append('path')
       .attr('d', link)
-      .style('fill', 'white')
+      .style('fill', 'white')      
       .each(function (d) { this._current = d })
 
     linkEnter.append('title')
@@ -166,6 +162,10 @@ export default function sankeyDiagram () {
       linkSel
         .select('path')
         .style('fill', linkColor)
+        .style('opacity', opacity)
+        .attr('prevColor', prevColor)
+        .style('stroke-width', 44)
+        .attr('dy', 44)
         .each(function (d) {
           select(this)
             .transition(context)
@@ -175,7 +175,10 @@ export default function sankeyDiagram () {
       linkSel
         .select('path')
         .style('fill', linkColor)
+        .style('opacity', opacity)
+        .attr('prevColor', prevColor)
         .attr('d', link)
+//        .style('stroke-width', d => d.dy)
     }
 
     linkSel.select('title')
@@ -233,16 +236,23 @@ export default function sankeyDiagram () {
     // enter.append('rect')
     enter.append('text')
       .attr('x', -10)
-      .attr('y', -50)
-      .style('font-weight', 'bold'); 
+      .attr('y', -90)
+      .style('font-weight', 'bold')
+      .style('font-size', '12px');
 
-        // Add the second text element below the first one
+      // Add the second text element below the first one
       enter.append('text')
       .attr('x', -10)
-      .attr('y', -25)// Adjust the y-coordinate as needed for spacing
-      .style('font-size', '10px');
+      .attr('y', -65)// Adjust the y-coordinate as needed for spacing
+      .style('font-size', '12px');
 
+      // Add the second text element below the first one
+      enter.append('text')
+      .attr('x', -10)
+      .attr('y', -40)// Adjust the y-coordinate as needed for spacing
+      .style('font-size', '12px');
 
+    
     group = group.merge(enter)
 
     group
@@ -261,6 +271,10 @@ export default function sankeyDiagram () {
 
     group.select('text:nth-child(2)')
     .text(d => d.title.split('$$')[1]);
+
+    group.select('text:nth-child(3)')
+    .text(d => d.title.split('$$')[2]);
+
   }
 
   function interpolateLink (b) {
@@ -361,6 +375,18 @@ export default function sankeyDiagram () {
   exports.linkColor = function (_x) {
     if (!arguments.length) return linkColor
     linkColor = _x
+    return this
+  }
+
+  exports.opacity = function (_x) {
+    if (!arguments.length) return opacity
+    opacity = _x
+    return this
+  }
+
+  exports.prevColor = function (_x) {
+    if (!arguments.length) return prevColor
+    prevColor = _x
     return this
   }
 
