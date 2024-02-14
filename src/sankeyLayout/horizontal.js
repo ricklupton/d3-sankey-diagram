@@ -41,7 +41,7 @@ export default function positionHorizontally (G, width, nodeWidth) {
 
   G.nodes().forEach(u => {
     const node = G.node(u)
-    node.x0 = dx * (node.rank || 0)
+    node.x0 = dx * ((node.rank-1.7)|| 0) 
     node.x1 = node.x0 + nodeWidth
   })
 }

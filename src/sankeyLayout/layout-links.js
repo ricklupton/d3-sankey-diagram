@@ -35,7 +35,7 @@ function setEdgeEndpoints (G) {
 
       port.outgoing.forEach(e => {
         const link = G.edge(e)
-        // link.x0 = node.x1
+        link.x0 = node.x1 + 124
         link.y0 = sy + link.dy / 2
         link.d0 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
@@ -44,7 +44,7 @@ function setEdgeEndpoints (G) {
 
       port.incoming.forEach(e => {
         const link = G.edge(e)
-        // link.x1 = node.x0
+        // link.x1 = node.x0 - 100
         link.y1 = ty + link.dy / 2
         link.d1 = node.backwards ? 'l' : 'r'
         link.dy = link.dy
@@ -88,6 +88,15 @@ function setEdgeEndCurvatures (links, rr) {
   links.forEach(link => {
     // const link = (i < 0) ? link.segments[link.segments.length + i] : link.segments[i]
     link.Rmax = maximumRadiusOfCurvature(link)
+
+
+    const middleY = (link.y0 + link.y1) / 2;
+    // const distanceFromMiddle = Math.abs(middleY - link.y0); 
+    // const maxDistance = Math.abs(link.y1 - link.y0); // Total distance from source to target
+    let thicknessFactor = 1;
+
+    link.dy = link.dy * thicknessFactor;
+    
     link[rr] = Math.max(link.dy / 2, (link.d0 === link.d1 ? link.Rmax * 0.6 : (5 + link.dy / 2)))
   })
 

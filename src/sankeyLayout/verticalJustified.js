@@ -30,7 +30,8 @@ export default function positionNodesVertically () {
         let yy = y + margin
         if (band.length === 1) {
           // centre vertically
-          yy += (height - band[0].dy) / 2
+          yy = whitespace * bandHeight / 5;
+          // yy += (height - band[0].dy) / 2
         }
 
         let prevGap = isFirst ? Number.MAX_VALUE : 0  // edge of graph

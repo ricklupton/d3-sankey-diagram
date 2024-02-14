@@ -29,7 +29,7 @@ export default function sankeyLink() {
     var seg
     for (var i = 0; i < d.points.length - 1; ++i) {
       seg = {
-        x0: d.points[i].x,
+        x0: d.points[i].x - 116,
         y0: d.points[i].y,
         x1: d.points[i + 1].x,
         y1: d.points[i + 1].y,
@@ -61,6 +61,15 @@ export default function sankeyLink() {
     if (dir === 'lr') {
       return bfLink(d);
     }
+
+    // // Calculate the center of the link
+    var centerX = (x0 + x1) / 2;
+    
+    // // Calculate the radius at the center (half of the width)
+    var centerRadius = h / 2;
+    
+    // // Calculate the radius at the ends (full width)
+    var endRadius = h;
 
     // Minimum thickness 2px
     var h = Math.max(minWidth(d), d.dy) / 2,
@@ -109,6 +118,28 @@ export default function sankeyLink() {
       hc = h;
     }
 
+
+    // if (centerX < x0) {
+    //   // Link is in the first half of the path
+    //   x2 = x0;
+    //   x3 = centerX;
+    //   r0 = endRadius;
+    //   r1 = interpolate(centerRadius, endRadius)(centerX / x0);
+    // } else if (centerX > x1) {
+    //   // Link is in the second half of the path
+    //   x2 = centerX;
+    //   x3 = x1;
+    //   r0 = interpolate(centerRadius, endRadius)((centerX - x1) / (x0 - x1));
+    //   r1 = endRadius;
+    // } else {
+    //   // Link is in the center
+    //   x2 = centerX - centerRadius;
+    //   x3 = centerX + centerRadius;
+    //   r0 = centerRadius;
+    //   r1 = centerRadius;
+    // }
+    // var radius = centerRadius + (Math.abs(centerX - (x0 + x1) / 2) / ((x1 - x0) / 2)) * (endRadius - centerRadius);
+
     function arc(dir, r) {
       var f = ( dir * (y1-y0) > 0) ? 1 : 0,
           rr = (fx * dir * (y1-y0) > 0) ? (r + h) : (r - h);
@@ -118,18 +149,66 @@ export default function sankeyLink() {
     }
 
     var path;
+
+    
+    var top = 0;
+    var bottom = 0;
+    var width =  (y1+h) - (y1-h);
+    if (y0 > y1 && h > 15) {
+      // Flow bottom to top
+      var calc = (10 * width) / 100;
+      top = calc;
+      bottom = -(calc);
+    }
+    else if (y1 > y0 && h > 15) {
+      // Flow top to bottom
+      var calc = (10 * width) / 100;
+      
+      top = ((y1-h) - (y3-hc) > 20)?-(calc):0;
+      bottom = ((y2+hc) - (y0+h) > 20)?calc:0;
+    }
     // if (fx * (x2 - x3) < 0 || Math.abs(y1 - y0) > 4*h) {
     // XXX this causes juddering during transitions
-
+/*
     path =  ("M"     + [x0,    y0-h ] + " " +
-              arc(+1, r0) + [x2+hs, y2-hc] + " " +
-            "L"     + [x3+hs, y3-hc] + " " +
+              arc(+1, r0) + [x2+hs+top, y2-hc] + " " +
+            "L"     + [x3+hs+top, y3-hc] + " " +
               arc(-1, r1) + [x1,    y1-h ] + " " +
             "L"     + [x1,    y1+h ] + " " +
-              arc(+1, r1) + [x3-hs, y3+hc] + " " +
-            "L"     + [x2-hs, y2+hc] + " " +
+              arc(+1, r1) + [x3-hs+bottom, y3+hc] + " " +
+            "L"     + [x2-hs+bottom, y2+hc] + " " +
               arc(-1, r0) + [x0,    y0+h ] + " " +
-            "Z");
+            "Z" + h + " " + theta);
+
+    path =  ("M"     + [x0,    y0-h ] + " " +
+            arc(+1, r0) + [x2+hs+top, y2-hc] + " " +
+          "L"     + [x3+hs+top, y3-hc] + " " +
+            arc(-1, r1) + [x1,    y1-h ] + " " +
+          "L"     + [x1,    y1+h ] + " " +
+            arc(+1, r1) + [x3-hs+bottom, y3+hc] + " " +
+          "L"     + [x2-hs+bottom, y2+hc] + " " +
+            arc(-1, r0) + [x0,    y0+h ] + " " +
+          "Z" + h + " " + theta);
+    */
+   
+    path =  ("M"     + [x0,    y0-h ] + " " +
+            "C" + [((x0 + x1)/2)+top, (y0-h)+top] + " " + [((x0 + x1)/2)+top, (y1-h)+top] + " " +[x1, y1-h] + " " +
+          "L"     + [x1,    y1+h ] + " " +
+          "C" + [((x0 + x1)/2)+bottom, (y1+h)+bottom] + " " + [((x0 + x1)/2)+bottom, (y0+h)+bottom] + " " + [x0, (y0+h)] + " " +
+          "L" + [x0, (y0+h)] + " " +
+          "Z" + " " + top);
+    
+
+    // path = ("M" + [x0, y0 - h] + " " +
+    //       arc(+1, radius) + [centerX, y0] + " " +
+    //       "L" + [centerX, y1] + " " +
+    //       arc(+1, radius) + [x1, y1 - h] + " " +
+    //       "L" + [x1, y1 + h] + " " +
+    //       arc(-1, radius) + [centerX, y1] + " " +
+    //       "L" + [centerX, y0] + " " +
+    //       arc(-1, radius) + [x0, y0 - h] + " " +
+    //       "Z");
+
     
     if (/NaN/.test(path)) {
       console.error('path NaN', d, path);
@@ -338,3 +417,5 @@ function required (f) {
   if (typeof f !== 'function') throw new Error()
   return f
 }
+
+

@@ -1,13 +1,14 @@
 {
-  "name": "d3-sankey-diagram",
-  "version": "0.8.0",
-  "description": "Sankey diagram d3 plugin",
-  "author": "Rick Lupton",
+  "name": "d3-sankey-awesome",
+  "version": "0.8.18",
+  "description": "Sankey diagram d3 plugin on steroids",
+  "author": "Purplecrow",
   "keywords": [
     "d3",
     "d3-module",
     "sankey",
-    "diagram"
+    "diagram",
+    "d3-sankey-awesome"
   ],
   "license": "MIT",
   "main": "build/d3-sankey-diagram.cjs.js",
@@ -16,14 +17,14 @@
   "homepage": "https://github.com/ricklupton/d3-sankey-diagram",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ricklupton/d3-sankey-diagram.git"
+    "url": "https://github.com/akshatVurbalize/d3-sankey-diagram.git"
   },
   "scripts": {
     "build": "rm -rf build && mkdir build && rollup -c",
     "pretest": "npm run build",
     "test": "tape -r ./test/buble-register -r reify 'test/**/*-test.js' && standard index.js src test",
     "test:watch": "tape-watch -r ../test/buble-register -r reify 'test/**/*-test.js'",
-    "prepublishOnly": "npm run test && uglifyjs build/d3-sankey-diagram.umd.js -c -m -o build/d3-sankey-diagram.min.js",
+    "prepublishOnly": "uglifyjs build/d3-sankey-diagram.umd.js -c -m -o build/d3-sankey-diagram.min.js",
     "postpublish": "zip -j build/d3-sankey-diagram.zip -- LICENSE README.md build/d3-sankey-diagram.cjs.js build/d3-sankey-diagram.esm.js build/d3-sankey-diagram.umd.js build/d3-sankey-diagram.min.js"
   },
   "dependencies": {
