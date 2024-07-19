@@ -1,7 +1,6 @@
-import positionGroup from '../src/positionGroup.js';
+import positionGroup from '../src/positionGroup.js'
 
-import test from 'tape';
-
+import test from 'tape'
 
 test('positionGroup()', t => {
   const nodes = new Map([
@@ -27,19 +26,19 @@ test('positionGroup()', t => {
   ].map(d => [d.id, d]))
 
   const group1 = {
-    'title': 'Group',
-    'nodes': ['a1', 'a2']
-  };
+    title: 'Group',
+    nodes: ['a1', 'a2']
+  }
 
   const group2 = {
-    'title': 'B',
-    'nodes': ['b']
-  };
+    title: 'B',
+    nodes: ['b']
+  }
 
   const group3 = {
-    'title': 'All',
-    'nodes': ['a1', 'a2', 'b']
-  };
+    title: 'All',
+    nodes: ['a1', 'a2', 'b']
+  }
 
   t.deepEqual(positionGroup(nodes, group1), {
     title: 'Group',
@@ -50,7 +49,7 @@ test('positionGroup()', t => {
       bottom: 195 + 75,
       right: 1
     }
-  }, 'group1');
+  }, 'group1')
 
   t.deepEqual(positionGroup(nodes, group2), {
     title: 'B',
@@ -61,7 +60,7 @@ test('positionGroup()', t => {
       bottom: 75 + 150,
       right: 301
     }
-  }, 'group2');
+  }, 'group2')
 
   t.deepEqual(positionGroup(nodes, group3), {
     title: 'All',
@@ -72,7 +71,7 @@ test('positionGroup()', t => {
       bottom: 195 + 75,
       right: 301
     }
-  }, 'group3');
+  }, 'group3')
 
-  t.end();
-});
+  t.end()
+})

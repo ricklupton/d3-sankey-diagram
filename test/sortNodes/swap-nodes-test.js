@@ -3,7 +3,7 @@ import { exampleTwoLevel } from './examples.js'
 import tape from 'tape'
 
 tape('iterateSwappingNodes', test => {
-  let {G, order} = exampleTwoLevel()
+  const { G, order } = exampleTwoLevel()
 
   swapNodes(G, order)
 

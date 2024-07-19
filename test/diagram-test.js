@@ -18,10 +18,10 @@ test('diagram: renders something and updates', t => {
   el.datum(graph).call(diagram)
 
   t.equal(el.selectAll('.node').size(), graph.nodes.length,
-          'right number of nodes')
+    'right number of nodes')
 
   t.equal(el.selectAll('.link').size(), graph.links.length,
-          'right number of links')
+    'right number of links')
 
   // update
   const h0 = getNodeHeights(el)
@@ -55,10 +55,10 @@ test('diagram: types', t => {
   const el = render(graph, diagram)
 
   t.equal(el.selectAll('.node').size(), 4,
-          'right number of nodes')
+    'right number of nodes')
 
   t.equal(el.selectAll('.link').size(), 5,
-          'right number of links')
+    'right number of links')
 
   t.end()
 })
@@ -68,15 +68,15 @@ test('diagram: types 2', t => {
   sankey()(example)
 
   const color = scaleOrdinal(schemeCategory10)
-  const diagram = sankeyDiagram();
+  const diagram = sankeyDiagram()
 
   const el = render(example, diagram)
 
   t.equal(el.selectAll('.node').size(), 5,
-          'right number of nodes')
+    'right number of nodes')
 
   t.equal(el.selectAll('.link').size(), 9,
-          'right number of links')
+    'right number of links')
 
   t.end()
 })
@@ -89,18 +89,17 @@ test('diagram: node value labels are not shown by default', t => {
   const el = render(example, diagram)
 
   const labels = el.selectAll('.node').select('.node-title').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(labels, ['a', 'b', 'c', 'd'], 'right labels')
 
   const values = el.selectAll('.node').select('.node-value').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(values, ['', '', '', ''], 'right value labels')
 
   t.end()
 })
-
 
 test('diagram: node labels (narrow nodes)', t => {
   const example = exampleLinkTypes()
@@ -110,18 +109,17 @@ test('diagram: node labels (narrow nodes)', t => {
   const el = render(example, diagram)
 
   const labels = el.selectAll('.node').select('.node-title').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(labels, ['a (4)', 'b (4)', 'c (3)', 'd (1)'], 'right labels')
 
   const values = el.selectAll('.node').select('.node-value').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(values, ['4', '4', '3', '1'], 'right value labels')
 
   t.end()
 })
-
 
 test('diagram: node labels (wide nodes)', t => {
   // when nodes are wide, the labels are shown separately
@@ -133,12 +131,12 @@ test('diagram: node labels (wide nodes)', t => {
   const el = render(example, diagram)
 
   const labels = el.selectAll('.node').select('.node-title').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(labels, ['a', 'b', 'c', 'd'], 'right labels')
 
   const values = el.selectAll('.node').select('.node-value').nodes()
-        .map(node => node.textContent)
+    .map(node => node.textContent)
 
   t.deepEqual(values, ['4', '4', '3', '1'], 'right value labels')
 
@@ -217,55 +215,55 @@ function render (datum, diagram) {
 function exampleBlastFurnace () {
   // Simplified example of links through coke oven and blast furnace
   const nodes = [
-    {id: 'input'},
-    {id: 'oven'},
-    {id: 'coke'},
-    {id: 'sinter'},
-    {id: 'bf'},
-    {id: 'output'},
-    {id: 'export'}
+    { id: 'input' },
+    { id: 'oven' },
+    { id: 'coke' },
+    { id: 'sinter' },
+    { id: 'bf' },
+    { id: 'output' },
+    { id: 'export' }
   ]
 
   const links = [
     // main flow
-    {source: 'input', target: 'oven', value: 2.5},
-    {source: 'oven', target: 'coke', value: 2.5},
-    {source: 'coke', target: 'sinter', value: 1},
-    {source: 'coke', target: 'bf', value: 1.5},
-    {source: 'sinter', target: 'bf', value: 1},
-    {source: 'bf', target: 'output', value: 1},
-    {source: 'bf', target: 'export', value: 1},
+    { source: 'input', target: 'oven', value: 2.5 },
+    { source: 'oven', target: 'coke', value: 2.5 },
+    { source: 'coke', target: 'sinter', value: 1 },
+    { source: 'coke', target: 'bf', value: 1.5 },
+    { source: 'sinter', target: 'bf', value: 1 },
+    { source: 'bf', target: 'output', value: 1 },
+    { source: 'bf', target: 'export', value: 1 },
 
     // additional export links, and input-sinter
-    {source: 'sinter', target: 'export', value: 0.2},
-    {source: 'oven', target: 'export', value: 0.2},
-    {source: 'input', target: 'sinter', value: 0.2},
+    { source: 'sinter', target: 'export', value: 0.2 },
+    { source: 'oven', target: 'export', value: 0.2 },
+    { source: 'input', target: 'sinter', value: 0.2 },
 
     // return loops
-    {source: 'oven', target: 'input', value: 0.5},
-    {source: 'bf', target: 'input', value: 0.5}
+    { source: 'oven', target: 'input', value: 0.5 },
+    { source: 'bf', target: 'input', value: 0.5 }
   ]
 
-  return {nodes, links}
+  return { nodes, links }
 }
 
 function exampleLinkTypes () {
   const nodes = [
-    {id: 'a'},
-    {id: 'b'},
-    {id: 'c'},
-    {id: 'd'}
+    { id: 'a' },
+    { id: 'b' },
+    { id: 'c' },
+    { id: 'd' }
   ]
 
   const links = [
-    {source: 'a', target: 'b', value: 2, type: 'x'},
-    {source: 'a', target: 'b', value: 2, type: 'y'},
-    {source: 'b', target: 'c', value: 1, type: 'x'},
-    {source: 'b', target: 'c', value: 2, type: 'y'},
-    {source: 'b', target: 'd', value: 1, type: 'x'}
+    { source: 'a', target: 'b', value: 2, type: 'x' },
+    { source: 'a', target: 'b', value: 2, type: 'y' },
+    { source: 'b', target: 'c', value: 1, type: 'x' },
+    { source: 'b', target: 'c', value: 2, type: 'y' },
+    { source: 'b', target: 'd', value: 1, type: 'x' }
   ]
 
-  return {nodes, links}
+  return { nodes, links }
 }
 
 function exampleLinkTypes2 () {

@@ -3,7 +3,7 @@ import tape from 'tape'
 import { assertAlmostEqual } from './assert-almost-equal.js'
 
 tape('sankey: scale', test => {
-  const {graph, ordering} = example4to1()
+  const { graph, ordering } = example4to1()
   const pos = sankey().ordering(ordering)
 
   test.equal(pos.scale(), null, 'initially scale is null')
@@ -26,19 +26,19 @@ tape('sankey() sets node.rank and node.depth', test => {
   //
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'},
-      {id: '2'},
-      {id: '3'},
-      {id: '4', direction: 'l'}
+      { id: '0' },
+      { id: '1' },
+      { id: '2' },
+      { id: '3' },
+      { id: '4', direction: 'l' }
     ],
     links: [
-      {source: '0', target: '1', value: 5},
-      {source: '0', target: '3', value: 5},
-      {source: '1', target: '2', value: 5},
-      {source: '1', target: '3', value: 1},
-      {source: '0', target: '2', value: 1},
-      {source: '3', target: '4', value: 1}
+      { source: '0', target: '1', value: 5 },
+      { source: '0', target: '3', value: 5 },
+      { source: '1', target: '2', value: 5 },
+      { source: '1', target: '3', value: 1 },
+      { source: '0', target: '2', value: 1 },
+      { source: '3', target: '4', value: 1 }
     ]
   }
   sankey()(graph)
@@ -49,7 +49,7 @@ tape('sankey() sets node.rank and node.depth', test => {
 })
 
 tape('sankey() sets node.{x0, y0, x1, y1}', test => {
-  const {graph, ordering} = example4to1()
+  const { graph, ordering } = example4to1()
 
   // 50% whitespace: scale = 8 / 20 * 0.5 = 0.2
   // margin = 8 * 50% / 5 = 0.8
@@ -64,7 +64,7 @@ tape('sankey() sets node.{x0, y0, x1, y1}', test => {
     0.8 + 1 + 0.8,
     0.8 + 1 + 0.8 + 1 + 0.8,
     0.8 + 1 + 0.8 + 1 + 0.8 + 1 + 0.8,
-    2  // centred
+    2 // centred
   ], 1e-6, 'node y')
 
   assertAlmostEqual(test, nodeAttr(graph, d => d.x0), [0, 0, 0, 0, 2], 'node x')
@@ -73,7 +73,7 @@ tape('sankey() sets node.{x0, y0, x1, y1}', test => {
 })
 
 tape('sankey() sets node positions using nodePosition()', test => {
-  const {graph} = example4to1()
+  const { graph } = example4to1()
   sankey().scale(0.2).nodePosition(d => [parseFloat(d.id), parseFloat(d.id)])(graph)
 
   test.deepEqual(nodeAttr(graph, d => d.y1 - d.y0), [1, 1, 1, 1, 4], 'node heights')
@@ -84,7 +84,7 @@ tape('sankey() sets node positions using nodePosition()', test => {
 })
 
 tape('sankey() sets link.dy and link.points', test => {
-  const {graph, ordering} = example4to1()
+  const { graph, ordering } = example4to1()
   sankey().size([3, 8]).ordering(ordering)(graph)
 
   test.deepEqual(graph.links.map(l => l.dy), [1, 1, 1, 1], 'link thicknesses')
@@ -110,11 +110,11 @@ tape('sankey() sets link.dy and link.points', test => {
 tape('sankey() sets link directions', test => {
   const graph = {
     nodes: [
-      {id: 'a'},
-      {id: 'b', direction: 'l'}
+      { id: 'a' },
+      { id: 'b', direction: 'l' }
     ],
     links: [
-      {source: 'a', target: 'b', value: 1}
+      { source: 'a', target: 'b', value: 1 }
     ]
   }
   sankey().ordering([['a', 'b']]).size([10, 12])(graph)
@@ -131,21 +131,21 @@ tape('sankey() sets link.points on long links', test => {
   //
   const graph = {
     nodes: [
-      {id: 'a'},
-      {id: 'b'},
-      {id: 'c'},
-      {id: 'd'}
+      { id: 'a' },
+      { id: 'b' },
+      { id: 'c' },
+      { id: 'd' }
     ],
     links: [
-      {source: 'a', target: 'b', value: 1},
-      {source: 'b', target: 'c', value: 1},
-      {source: 'c', target: 'd', value: 1},
-      {source: 'a', target: 'd', value: 1}
+      { source: 'a', target: 'b', value: 1 },
+      { source: 'b', target: 'c', value: 1 },
+      { source: 'c', target: 'd', value: 1 },
+      { source: 'a', target: 'd', value: 1 }
     ]
   }
   sankey().size([10, 12])(graph)
 
-  test.deepEqual(graph.links.map(l => l.dy), [ 3, 3, 3, 3 ])
+  test.deepEqual(graph.links.map(l => l.dy), [3, 3, 3, 3])
   test.deepEqual(graph.links[0].points, [
     { x: 1, y: 7.5, ro: 1.5, d: 'r' },
     { x: 3, y: 9.3, ri: 1.5, d: 'r' }
@@ -163,11 +163,11 @@ tape('sankey() sets link.points on long links', test => {
 tape.skip('sankey.update() sets node.{x0, y0, x1, y1}, link.dy and link.points based on existing node positions', test => {
   const graph = {
     nodes: [
-      {id: 'a', x0: 1, x1: 2, y: 1},
-      {id: 'b', x0: 3, x1: 4, y: 1}
+      { id: 'a', x0: 1, x1: 2, y: 1 },
+      { id: 'b', x0: 3, x1: 4, y: 1 }
     ],
     links: [
-      {source: 'a', target: 'b', value: 1}
+      { source: 'a', target: 'b', value: 1 }
     ]
   }
   sankey().scale(1).update(graph)
@@ -183,11 +183,11 @@ tape.skip('sankey.update() sets node.{x0, y0, x1, y1}, link.dy and link.points b
 tape('sankey().size() sets width and height', test => {
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'}
+      { id: '0' },
+      { id: '1' }
     ],
     links: [
-      {source: '0', target: '1', value: 5}
+      { source: '0', target: '1', value: 5 }
     ]
   }
 
@@ -205,11 +205,11 @@ tape('sankey().size() sets width and height', test => {
 tape('sankey().extent() sets x0, y0, x1, y1', test => {
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'}
+      { id: '0' },
+      { id: '1' }
     ],
     links: [
-      {source: '0', target: '1', value: 5}
+      { source: '0', target: '1', value: 5 }
     ]
   }
 
@@ -222,15 +222,15 @@ tape('sankey().extent() sets x0, y0, x1, y1', test => {
 tape('sankey.rankSets() affects ranking of nodes', test => {
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'},
-      {id: '2'},
-      {id: '3'}
+      { id: '0' },
+      { id: '1' },
+      { id: '2' },
+      { id: '3' }
     ],
     links: [
-      {source: '0', target: '1', value: 5},
-      {source: '1', target: '2', value: 5},
-      {source: '0', target: '3', value: 5}
+      { source: '0', target: '1', value: 5 },
+      { source: '1', target: '2', value: 5 },
+      { source: '0', target: '3', value: 5 }
     ]
   }
 
@@ -246,10 +246,10 @@ tape('sankey.rankSets() affects ranking of nodes', test => {
 tape('sankey() horizontal positioning', test => {
   function nodeX (width) {
     const graph = {
-      nodes: [{id: '0'}, {id: '1'}, {id: '2'}],
+      nodes: [{ id: '0' }, { id: '1' }, { id: '2' }],
       links: [
-        {source: '0', target: '1', value: 3},
-        {source: '1', target: '2', value: 3}
+        { source: '0', target: '1', value: 3 },
+        { source: '1', target: '2', value: 3 }
       ]
     }
     sankey().ordering([['0'], ['1'], ['2']]).size([width, 1])(graph)
@@ -272,17 +272,17 @@ function nodeAttr (graph, f) {
 tape('sankey() nodes with zero value are ignored', test => {
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'},
-      {id: '2'},
-      {id: '3'},
-      {id: '4'}
+      { id: '0' },
+      { id: '1' },
+      { id: '2' },
+      { id: '3' },
+      { id: '4' }
     ],
     links: [
-      {source: '0', target: '4', value: 5},
-      {source: '1', target: '4', value: 5},
-      {source: '2', target: '4', value: 0},  // NB value = 0
-      {source: '3', target: '4', value: 5}
+      { source: '0', target: '4', value: 5 },
+      { source: '1', target: '4', value: 5 },
+      { source: '2', target: '4', value: 0 }, // NB value = 0
+      { source: '3', target: '4', value: 5 }
     ]
   }
 
@@ -306,22 +306,22 @@ tape('justifiedPositioning: bands', test => {
   //
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'},
-      {id: '2'},
-      {id: '3'},
-      {id: '4'}
+      { id: '0' },
+      { id: '1' },
+      { id: '2' },
+      { id: '3' },
+      { id: '4' }
     ],
     links: [
-      {source: '0', target: '2', value: 5},
-      {source: '1', target: '3', value: 10},
-      {source: '1', target: '4', value: 15}
+      { source: '0', target: '2', value: 5 },
+      { source: '1', target: '3', value: 10 },
+      { source: '1', target: '4', value: 15 }
     ]
   }
 
   const s = sankey()
-        .size([1, 8])
-        .ordering([ [['0'], []], [['2'], ['1']], [[], ['3', '4']] ])
+    .size([1, 8])
+    .ordering([[['0'], []], [['2'], ['1']], [[], ['3', '4']]])
 
   const nodes = nodeAttr(s(graph), d => d)
 
@@ -357,17 +357,17 @@ function example4to1 () {
   return {
     graph: {
       nodes: [
-        {id: '0'},
-        {id: '1'},
-        {id: '2'},
-        {id: '3'},
-        {id: '4'}
+        { id: '0' },
+        { id: '1' },
+        { id: '2' },
+        { id: '3' },
+        { id: '4' }
       ],
       links: [
-        {source: '0', target: '4', value: 5},
-        {source: '1', target: '4', value: 5},
-        {source: '2', target: '4', value: 5},
-        {source: '3', target: '4', value: 5}
+        { source: '0', target: '4', value: 5 },
+        { source: '1', target: '4', value: 5 },
+        { source: '2', target: '4', value: 5 },
+        { source: '3', target: '4', value: 5 }
       ]
     },
     ordering: [['0', '1', '2', '3'], ['4']]
@@ -376,17 +376,17 @@ function example4to1 () {
 
 tape('sankey.ordering(order) sets rank, band and depth', test => {
   function resultForOrder (order) {
-    var graph = {
+    const graph = {
       nodes: [
-        {id: 'a'},
-        {id: 'b'},
-        {id: 'c'},
-        {id: 'd'}
+        { id: 'a' },
+        { id: 'b' },
+        { id: 'c' },
+        { id: 'd' }
       ],
       links: [
-        {source: 'a', target: 'b'},
-        {source: 'a', target: 'c'},
-        {source: 'c', target: 'd'}
+        { source: 'a', target: 'b' },
+        { source: 'a', target: 'c' },
+        { source: 'c', target: 'd' }
       ]
     }
     return rankBandAndDepth(sankey().ordering(order)(graph))
@@ -410,7 +410,7 @@ tape('sankey.ordering(order) sets rank, band and depth', test => {
 })
 
 tape('sankey.ordering() returns ordering', test => {
-  var order = [['a'], ['b', 'c'], ['d']]
+  const order = [['a'], ['b', 'c'], ['d']]
   test.equal(sankey().ordering(order).ordering(), order)
   test.end()
 })

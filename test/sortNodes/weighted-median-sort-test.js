@@ -3,7 +3,7 @@ import { exampleTwoLevel } from './examples.js'
 import tape from 'tape'
 
 tape('sortNodes: forwards', test => {
-  let {G, order} = exampleTwoLevel()
+  const { G, order } = exampleTwoLevel()
 
   sortNodes(G, order, +1)
   test.deepEqual(order, [
@@ -15,7 +15,7 @@ tape('sortNodes: forwards', test => {
 })
 
 tape('sortNodes: backwards', test => {
-  let {G, order} = exampleTwoLevel()
+  const { G, order } = exampleTwoLevel()
 
   sortNodes(G, order, -1)
   test.deepEqual(order, [

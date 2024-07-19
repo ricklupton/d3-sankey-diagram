@@ -5,20 +5,20 @@ import { Graph } from '@dagrejs/graphlib'
 
 tape('orderLinks() works between neighbouring layers', test => {
   const graph = new Graph({ directed: true, multigraph: true })
-  graph.setNode('0', {x0: 0, x1: 1, y: 0})
-  graph.setNode('1', {x0: 0, x1: 1, y: 1})
-  graph.setNode('2', {x0: 0, x1: 1, y: 2})
-  graph.setNode('3', {x0: 0, x1: 1, y: 3})
-  graph.setNode('4', {x0: 2, x1: 3, y: 1.5})
-  graph.setEdge('0', '4', {dy: 1})
-  graph.setEdge('1', '4', {dy: 1})
-  graph.setEdge('2', '4', {dy: 1})
-  graph.setEdge('3', '4', {dy: 1})
+  graph.setNode('0', { x0: 0, x1: 1, y: 0 })
+  graph.setNode('1', { x0: 0, x1: 1, y: 1 })
+  graph.setNode('2', { x0: 0, x1: 1, y: 2 })
+  graph.setNode('3', { x0: 0, x1: 1, y: 3 })
+  graph.setNode('4', { x0: 2, x1: 3, y: 1.5 })
+  graph.setEdge('0', '4', { dy: 1 })
+  graph.setEdge('1', '4', { dy: 1 })
+  graph.setEdge('2', '4', { dy: 1 })
+  graph.setEdge('3', '4', { dy: 1 })
   prepareNodePorts(graph)
   orderLinks(graph)
 
   test.deepEqual(incoming(graph.node('4')), ['0', '1', '2', '3'],
-                 'incoming')
+    'incoming')
 
   // change ordering: put node 3 at top, node 0 at bottom
   graph.node('0').y = 3
@@ -27,7 +27,7 @@ tape('orderLinks() works between neighbouring layers', test => {
   orderLinks(graph)
 
   test.deepEqual(incoming(graph.node('4')), ['3', '1', '2', '0'],
-                'node 4 incoming swapped')
+    'node 4 incoming swapped')
 
   test.end()
 })
@@ -41,23 +41,23 @@ tape('orderLinks() starting and ending in same slice', test => {
   //     |--5--|
   //
   const graph = new Graph({ directed: true, multigraph: true })
-  graph.setNode('0', {x0: 0, x1: 1, y: 4})
-  graph.setNode('1', {x0: 2, x1: 3, y: 0, direction: 'l'})
-  graph.setNode('2', {x0: 2, x1: 3, y: 2, direction: 'l'})
-  graph.setNode('3', {x0: 2, x1: 3, y: 4})
-  graph.setNode('4', {x0: 2, x1: 3, y: 10, direction: 'l'})
-  graph.setNode('5', {x0: 2, x1: 3, y: 12, direction: 'l'})
-  graph.setNode('6', {x0: 4, x1: 5, y: 4})
-  graph.setEdge('0', '3', {dy: 1})
-  graph.setEdge('1', '3', {dy: 1})
-  graph.setEdge('2', '3', {dy: 1})
-  graph.setEdge('4', '3', {dy: 1})
-  graph.setEdge('5', '3', {dy: 1})
-  graph.setEdge('3', '1', {dy: 1})
-  graph.setEdge('3', '2', {dy: 1})
-  graph.setEdge('3', '4', {dy: 1})
-  graph.setEdge('3', '5', {dy: 1})
-  graph.setEdge('3', '6', {dy: 1})
+  graph.setNode('0', { x0: 0, x1: 1, y: 4 })
+  graph.setNode('1', { x0: 2, x1: 3, y: 0, direction: 'l' })
+  graph.setNode('2', { x0: 2, x1: 3, y: 2, direction: 'l' })
+  graph.setNode('3', { x0: 2, x1: 3, y: 4 })
+  graph.setNode('4', { x0: 2, x1: 3, y: 10, direction: 'l' })
+  graph.setNode('5', { x0: 2, x1: 3, y: 12, direction: 'l' })
+  graph.setNode('6', { x0: 4, x1: 5, y: 4 })
+  graph.setEdge('0', '3', { dy: 1 })
+  graph.setEdge('1', '3', { dy: 1 })
+  graph.setEdge('2', '3', { dy: 1 })
+  graph.setEdge('4', '3', { dy: 1 })
+  graph.setEdge('5', '3', { dy: 1 })
+  graph.setEdge('3', '1', { dy: 1 })
+  graph.setEdge('3', '2', { dy: 1 })
+  graph.setEdge('3', '4', { dy: 1 })
+  graph.setEdge('3', '5', { dy: 1 })
+  graph.setEdge('3', '6', { dy: 1 })
   prepareNodePorts(graph)
   orderLinks(graph)
 
@@ -96,12 +96,12 @@ tape('orderLinks() sorts links with numeric types', test => {
 
 tape('orderLinks() puts self-loops at the bottom', test => {
   const graph = new Graph({ directed: true, multigraph: true })
-  graph.setNode('0', {x0: 0, x1: 1, y: 0})
-  graph.setNode('1', {x0: 2, x1: 3, y: 0})
-  graph.setNode('2', {x0: 4, x1: 5, y: 0})
-  graph.setEdge('0', '1', {dy: 1})
-  graph.setEdge('1', '1', {dy: 1})
-  graph.setEdge('1', '2', {dy: 1})
+  graph.setNode('0', { x0: 0, x1: 1, y: 0 })
+  graph.setNode('1', { x0: 2, x1: 3, y: 0 })
+  graph.setNode('2', { x0: 4, x1: 5, y: 0 })
+  graph.setEdge('0', '1', { dy: 1 })
+  graph.setEdge('1', '1', { dy: 1 })
+  graph.setEdge('1', '2', { dy: 1 })
   prepareNodePorts(graph)
   orderLinks(graph)
 
@@ -116,12 +116,12 @@ function exampleTypes (types) {
   //  1 --|2
   //
   const graph = new Graph({ directed: true, multigraph: true })
-  graph.setNode('0', {x0: 0, x1: 1, y: 0})
-  graph.setNode('1', {x0: 0, x1: 1, y: 3})
-  graph.setNode('2', {x0: 2, x1: 3, y: 0})
+  graph.setNode('0', { x0: 0, x1: 1, y: 0 })
+  graph.setNode('1', { x0: 0, x1: 1, y: 3 })
+  graph.setNode('2', { x0: 2, x1: 3, y: 0 })
   types.forEach(m => {
-    graph.setEdge('0', '2', {dy: 1}, m)
-    graph.setEdge('1', '2', {dy: 1}, m)
+    graph.setEdge('0', '2', { dy: 1 }, m)
+    graph.setEdge('1', '2', { dy: 1 }, m)
   })
   return graph
 }
