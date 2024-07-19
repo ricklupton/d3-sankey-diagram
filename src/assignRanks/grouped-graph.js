@@ -9,7 +9,7 @@ import { map } from 'd3-collection'
  */
 export default function groupedGraph (G, rankSets = []) {
   // Not multigraph because this is only used for calculating ranks
-  const GG = new Graph({directed: true})
+  const GG = new Graph({ directed: true })
   if (G.nodes().length === 0) return GG
 
   // Make sure there is a minimum-rank set
@@ -17,10 +17,10 @@ export default function groupedGraph (G, rankSets = []) {
 
   // Construct map of node ids to the set they are in, if any
   const nodeSets = map()
-  var set
-  var id
-  var i
-  var j
+  let set
+  let id
+  let i
+  let j
   for (i = 0; i < rankSets.length; ++i) {
     set = rankSets[i]
     if (!set.nodes || set.nodes.length === 0) continue
@@ -32,9 +32,7 @@ export default function groupedGraph (G, rankSets = []) {
   }
 
   // use i to keep counting new ids
-  var nodes = G.nodes()
   G.nodes().forEach(u => {
-    const d = G.node(u)
     if (!nodeSets.has(u)) {
       id = '' + (i++)
       set = { type: 'same', nodes: [u] }
@@ -45,7 +43,6 @@ export default function groupedGraph (G, rankSets = []) {
 
   // Add edges between nodes/groups
   G.edges().forEach(e => {
-    const d = G.edge(e)
     const sourceSet = nodeSets.get(e.v)
     const targetSet = nodeSets.get(e.w)
 
@@ -79,14 +76,14 @@ export default function groupedGraph (G, rankSets = []) {
 // }
 
 function ensureSmin (G, rankSets) {
-  for (var i = 0; i < rankSets.length; ++i) {
+  for (let i = 0; i < rankSets.length; ++i) {
     if (rankSets[i].type === 'min') {
-      return rankSets  // ok
+      return rankSets // ok
     }
   }
 
   // find the first sourceSet node, or else use the first node
-  var sources = G.sources()
-  var n0 = sources.length ? sources[0] : G.nodes()[0]
-  return [{ type: 'min', nodes: [ n0 ] }].concat(rankSets)
+  const sources = G.sources()
+  const n0 = sources.length ? sources[0] : G.nodes()[0]
+  return [{ type: 'min', nodes: [n0] }].concat(rankSets)
 }

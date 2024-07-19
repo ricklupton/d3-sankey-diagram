@@ -2,25 +2,24 @@ import tape from 'tape'
 import sankey from '../src/sankey.js'
 
 tape('sankey() has the expected defaults', test => {
-  var s = sankey()
-  test.equal(s.nodeId()({id: 'foo'}), 'foo')
+  const s = sankey()
+  test.equal(s.nodeId()({ id: 'foo' }), 'foo')
   // test.equal(s.nodeBackwards()({direction: 'l'}), true)
-  test.deepEqual(s.sourceId()({source: 'bar', sourcePort: 'a'}), {id: 'bar', port: 'a'})
-  test.deepEqual(s.targetId()({target: 'baz', targetPort: 'b'}), {id: 'baz', port: 'b'})
-  test.equal(s.linkType()({type: 'x'}), 'x')
+  test.deepEqual(s.sourceId()({ source: 'bar', sourcePort: 'a' }), { id: 'bar', port: 'a' })
+  test.deepEqual(s.targetId()({ target: 'baz', targetPort: 'b' }), { id: 'baz', port: 'b' })
+  test.equal(s.linkType()({ type: 'x' }), 'x')
   test.end()
 })
 
 tape('sankey(graph) builds the graph structure', test => {
-  var s = sankey()
-  var l
-  var graph = s({
+  const s = sankey()
+  const graph = s({
     nodes: [
-      {id: 'a'},
-      {id: 'b'}
+      { id: 'a' },
+      { id: 'b' }
     ],
     links: [
-      (l = {source: 'a', target: 'b', type: 'c'})
+      { source: 'a', target: 'b', type: 'c' }
     ]
   })
 
@@ -104,20 +103,20 @@ tape('sankey(graph) builds the graph structure', test => {
 
 tape('sankey(graph) sets node and link values and link type', test => {
   // Custom accessors so we can check .value and .type are really being set
-  var s = sankey()
-      .linkValue(function (d) { return d.val })
-      .linkType(function (d) { return d.typ })
+  const s = sankey()
+    .linkValue(function (d) { return d.val })
+    .linkType(function (d) { return d.typ })
 
-  var graph = s({
+  const graph = s({
     nodes: [
-      {id: 'a'},
-      {id: 'b'},
-      {id: 'c'}
+      { id: 'a' },
+      { id: 'b' },
+      { id: 'c' }
     ],
     links: [
-      {source: 'a', target: 'b', typ: 'x', val: 7},
-      {source: 'a', target: 'b', typ: 'y', val: 2},
-      {source: 'b', target: 'c', typ: 'x', val: 3}
+      { source: 'a', target: 'b', typ: 'x', val: 7 },
+      { source: 'a', target: 'b', typ: 'y', val: 2 },
+      { source: 'b', target: 'c', typ: 'x', val: 3 }
     ]
   })
 
@@ -134,19 +133,19 @@ tape('sankey(graph) sets node and link values and link type', test => {
 })
 
 tape('sankey(nodes, edges) observes the specified id accessor functions', test => {
-  var s = sankey()
-      .nodeId(function (d) { return d.foo })
-      .sourceId(function (d) { return d.bar })
-      .targetId(function (d) { return d.baz })
-      .linkType(function (d) { return d.fred })
+  const s = sankey()
+    .nodeId(function (d) { return d.foo })
+    .sourceId(function (d) { return d.bar })
+    .targetId(function (d) { return d.baz })
+    .linkType(function (d) { return d.fred })
 
-  var graph = s({
+  const graph = s({
     nodes: [
-      {foo: 'a'},
-      {foo: 'b'}
+      { foo: 'a' },
+      { foo: 'b' }
     ],
     links: [
-      {bar: 'a', baz: 'b', fred: 'c'}
+      { bar: 'a', baz: 'b', fred: 'c' }
     ]
   })
 
@@ -159,60 +158,60 @@ tape('sankey(nodes, edges) observes the specified id accessor functions', test =
 })
 
 tape('nodeId() is given the node and its index', test => {
-  var s = sankey().nodeId(function (d, i) { return i })
-  var graph = s({nodes: [{id: 'a'}, {id: 'b'}], links: [{source: 0, target: 1}]})
+  const s = sankey().nodeId(function (d, i) { return i })
+  const graph = s({ nodes: [{ id: 'a' }, { id: 'b' }], links: [{ source: 0, target: 1 }] })
   test.equal(graph.links[0].source.id, 'a')
   test.equal(graph.links[0].target.id, 'b')
   test.end()
 })
 
 tape('sankey.nodeId(id) tests that nodeId is a function', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () { s.nodeId(42) })
   test.throws(function () { s.nodeId(null) })
   test.end()
 })
 
 tape('sankey.nodeBackwards(id) tests that nodeBackwards is a function', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () { s.nodeBackwards(42) })
   test.throws(function () { s.nodeBackwards(null) })
   test.end()
 })
 
 tape('sankey.sourceId(id) tests that id is a function', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () { s.sourceId(42) })
   test.throws(function () { s.sourceId(null) })
   test.end()
 })
 
 tape('sankey.targetId(id) tests that id is a function', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () { s.targetId(42) })
   test.throws(function () { s.targetId(null) })
   test.end()
 })
 
 tape('sankey.linkType(id) tests that id is a function', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () { s.linkType(42) })
   test.throws(function () { s.linkType(null) })
   test.end()
 })
 
 tape('sankey(graph) throws an error if a node is missing', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () {
-    s({nodes: [], links: [{source: 'a', target: 'b'}]})
+    s({ nodes: [], links: [{ source: 'a', target: 'b' }] })
   }, /\bmissing\b/)
   test.end()
 })
 
 tape('sankey(graph) throws an error if multiple nodes have the same id', test => {
-  var s = sankey()
+  const s = sankey()
   test.throws(function () {
-    s({nodes: [{id: 'a'}, {id: 'a'}], links: []})
+    s({ nodes: [{ id: 'a' }, { id: 'a' }], links: [] })
   }, /\bduplicate\b/)
   test.end()
 })

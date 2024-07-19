@@ -12,8 +12,8 @@ tape('linkLayout: link attributes', test => {
   // ids
   // test.deepEqual(graph.edges.map(e => id), ['0-2-m1', '1-2-m2'], 'id')
   test.deepEqual(graph.edges(), [
-    {v: '0', w: '2', name: 'm1'},
-    {v: '1', w: '2', name: 'm2'}
+    { v: '0', w: '2', name: 'm1' },
+    { v: '1', w: '2', name: 'm2' }
   ], 'ids')
 
   const edges = graph.edges().map(e => graph.edge(e))
@@ -39,15 +39,15 @@ tape('linkLayout: loose edges', test => {
   layoutLinks(graph)
 
   test.deepEqual(graph.edges(), [
-    {v: '0', w: '2', name: 'm1'},
-    {v: '1', w: '2', name: 'm2'}
+    { v: '0', w: '2', name: 'm1' },
+    { v: '1', w: '2', name: 'm2' }
   ], 'ids')
   const edges = graph.edges().map(e => graph.edge(e))
 
   // should not overlap
   test.ok((edges[0].r1 + edges[0].dy / 2) <=
           (edges[1].r1 - edges[1].dy / 2),
-          'links should not overlap')
+  'links should not overlap')
 
   test.end()
 })
@@ -60,22 +60,22 @@ tape('linkLayout: tight curvature', test => {
   layoutLinks(graph)
 
   test.deepEqual(graph.edges(), [
-    {v: '0', w: '2', name: 'm1'},
-    {v: '1', w: '2', name: 'm2'}
+    { v: '0', w: '2', name: 'm1' },
+    { v: '1', w: '2', name: 'm2' }
   ], 'ids')
   const edges = graph.edges().map(e => graph.edge(e))
 
   // curvature should no longer be symmetric
   assertNotAlmostEqual(test,
-                       edges.map(f => f.r0),
-                       edges.map(f => f.r1), 1e-6,
-                       'radius should not be equal at both ends')
+    edges.map(f => f.r0),
+    edges.map(f => f.r1), 1e-6,
+    'radius should not be equal at both ends')
 
   // should not overlap
   assertAlmostEqual(test,
-                    (edges[0].r1 + edges[0].dy / 2),
-                    (edges[1].r1 - edges[1].dy / 2), 1e-6,
-                    'link curvatures should just touch')
+    (edges[0].r1 + edges[0].dy / 2),
+    (edges[1].r1 - edges[1].dy / 2), 1e-6,
+    'link curvatures should just touch')
 
   test.end()
 })
@@ -88,19 +88,19 @@ tape('linkLayout: maximum curvature limit', test => {
   layoutLinks(graph)
 
   test.deepEqual(graph.edges(), [
-    {v: '0', w: '2', name: 'm1'},
-    {v: '1', w: '2', name: 'm2'}
+    { v: '0', w: '2', name: 'm1' },
+    { v: '1', w: '2', name: 'm2' }
   ], 'ids')
   const edges = graph.edges().map(e => graph.edge(e))
 
   // curvature should no longer be symmetric
   assertNotAlmostEqual(test,
-                       edges.map(f => f.r0),
-                       edges.map(f => f.r1), 1e-6,
-                       'radius should not be equal at both ends')
+    edges.map(f => f.r0),
+    edges.map(f => f.r1), 1e-6,
+    'radius should not be equal at both ends')
 
   assertAlmostEqual(test, (edges[0].r1 - edges[0].dy / 2), 0, 1e-6,
-                    'inner link curvature should be zero')
+    'inner link curvature should be zero')
 
   test.end()
 })
@@ -116,19 +116,19 @@ function example2to1 (f) {
   // f == 1 means 1-2 is tight below 0-2
 
   const graph = new Graph({ directed: true, multigraph: true })
-  graph.setNode('0', {dy: 1, x0: 0, x1: 1, y: 0, subdivisions: [{incoming: [], outgoing: [{v: '0', w: '2', name: 'm1'}]}]})
-  graph.setNode('1', {dy: 1, x0: 0, x1: 1, y: 1 + (1 - f) * 2, subdivisions: [{incoming: [], outgoing: [{v: '1', w: '2', name: 'm2'}]}]})
+  graph.setNode('0', { dy: 1, x0: 0, x1: 1, y: 0, subdivisions: [{ incoming: [], outgoing: [{ v: '0', w: '2', name: 'm1' }] }] })
+  graph.setNode('1', { dy: 1, x0: 0, x1: 1, y: 1 + (1 - f) * 2, subdivisions: [{ incoming: [], outgoing: [{ v: '1', w: '2', name: 'm2' }] }] })
   graph.setNode('2', {
     dy: 2,
     x0: 3,
     x1: 4,
     y: 2,
     subdivisions: [{
-      incoming: [{v: '0', w: '2', name: 'm1'}, {v: '1', w: '2', name: 'm2'}],
+      incoming: [{ v: '0', w: '2', name: 'm1' }, { v: '1', w: '2', name: 'm2' }],
       outgoing: []
     }]
   })
-  graph.setEdge('0', '2', {dy: 1}, 'm1')
-  graph.setEdge('1', '2', {dy: 1}, 'm2')
+  graph.setEdge('0', '2', { dy: 1 }, 'm1')
+  graph.setEdge('1', '2', { dy: 1 }, 'm2')
   return graph
 }

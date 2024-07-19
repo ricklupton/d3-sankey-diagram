@@ -6,14 +6,14 @@ export default function swapNodes (G, order) {
     improved = false
     for (let i = 0; i < order.length; ++i) {
       for (let j = 0; j < order[i].length - 1; ++j) {
-        let count0 = allCrossings(G, order, i)
+        const count0 = allCrossings(G, order, i)
         transpose(order[i], j, j + 1)
-        let count1 = allCrossings(G, order, i)
+        const count1 = allCrossings(G, order, i)
 
         if (count1 < count0) {
           improved = true
         } else {
-          transpose(order[i], j, j + 1)  // put back
+          transpose(order[i], j, j + 1) // put back
         }
       }
     }

@@ -24,7 +24,7 @@ export default function makeAcyclic (G, v0) {
 // return new graph where nodes have depth and thread
 export function findSpanningTree (G, v0) {
   const visited = set()
-  const tree = new Graph({directed: true})
+  const tree = new Graph({ directed: true })
   const thread = []
 
   if (!G.hasNode(v0)) throw Error('node not in graph')
@@ -51,13 +51,13 @@ export function nodeRelationship (tree, v, w) {
   const V = tree.node(v)
   const W = tree.node(w)
   if (V.depth < W.depth) {
-    let u = V.thread  // next node
+    let u = V.thread // next node
     while (tree.node(u).depth > V.depth) {
       if (u === w) return 1
       u = tree.node(u).thread
     }
   } else if (W.depth < V.depth) {
-    let u = W.thread  // next node
+    let u = W.thread // next node
     while (tree.node(u).depth > W.depth) {
       if (u === v) return -1
       u = tree.node(u).thread
@@ -70,7 +70,7 @@ function doDfs (G, v, visited, tree, thread, depth = 0) {
   if (!visited.has(v)) {
     visited.add(v)
     thread.push(v)
-    tree.setNode(v, { depth: depth })
+    tree.setNode(v, { depth })
 
     // It doesn't seem to cause a problem with letters as node ids, but numbers
     // are sorted when using G.successors(). So use G.outEdges() instead.

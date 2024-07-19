@@ -3,9 +3,9 @@ import tape from 'tape'
 
 tape('sankeyLayout: findFirst() returns first link satisfying test', test => {
   const links = [
-    {y0: 0, y1: -10},
-    {y0: 1, y1: 0},
-    {y0: 2, y1: 10}
+    { y0: 0, y1: -10 },
+    { y0: 1, y1: 0 },
+    { y0: 2, y1: 10 }
   ]
   test.equal(findFirst(links, f => f.y1 > f.y0), 2)
   test.end()

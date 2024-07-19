@@ -1,13 +1,13 @@
 import { sum } from 'd3-array'
 
 export default function positionNodesVertically () {
-  var iterations = 25
-  var nodePadding = 8
+  let iterations = 25
+  let nodePadding = 8
 
   function layout (nested, height) {
     initializeNodeDepth()
     resolveCollisions()
-    for (var alpha = 1, i = iterations; i > 0; --i) {
+    for (let alpha = 1, i = iterations; i > 0; --i) {
       relaxRightToLeft(alpha *= 0.99)
       resolveCollisions()
       relaxLeftToRight(alpha)
@@ -30,9 +30,9 @@ export default function positionNodesVertically () {
       nested.forEach(layer => {
         layer.forEach(band => {
           band.forEach(node => {
-            var edges = node.incoming || node.edges
+            const edges = node.incoming || node.edges
             if (edges.length) {
-              var y = sum(edges, weightedSource) / sum(edges, value)
+              const y = sum(edges, weightedSource) / sum(edges, value)
               node.y += (y - center(node)) * alpha
             }
           })
@@ -48,9 +48,9 @@ export default function positionNodesVertically () {
       nested.slice().reverse().forEach(layer => {
         layer.forEach(band => {
           band.forEach(node => {
-            var edges = node.outgoing || node.edges
+            const edges = node.outgoing || node.edges
             if (edges.length) {
-              var y = sum(edges, weightedTarget) / sum(edges, value)
+              const y = sum(edges, weightedTarget) / sum(edges, value)
               node.y += (y - center(node)) * alpha
             }
           })
@@ -65,11 +65,11 @@ export default function positionNodesVertically () {
     function resolveCollisions () {
       nested.forEach(layer => {
         layer.forEach(nodes => {
-          var node
-          var dy
-          var y0 = 0
-          var n = nodes.length
-          var i
+          let node
+          let dy
+          let y0 = 0
+          const n = nodes.length
+          let i
 
           // Push any overlapping nodes down.
           nodes.sort(ascendingDepth)

@@ -60,7 +60,7 @@ export function removeDummyNodes (G) {
           y: dummyEdge.y0,
           d: dummyEdge.d0,
           ro: dummyEdge.r0,
-          ri: r1s[i]  // from last edge
+          ri: r1s[i] // from last edge
         })
       })
       r1s = dummyEdges.map(dummyEdge => dummyEdge.r1)
@@ -88,24 +88,24 @@ export function dummyNodes (source, target) {
   if (r + 1 <= target.rank) {
     // add more to get forwards
     if (source.backwards) {
-      dummyNodes.push({rank: r, backwards: false})  // turn around
+      dummyNodes.push({ rank: r, backwards: false }) // turn around
     }
     while (++r < target.rank) {
-      dummyNodes.push({rank: r, backwards: false})
+      dummyNodes.push({ rank: r, backwards: false })
     }
     if (target.backwards) {
-      dummyNodes.push({rank: r, backwards: false})  // turn around
+      dummyNodes.push({ rank: r, backwards: false }) // turn around
     }
   } else if (r > target.rank) {
     // add more to get backwards
     if (!source.backwards) {
-      dummyNodes.push({rank: r, backwards: true})  // turn around
+      dummyNodes.push({ rank: r, backwards: true }) // turn around
     }
     while (r-- > target.rank + 1) {
-      dummyNodes.push({rank: r, backwards: true})
+      dummyNodes.push({ rank: r, backwards: true })
     }
     if (!target.backwards) {
-      dummyNodes.push({rank: r, backwards: true})  // turn around
+      dummyNodes.push({ rank: r, backwards: true }) // turn around
     }
   }
 

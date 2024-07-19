@@ -8,7 +8,7 @@ export function exampleWithLoop () {
   //              \
   //      <h---<g-`
   //
-  const G = new Graph({directed: true})
+  const G = new Graph({ directed: true })
 
   G.setEdge('a', 'b')
   G.setEdge('a', 'd')
@@ -49,28 +49,27 @@ export function exampleWithLoop () {
   // return { graph: graph, rankSets: rankSets }
 }
 
-export function exampleWithReversedNodes () {
-  //
-  //      a -- b
-  //       `
-  // d -- c'
-  //
-  var nodes = [
-    {id: 'c', direction: 'l'},
-    {id: 'd', direction: 'l'}
-  ]
+// export function exampleWithReversedNodes () {
+//   //
+//   //      a -- b
+//   //       `
+//   // d -- c'
+//   //
+//   const nodes = [
+//     { id: 'c', direction: 'l' },
+//     { id: 'd', direction: 'l' }
+//   ]
 
-  var edges = [
-    {source: 'a', target: 'b'},
-    {source: 'a', target: 'c'},
-    {source: 'c', target: 'd'}
-  ]
+//   const edges = [
+//     { source: 'a', target: 'b' },
+//     { source: 'a', target: 'c' },
+//     { source: 'c', target: 'd' }
+//   ]
 
-  var graph = layeredGraph()(nodes, edges)
+//   const graph = layeredGraph()(nodes, edges)
 
-  return { graph: graph, rankSets: [] }
-}
-
+//   return { graph, rankSets: [] }
+// }
 
 // export function exampleBlastFurnaceWithDummy() {
 //   let G = new Graph({ directed: true });

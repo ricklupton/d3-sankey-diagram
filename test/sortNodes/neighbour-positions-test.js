@@ -4,7 +4,7 @@ import { Graph } from '@dagrejs/graphlib'
 import tape from 'tape'
 
 tape('neighbourPositions', test => {
-  let {G, order} = exampleTwoLevel()
+  const { G, order } = exampleTwoLevel()
 
   test.deepEqual(neighbourPositions(G, order, 0, 1, 'n2'), [0, 3, 4], 'n2')
   test.deepEqual(neighbourPositions(G, order, 0, 1, 'n0'), [0], 'n0')
@@ -16,7 +16,7 @@ tape('neighbourPositions', test => {
 })
 
 tape('neighbourPositions: multigraph', test => {
-  let {G, order} = exampleTwoLevelMultigraph()
+  const { G, order } = exampleTwoLevelMultigraph()
 
   test.deepEqual(neighbourPositions(G, order, 0, 1, 'a'), [0, 2], 'a')
   test.deepEqual(neighbourPositions(G, order, 0, 1, 'b'), [1, 2], 'b')
@@ -35,12 +35,12 @@ tape('neighbourPositions: loops', test => {
   //
   //   b -- 3
   //
-  let G = new Graph({ directed: true })
+  const G = new Graph({ directed: true })
   G.setEdge('a', '1', {})
   G.setEdge('b', '3', {})
   G.setEdge('2', '1', {})
 
-  let order = [
+  const order = [
     ['a', 'b'],
     ['1', '2', '3']
   ]

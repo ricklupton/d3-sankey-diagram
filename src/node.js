@@ -36,8 +36,8 @@ export default function () {
     }
 
     selection.each(function (d) {
-      let title = select(this).select('title')
-      let value = select(this).select('.node-value')
+      const title = select(this).select('title')
+      const value = select(this).select('.node-value')
       let text = select(this).select('.node-title')
       let line = select(this).select('line')
       let body = select(this).select('.node-body')
@@ -49,7 +49,8 @@ export default function () {
 
       const separateValue = (d.x1 - d.x0) > 2
       const titleText = nodeTitle(d) + ((!separateValue && nodeValue(d))
-                                        ? ' (' + nodeValue(d) + ')' : '')
+        ? ' (' + nodeValue(d) + ')'
+        : '')
 
       // Update un-transitioned
       title
@@ -169,13 +170,13 @@ function titlePosition (d) {
     titleAbove = false
   }
 
-  return {titleAbove, right}
+  return { titleAbove, right }
 }
 
 function wrap (d, width) {
-  var text = select(this)
-  var lines = text.text().split(/\n/)
-  var lineHeight = 1.1 // ems
+  const text = select(this)
+  const lines = text.text().split(/\n/)
+  const lineHeight = 1.1 // ems
   if (lines.length === 1) return
   text.text(null)
   lines.forEach(function (line, i) {

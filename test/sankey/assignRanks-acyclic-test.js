@@ -1,6 +1,7 @@
 import makeAcyclic, { findSpanningTree, nodeRelationship } from '../../src/assignRanks/make-acyclic.js'
-import pkg from '@dagrejs/graphlib'; const { Graph, alg } = pkg
 import tape from 'tape'
+import pkg from '@dagrejs/graphlib'
+const { Graph, alg } = pkg
 
 tape('rank assignment: makeAcyclic()', tape => {
   //
@@ -9,7 +10,7 @@ tape('rank assignment: makeAcyclic()', tape => {
   //  a -- b -- c
   //    `-----'
   //
-  const G = new Graph({directed: true})
+  const G = new Graph({ directed: true })
   G.setEdge('a', 'b', {})
   G.setEdge('b', 'c', {})
   G.setEdge('a', 'c', {})
@@ -22,11 +23,11 @@ tape('rank assignment: makeAcyclic()', tape => {
 
   tape.deepEqual(G.nodes(), ['a', 'b', 'c', 'd'], 'nodes')
   tape.deepEqual(G.edges(), [
-    {v: 'a', w: 'b'},
-    {v: 'b', w: 'c'},
-    {v: 'a', w: 'c'},
-    {v: 'b', w: 'd'},
-    {v: 'a', w: 'd'}   // REVERSED!
+    { v: 'a', w: 'b' },
+    { v: 'b', w: 'c' },
+    { v: 'a', w: 'c' },
+    { v: 'b', w: 'd' },
+    { v: 'a', w: 'd' } // REVERSED!
   ], 'edges')
   tape.deepEqual(G.edges().map(e => G.edge(e)), [
     {},
@@ -40,7 +41,7 @@ tape('rank assignment: makeAcyclic()', tape => {
 })
 
 tape('rank assignment: find spanning tree', test => {
-  const G = new Graph({directed: true})
+  const G = new Graph({ directed: true })
   G.setEdge('a', 'b')
   G.setEdge('b', 'c')
   G.setEdge('a', 'c')
@@ -63,13 +64,13 @@ tape('rank assignment: find spanning tree', test => {
     ],
     'depth and thread in tree')
   test.deepEqual(tree.edges(), [
-    {v: 'a', w: 'b'},
-    {v: 'b', w: 'c'},
-    {v: 'b', w: 'd'}
+    { v: 'a', w: 'b' },
+    { v: 'b', w: 'c' },
+    { v: 'b', w: 'd' }
   ], 'tree edges')
 
   // add same edges in a different order: a-c before b-c
-  const G2 = new Graph({directed: true})
+  const G2 = new Graph({ directed: true })
   G2.setEdge('a', 'c')
   G2.setEdge('a', 'b')
   G2.setEdge('b', 'c')
@@ -81,9 +82,9 @@ tape('rank assignment: find spanning tree', test => {
   test.ok(alg.isAcyclic(tree2), 'tree2 should not have cycles')
   test.deepEqual(tree2.nodes(), ['a', 'c', 'b', 'd'], 'all nodes in tree2')
   test.deepEqual(tree2.edges(), [
-    {v: 'a', w: 'c'},
-    {v: 'a', w: 'b'},
-    {v: 'b', w: 'd'}
+    { v: 'a', w: 'c' },
+    { v: 'a', w: 'b' },
+    { v: 'b', w: 'd' }
   ], 'tree2 edges')
 
   test.end()
@@ -95,13 +96,13 @@ tape('rank assignment: find spanning tree - multiple solutions', test => {
   // It doesn'test seem to cause a problem with letters as node ids, but
   // numbers are sorted when using G.successors().
 
-  const G1 = new Graph({directed: true})
+  const G1 = new Graph({ directed: true })
   G1.setEdge('0', '1')
   G1.setEdge('1', '2')
   G1.setEdge('0', '2')
 
-  const G2 = new Graph({directed: true})
-  G2.setEdge('0', '2')  // different order
+  const G2 = new Graph({ directed: true })
+  G2.setEdge('0', '2') // different order
   G2.setEdge('0', '1')
   G2.setEdge('1', '2')
 
@@ -109,13 +110,13 @@ tape('rank assignment: find spanning tree - multiple solutions', test => {
   const tree2 = findSpanningTree(G2, '0')
 
   test.deepEqual(tree1.edges(), [
-    {v: '0', w: '1'},
-    {v: '1', w: '2'}
+    { v: '0', w: '1' },
+    { v: '1', w: '2' }
   ], 'tree1 edges')
 
   test.deepEqual(tree2.edges(), [
-    {v: '0', w: '2'},
-    {v: '0', w: '1'}
+    { v: '0', w: '2' },
+    { v: '0', w: '1' }
   ], 'tree2 edges')
 
   test.end()
@@ -176,7 +177,7 @@ tape('rank assignment: relationship of nodes in tree', test => {
   //  a -- b -<
   //           `- d
   //
-  const tree = new Graph({directed: true})
+  const tree = new Graph({ directed: true })
   tree.setNode('a', { depth: 0, thread: 'b' })
   tree.setNode('b', { depth: 1, thread: 'c' })
   tree.setNode('c', { depth: 2, thread: 'd' })

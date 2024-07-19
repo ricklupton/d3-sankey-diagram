@@ -5,7 +5,7 @@ import { Graph } from '@dagrejs/graphlib'
 import tape from 'tape'
 
 tape('countBetweenCrossings', test => {
-  const {G, order} = exampleTwoLevel()
+  const { G, order } = exampleTwoLevel()
 
   // layer 1 to layer 2
   const count = countBetweenCrossings(G, order[0], order[1])
@@ -13,7 +13,7 @@ tape('countBetweenCrossings', test => {
 
   // layer 2 to layer 1
   const G2 = new Graph({ directed: true })
-  G.edges().forEach(({v, w}) => G2.setEdge(w, v))
+  G.edges().forEach(({ v, w }) => G2.setEdge(w, v))
   const count2 = countBetweenCrossings(G2, order[1], order[0])
   test.equal(count2, 12)
 
@@ -21,7 +21,7 @@ tape('countBetweenCrossings', test => {
 })
 
 tape('countLoopCrossings', test => {
-  const {G, order} = exampleTwoLevelWithLoops()
+  const { G, order } = exampleTwoLevelWithLoops()
 
   const count = countLoopCrossings(G, order[0], order[1])
   test.equal(count, 1)
@@ -29,7 +29,7 @@ tape('countLoopCrossings', test => {
 })
 
 tape('countLoopCrossings: types', test => {
-  const {G, order} = exampleTwoLevelWithLoops('m')
+  const { G, order } = exampleTwoLevelWithLoops('m')
 
   const count = countLoopCrossings(G, order[0], order[1])
   test.equal(count, 1)

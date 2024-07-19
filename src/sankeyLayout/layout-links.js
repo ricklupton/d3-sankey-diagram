@@ -25,7 +25,6 @@ function setEdgeEndpoints (G) {
     node.fromElsewhere.forEach(link => {
       link.y1 = ty + link.dy / 2
       link.d1 = node.backwards ? 'l' : 'r'
-      link.dy = link.dy
       ty += link.dy
     })
 
@@ -38,7 +37,6 @@ function setEdgeEndpoints (G) {
         // link.x0 = node.x1
         link.y0 = sy + link.dy / 2
         link.d0 = node.backwards ? 'l' : 'r'
-        link.dy = link.dy
         sy += link.dy
       })
 
@@ -47,7 +45,6 @@ function setEdgeEndpoints (G) {
         // link.x1 = node.x0
         link.y1 = ty + link.dy / 2
         link.d1 = node.backwards ? 'l' : 'r'
-        link.dy = link.dy
         ty += link.dy
       })
     })
@@ -55,7 +52,6 @@ function setEdgeEndpoints (G) {
     node.toElsewhere.forEach(link => {
       link.y0 = sy + link.dy / 2
       link.d0 = node.backwards ? 'l' : 'r'
-      link.dy = link.dy
       sy += link.dy
     })
   })
@@ -74,8 +70,8 @@ function setEdgeCurvatures (G) {
 }
 
 function maximumRadiusOfCurvature (link) {
-  var Dx = link.x1 - link.x0
-  var Dy = link.y1 - link.y0
+  const Dx = link.x1 - link.x0
+  const Dy = link.y1 - link.y0
   if (link.d0 !== link.d1) {
     return Math.abs(Dy) / 2.1
   } else {
@@ -92,8 +88,8 @@ function setEdgeEndCurvatures (links, rr) {
   })
 
   let jmid = (rr === 'r0'
-              ? findFirst(links, f => f.y1 > f.y0)
-              : findFirst(links, f => f.y0 > f.y1))
+    ? findFirst(links, f => f.y1 > f.y0)
+    : findFirst(links, f => f.y0 > f.y1))
   if (jmid === null) jmid = links.length
 
   // Set maximum radius down from middle
@@ -101,7 +97,7 @@ function setEdgeEndCurvatures (links, rr) {
 
   // Set maximum radius up from middle
   if (jmid > 0) {
-    let links2 = []
+    const links2 = []
     for (let j = jmid - 1; j >= 0; j--) links2.push(links[j])
     sweepCurvatureInwards(links2, rr)
   }

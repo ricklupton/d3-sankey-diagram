@@ -5,14 +5,14 @@ import { assertAlmostEqual } from './assert-almost-equal.js'
 tape('sankey() aligns ports', test => {
   const graph = {
     nodes: [
-      {id: '0'},
-      {id: '1'},
-      {id: '2'}
+      { id: '0' },
+      { id: '1' },
+      { id: '2' }
     ],
     links: [
-      {source: '0', target: '2', targetPort: 'a', type: '02a', value: 5},
-      {source: '0', target: '2', targetPort: 'b', type: '02b', value: 5},
-      {source: '1', target: '2', targetPort: 'a', type: '12a', value: 5}
+      { source: '0', target: '2', targetPort: 'a', type: '02a', value: 5 },
+      { source: '0', target: '2', targetPort: 'b', type: '02b', value: 5 },
+      { source: '1', target: '2', targetPort: 'a', type: '12a', value: 5 }
     ]
   }
   const ordering = [['0', '1'], ['2']]
@@ -29,7 +29,7 @@ tape('sankey() aligns ports', test => {
   assertAlmostEqual(test, graph.links[2].points[1].y, n2.y0 + 3, 1e-3, 'l2')
 
   // Node 2 should have ports positioned
-  test.deepEqual(n2.ports.map(d => ({id: d.id, y: d.y, dy: d.dy})), [
+  test.deepEqual(n2.ports.map(d => ({ id: d.id, y: d.y, dy: d.dy })), [
     { id: 'a', y: 0, dy: 4 },
     { id: 'b', y: 4, dy: 2 }
   ], 'ports')
@@ -42,7 +42,7 @@ tape('sankey() aligns ports', test => {
   assertAlmostEqual(test, graph.links[0].points[1].y, n2.y0 + 3, 1e-3, 'l0 again')
   assertAlmostEqual(test, graph.links[1].points[1].y, n2.y0 + 1, 1e-3, 'l1 again')
   assertAlmostEqual(test, graph.links[2].points[1].y, n2.y0 + 5, 1e-3, 'l2 again')
-  test.deepEqual(n2.ports.map(d => ({id: d.id, y: d.y, dy: d.dy})), [
+  test.deepEqual(n2.ports.map(d => ({ id: d.id, y: d.y, dy: d.dy })), [
     { id: 'b', y: 0, dy: 2 },
     { id: 'a', y: 2, dy: 4 }
   ], 'ports again')
@@ -80,6 +80,6 @@ tape('sankey() aligns ports', test => {
 //   test.end()
 // })
 
-function pointsY (link) {
-  return link.points.map(d => d.y)
-}
+// function pointsY (link) {
+//   return link.points.map(d => d.y)
+// }

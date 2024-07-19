@@ -5,7 +5,7 @@ function defaultSeparation (a, b) {
 }
 
 export default function positionNodesVertically () {
-  var separation = defaultSeparation
+  let separation = defaultSeparation
 
   function layout (nested, totalHeight, whitespace) {
     nested.forEach(layer => {
@@ -25,7 +25,7 @@ export default function positionNodesVertically () {
         const kg = sum(gaps) ? space / sum(gaps) : 0
 
         const isFirst = true
-        const isLast = true  // XXX bands
+        const isLast = true // XXX bands
 
         let yy = y + margin
         if (band.length === 1) {
@@ -33,7 +33,7 @@ export default function positionNodesVertically () {
           yy += (height - band[0].dy) / 2
         }
 
-        let prevGap = isFirst ? Number.MAX_VALUE : 0  // edge of graph
+        let prevGap = isFirst ? Number.MAX_VALUE : 0 // edge of graph
         band.forEach((node, i) => {
           node.y = yy
           node.spaceAbove = prevGap
@@ -47,7 +47,7 @@ export default function positionNodesVertically () {
           }
         })
         if (band.length > 0) {
-          band[band.length - 1].spaceBelow = isLast ? Number.MAX_VALUE : 0  // edge of graph
+          band[band.length - 1].spaceBelow = isLast ? Number.MAX_VALUE : 0 // edge of graph
         }
 
         y += bandHeight

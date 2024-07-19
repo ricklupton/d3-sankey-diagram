@@ -7,7 +7,7 @@ export default function prepareNodePorts (G, sortPorts) {
     const ports = map()
     function getOrSet (id, side) {
       if (ports.has(id)) return ports.get(id)
-      const port = { id: id, node: node.data, side: side, incoming: [], outgoing: [] }
+      const port = { id, node: node.data, side, incoming: [], outgoing: [] }
       ports.set(id, port)
       return port
     }
@@ -40,13 +40,13 @@ export default function prepareNodePorts (G, sortPorts) {
 
     // Set positions of ports, roughly -- so the other endpoints of links are
     // known approximately when being sorted.
-    let y = {west: fromElsewhereDy, east: 0}
-    let i = {west: 0, east: 0}
+    const y = { west: fromElsewhereDy, east: 0 }
+    const i = { west: 0, east: 0 }
     node.ports.forEach(port => {
       port.y = y[port.side]
       port.index = i[port.side]
       port.dy = Math.max(sum(port.incoming, e => G.edge(e).dy),
-                         sum(port.outgoing, e => G.edge(e).dy))
+        sum(port.outgoing, e => G.edge(e).dy))
       const x = (port.side === 'west' ? node.x0 : node.x1)
 
       port.outgoing.forEach(e => {

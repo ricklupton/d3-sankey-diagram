@@ -9,6 +9,6 @@ export default function linkDirection (G, e, head = true) {
     //                   target.x0 - source.x1)
     const link = G.edge(e)
     return Math.atan2(link.y1 - link.y0,
-                      link.x1 - link.x0)
+      link.x1 - link.x0)
   }
 }

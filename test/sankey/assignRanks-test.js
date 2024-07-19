@@ -17,8 +17,8 @@ tape('rank assignment: overall', test => {
   graph.setNode('d', {})
   graph.setNode('e', {})
   graph.setNode('f', {})
-  graph.setNode('g', {backwards: true})
-  graph.setNode('h', {backwards: true})
+  graph.setNode('g', { backwards: true })
+  graph.setNode('h', { backwards: true })
   graph.setEdge('a', 'b', {})
   graph.setEdge('b', 'c', {})
   graph.setEdge('a', 'd', {})
@@ -36,26 +36,26 @@ tape('rank assignment: overall', test => {
   // Without rankSets
   assignRanks(graph, [])
   test.deepEqual(ranks(graph), {
-    'a': 0,
-    'b': 1,
-    'c': 2,
-    'd': 1,
-    'e': 3,
-    'f': 1,
-    'g': 1,
-    'h': 0
+    a: 0,
+    b: 1,
+    c: 2,
+    d: 1,
+    e: 3,
+    f: 1,
+    g: 1,
+    h: 0
   }, 'ranks without rankSets')
 
   assignRanks(graph, rankSets)
   test.deepEqual(ranks(graph), {
-    'a': 0,
-    'b': 1,
-    'c': 2,
-    'd': 2,
-    'e': 3,
-    'f': 1,
-    'g': 2,
-    'h': 1
+    a: 0,
+    b: 1,
+    c: 2,
+    d: 2,
+    e: 3,
+    f: 1,
+    g: 2,
+    h: 1
   }, 'ranks with rankSets')
 
   test.end()
@@ -81,25 +81,25 @@ tape('rank assignment: disconnected', test => {
   // Without rankSets
   assignRanks(graph, [])
   test.deepEqual(ranks(graph), {
-    'a': 0,
-    'b': 1,
-    'c': 0,
-    'd': 1
+    a: 0,
+    b: 1,
+    c: 0,
+    d: 1
   }, 'ranks without rankSets')
 
   assignRanks(graph, rankSets)
   test.deepEqual(ranks(graph), {
-    'a': 0,
-    'b': 1,
-    'c': 1,
-    'd': 2
+    a: 0,
+    b: 1,
+    c: 1,
+    d: 2
   }, 'ranks with rankSets')
 
   test.end()
 })
 
 function ranks (graph) {
-  var r = {}
+  const r = {}
   graph.nodes().forEach(u => { r[u] = graph.node(u).rank })
   return r
 }

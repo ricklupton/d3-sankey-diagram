@@ -18,15 +18,15 @@ import compareSVGPath from './compareSVGPath.js'
 tape('sankeyLink() path curves downwards with different radii', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 10},
-      {x: 30, y: 70, ri: 20}
+      { x: 0, y: 0, ro: 10 },
+      { x: 30, y: 70, ri: 20 }
     ],
     dy: 2
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A11 11 1.571 0 1 11,10 ' +
                  'L11,50 ' +
                  'A19 19 1.571 0 0 30,69 ' +
@@ -41,14 +41,14 @@ tape('sankeyLink() path curves downwards with different radii', test => {
 tape('sankeyLink() path curves upwards with different radii', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 10},
-      {x: 30, y: -70, ri: 20}
+      { x: 0, y: 0, ro: 10 },
+      { x: 30, y: -70, ri: 20 }
     ],
     dy: 2
   }
 
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A9 9 1.571 0 0 9,-10 ' +
                  'L9,-50 ' +
                  'A21 21 1.571 0 1 30,-71 ' +
@@ -63,8 +63,8 @@ tape('sankeyLink() path curves upwards with different radii', test => {
 tape('sankeyLink() default link shape has two adjacent circular arcs', test => {
   const link = {
     points: [
-      {x: 0, y: 0},
-      {x: 15, y: 10}
+      { x: 0, y: 0 },
+      { x: 15, y: 10 }
     ],
     dy: 2
   }
@@ -72,7 +72,7 @@ tape('sankeyLink() default link shape has two adjacent circular arcs', test => {
   // radius = 5
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A6 6 0.729 0 1 4,0.527 ' +
                  'L12.333,7.981 ' +
                  'A4 4 0.729 0 0 15,9 ' +
@@ -87,15 +87,15 @@ tape('sankeyLink() default link shape has two adjacent circular arcs', test => {
 tape('sankeyLink() reduces to straight line', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 1},
-      {x: 10, y: 0, ri: 1}
+      { x: 0, y: 0, ro: 1 },
+      { x: 10, y: 0, ri: 1 }
     ],
     dy: 2
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A0 0 0 0 0 0,-1 ' +
                  'L10,-1 ' +
                  'A0 0 0 0 0 10,-1 ' +
@@ -111,8 +111,8 @@ tape('sankeyLink() reduces to straight line', test => {
 tape('sankeyLink() specifying link radius', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 1},
-      {x: 2, y: 10, ri: 1}
+      { x: 0, y: 0, ro: 1 },
+      { x: 2, y: 10, ri: 1 }
     ],
     dy: 2
   }
@@ -120,7 +120,7 @@ tape('sankeyLink() specifying link radius', test => {
   // radius = 1, angle = 90
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A2 2 1.570 0 1 2,0.999 ' +
                  'L2,9 ' +
                  'A0 0 1.570 0 0 2,9 ' +
@@ -135,8 +135,8 @@ tape('sankeyLink() specifying link radius', test => {
 tape('sankeyLink() minimum thickness when dy small', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 1},
-      {x: 2, y: 10, ri: 1}
+      { x: 0, y: 0, ro: 1 },
+      { x: 2, y: 10, ri: 1 }
     ],
     dy: 2
   }
@@ -152,14 +152,14 @@ tape('sankeyLink() minimum thickness when dy small', test => {
 tape('sankeyLink() thickness goes to zero when dy = 0', test => {
   const link = {
     points: [
-      {x: 0, y: 0, ro: 1},
-      {x: 10, y: 0, ri: 1}
+      { x: 0, y: 0, ro: 1 },
+      { x: 10, y: 0, ri: 1 }
     ],
     dy: 0
   }
 
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,0 ' +
+    'M0,0 ' +
                  'A0 0 0 0 0 0,0 ' +
                  'L10,0 ' +
                  'A0 0 0 0 0 10,0 ' +
@@ -198,15 +198,15 @@ tape('sankeyLink() thickness goes to zero when dy = 0', test => {
 tape('sankeyLink() flow from forward to reverse node', test => {
   const link = {
     points: [
-      {x: 0, y: 0, d: 'r'},
-      {x: 0, y: 50, d: 'l'}
+      { x: 0, y: 0, d: 'r' },
+      { x: 0, y: 50, d: 'l' }
     ],
     dy: 10
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-5 ' +
+    'M0,-5 ' +
                  'A15 15 1.570 0 1 15,10 ' +
                  'L15,40 ' +
                  'A15 15 1.570 0 1 0,55 ' +
@@ -219,7 +219,7 @@ tape('sankeyLink() flow from forward to reverse node', test => {
   // force radius
   link.points[0].ro = link.points[1].ri = 20
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-5 ' +
+    'M0,-5 ' +
                  'A25 25 1.570 0 1 25,20 ' +
                  'L25,30 ' +
                  'A25 25 1.570 0 1 0,55 ' +
@@ -235,15 +235,15 @@ tape('sankeyLink() flow from forward to reverse node', test => {
 tape('sankeyLink() flow from reverse to forward node', test => {
   const link = {
     points: [
-      {x: 0, y: 0, d: 'l'},
-      {x: 0, y: 50, d: 'r'}
+      { x: 0, y: 0, d: 'l' },
+      { x: 0, y: 50, d: 'r' }
     ],
     dy: 10
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-5 ' +
+    'M0,-5 ' +
                  'A15 15 1.570 0 0 -15,10 ' +
                  'L-15,40 ' +
                  'A15 15 1.570 0 0 0,55 ' +
@@ -258,15 +258,15 @@ tape('sankeyLink() flow from reverse to forward node', test => {
 tape('sankeyLink() flow from reverse to reverse node', test => {
   const link = {
     points: [
-      {x: 20, y: 0, d: 'l'},
-      {x: 0, y: 0, d: 'l'}
+      { x: 20, y: 0, d: 'l' },
+      { x: 0, y: 0, d: 'l' }
     ],
     dy: 10
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-5 ' +
+    'M0,-5 ' +
                  'A0 0 0 0 0 0,-5 ' +
                  'L20,-5 ' +
                  'A0 0 0 0 0 20,-5 ' +
@@ -302,16 +302,16 @@ tape('sankeyLink() flow from reverse to reverse node', test => {
 tape('sankeyLink() with multiple segments', test => {
   const link = {
     points: [
-      {x: 0, y: 0},
-      {x: 10, y: 0},
-      {x: 20, y: 0}
+      { x: 0, y: 0 },
+      { x: 10, y: 0 },
+      { x: 20, y: 0 }
     ],
     dy: 2
   }
 
   // Arc: A rx ry theta large-arc-flag direction-flag x y
   compareSVGPath(test, sankeyLink()(link),
-                 'M0,-1 ' +
+    'M0,-1 ' +
                  'A0 0 0 0 0 0,-1 ' +
                  'L10,-1 ' +
                  'A0 0 0 0 0 10,-1 ' +

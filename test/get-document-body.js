@@ -1,4 +1,4 @@
-import {JSDOM} from 'jsdom'
+import { JSDOM } from 'jsdom'
 
 export default function () {
   if (process.browser) {
