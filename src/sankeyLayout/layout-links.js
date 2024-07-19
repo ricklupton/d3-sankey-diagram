@@ -25,7 +25,6 @@ function setEdgeEndpoints (G) {
     node.fromElsewhere.forEach(link => {
       link.y1 = ty + link.dy / 2
       link.d1 = node.backwards ? 'l' : 'r'
-      link.dy = link.dy
       ty += link.dy
     })
 
@@ -38,7 +37,6 @@ function setEdgeEndpoints (G) {
         // link.x0 = node.x1
         link.y0 = sy + link.dy / 2
         link.d0 = node.backwards ? 'l' : 'r'
-        link.dy = link.dy
         sy += link.dy
       })
 
@@ -47,7 +45,6 @@ function setEdgeEndpoints (G) {
         // link.x1 = node.x0
         link.y1 = ty + link.dy / 2
         link.d1 = node.backwards ? 'l' : 'r'
-        link.dy = link.dy
         ty += link.dy
       })
     })
@@ -55,7 +52,6 @@ function setEdgeEndpoints (G) {
     node.toElsewhere.forEach(link => {
       link.y0 = sy + link.dy / 2
       link.d0 = node.backwards ? 'l' : 'r'
-      link.dy = link.dy
       sy += link.dy
     })
   })

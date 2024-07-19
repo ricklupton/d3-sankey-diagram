@@ -32,9 +32,7 @@ export default function groupedGraph (G, rankSets = []) {
   }
 
   // use i to keep counting new ids
-  const nodes = G.nodes()
   G.nodes().forEach(u => {
-    const d = G.node(u)
     if (!nodeSets.has(u)) {
       id = '' + (i++)
       set = { type: 'same', nodes: [u] }
@@ -45,7 +43,6 @@ export default function groupedGraph (G, rankSets = []) {
 
   // Add edges between nodes/groups
   G.edges().forEach(e => {
-    const d = G.edge(e)
     const sourceSet = nodeSets.get(e.v)
     const targetSet = nodeSets.get(e.w)
 

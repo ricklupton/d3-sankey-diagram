@@ -29,7 +29,6 @@ export default function countCrossings (G, orderA, orderB) {
 export function countBetweenCrossings (G, orderA, orderB) {
   let north
   let south
-  let q
 
   if (orderA.length > orderB.length) {
     north = orderA
@@ -38,7 +37,7 @@ export function countBetweenCrossings (G, orderA, orderB) {
     north = orderB
     south = orderA
   }
-  q = south.length
+  const q = south.length
 
   // lexicographically sorted edges from north to south
   const southSeq = []

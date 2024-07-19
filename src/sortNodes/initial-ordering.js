@@ -1,5 +1,5 @@
-import pkg from '@dagrejs/graphlib';
-import { map } from 'd3-collection' const { alg } = pkg;
+import { map } from 'd3-collection'
+import pkg from '@dagrejs/graphlib'; const { alg } = pkg
 
 export default function initialOrdering (G, ranks) {
   const order = []

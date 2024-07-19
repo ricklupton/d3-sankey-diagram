@@ -1,5 +1,3 @@
-import { interpolate } from 'd3-interpolate'
-
 // function defaultSegments (d) {
 //   return d.segments
 // }
@@ -117,19 +115,20 @@ export default function sankeyLink () {
       return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    let path
     // if (fx * (x2 - x3) < 0 || Math.abs(y1 - y0) > 4*h) {
     // XXX this causes juddering during transitions
 
-    path = ('M' + [x0, y0 - h] + ' ' +
-              arc(+1, r0) + [x2 + hs, y2 - hc] + ' ' +
-            'L' + [x3 + hs, y3 - hc] + ' ' +
-              arc(-1, r1) + [x1, y1 - h] + ' ' +
-            'L' + [x1, y1 + h] + ' ' +
-              arc(+1, r1) + [x3 - hs, y3 + hc] + ' ' +
-            'L' + [x2 - hs, y2 + hc] + ' ' +
-              arc(-1, r0) + [x0, y0 + h] + ' ' +
-            'Z')
+    const path = (
+      'M' + [x0, y0 - h] + ' ' +
+      arc(+1, r0) + [x2 + hs, y2 - hc] + ' ' +
+      'L' + [x3 + hs, y3 - hc] + ' ' +
+      arc(-1, r1) + [x1, y1 - h] + ' ' +
+      'L' + [x1, y1 + h] + ' ' +
+      arc(+1, r1) + [x3 - hs, y3 + hc] + ' ' +
+      'L' + [x2 - hs, y2 + hc] + ' ' +
+      arc(-1, r0) + [x0, y0 + h] + ' ' +
+      'Z'
+    )
 
     if (/NaN/.test(path)) {
       console.error('path NaN', d, path)
@@ -170,7 +169,6 @@ export default function sankeyLink () {
     const defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h) // Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
     const r = Math.min(Math.abs(y1 - y0) / 2.1, defaultRadius) // 2*(d.r || defaultRadius),
     const theta = Math.atan2(Dy - 2 * r, Dx)
-    const l = Math.sqrt(Math.max(0, Dx * Dx + (Dy - 2 * r) * (Dy - 2 * r)))
     const f = d.y1 > d.y0 ? 1 : -1
     const hs = h * Math.sin(theta)
     const hc = h * Math.cos(theta)
@@ -205,11 +203,8 @@ export default function sankeyLink () {
     const x1 = d.x1
     const y0 = d.y0
     const y1 = d.y1
-    const Dx = d.x1 - d.x0
-    const Dy = d.y1 - d.y0
     const theta = Math.PI / 2
     const r = Math.max(0, x1 - x0)
-    const f = d.y1 > d.y0 // = 1
     const y2 = y0 + r
 
     function arc (dir) {
@@ -236,11 +231,8 @@ export default function sankeyLink () {
     const x1 = d.x1
     const y0 = d.y0
     const y1 = d.y1
-    const Dx = d.x1 - d.x0
-    const Dy = d.y1 - d.y0
     const theta = Math.PI / 2
     const r = Math.max(0, x1 - x0)
-    const f = d.y1 > d.y0 // = 1
     const y2 = y1 - r
 
     function arc (dir) {
@@ -273,7 +265,7 @@ export default function sankeyLink () {
     const defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h) // Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
     const r = Math.min(Math.abs(Dy) / 2.1, defaultRadius) // 2*(d.r || defaultRadius),
     const theta = Math.atan2(Dy - 2 * r, Dx)
-    const l = Math.sqrt(Math.max(0, Dx * Dx + (Dy - 2 * r) * (Dy - 2 * r)))
+    // const l = Math.sqrt(Math.max(0, Dx * Dx + (Dy - 2 * r) * (Dy - 2 * r)))
     const f = d.y1 > d.y0 ? 1 : -1
     const hs = h * Math.sin(theta)
     const hc = h * Math.cos(theta)

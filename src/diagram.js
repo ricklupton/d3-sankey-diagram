@@ -28,6 +28,7 @@ export function linkTitleGenerator (nodeTitle, typeTitle, fmt) {
 export default function sankeyDiagram () {
   let margin = { top: 0, right: 0, bottom: 0, left: 0 }
 
+  // eslint-disable-next-line no-unused-vars -- FIXME should set class for nodes
   let selectedNode = null
   let selectedEdge = null
 
@@ -273,10 +274,10 @@ export default function sankeyDiagram () {
   function linkOrder (a, b) {
     if (a.id === selectedEdge) return +1
     if (b.id === selectedEdge) return -1
-    if (!a.source || a.target && a.target.direction === 'd') return -1
-    if (!b.source || b.target && b.target.direction === 'd') return +1
-    if (!a.target || a.source && a.source.direction === 'd') return -1
-    if (!b.target || b.source && b.source.direction === 'd') return +1
+    if (!a.source || (a.target && a.target.direction === 'd')) return -1
+    if (!b.source || (b.target && b.target.direction === 'd')) return +1
+    if (!a.target || (a.source && a.source.direction === 'd')) return -1
+    if (!b.target || (b.source && b.source.direction === 'd')) return +1
     return a.dy - b.dy
   }
 
