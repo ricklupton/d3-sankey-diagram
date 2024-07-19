@@ -1,7 +1,6 @@
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import buble from 'rollup-plugin-buble'
-import pkg from './package.json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import pkg from './package.json' with { type: "json" }
 
 const d3External = [
   'd3-collection',
@@ -21,22 +20,21 @@ d3External.forEach(k => {
 export default [
   // browser-friendly UMD build
   {
-    entry: 'src/index.js',
-    dest: pkg.browser,
-    format: 'umd',
-    moduleName: 'd3',
-    extend: true,
-    globals: globals,
+    input: 'src/index.js',
+    output: {
+      file: pkg.browser,
+      format: 'umd',
+      name: 'd3',
+      extend: true,
+      globals: globals
+    },
     external: d3External,
     plugins: [
-      resolve(), // find modules in node_modules
+      nodeResolve(), // find modules in node_modules
       commonjs({ // convert CommonJS to ES modules so they can be loaded
         // namedExports: {
         //   'node_modules/graphlib/index.js': ['Graph', 'alg']
         // }
-      }),
-      buble({  // transpile ES2015+ to ES5
-        exclude: ['node_modules/**']
       })
     ]
   },
@@ -47,16 +45,11 @@ export default [
   // builds from a single configuration where possible, using
   // the `targets` option which can specify `dest` and `format`)
   {
-    entry: 'src/index.js',
-    external: [...d3External, 'graphlib'],
-    targets: [
-      { dest: pkg.main, format: 'cjs' },
-      { dest: pkg.module, format: 'es' }
+    input: 'src/index.js',
+    output: [
+      { file: pkg.main, format: 'cjs' },
+      { file: pkg.module, format: 'es' }
     ],
-    plugins: [
-      buble({
-        exclude: ['node_modules/**']
-      })
-    ]
+    external: [...d3External, '@dagrejs/graphlib'],
   }
 ]

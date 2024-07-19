@@ -1,6 +1,6 @@
 import { addDummyNodes, dummyNodes } from '../../src/sortNodes/dummy-nodes.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 
 tape('dummyNodes(edge) adds nothing to short edges', test => {
   test.deepEqual(dummyNodes({rank: 0}, {rank: 1}), [], 'forwards')

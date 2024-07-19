@@ -1,5 +1,5 @@
 import sortNodes from '../../src/sortNodes/weighted-median-sort.js'
-import { exampleTwoLevel } from './examples'
+import { exampleTwoLevel } from './examples.js'
 import tape from 'tape'
 
 tape('sortNodes: forwards', test => {

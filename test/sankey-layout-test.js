@@ -1,6 +1,6 @@
 import sankey from '../src/sankey.js'
 import tape from 'tape'
-import { assertAlmostEqual } from './assert-almost-equal'
+import { assertAlmostEqual } from './assert-almost-equal.js'
 
 tape('sankey: scale', test => {
   const {graph, ordering} = example4to1()

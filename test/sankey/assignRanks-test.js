@@ -1,6 +1,6 @@
 import assignRanks from '../../src/assignRanks/index.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 
 tape('rank assignment: overall', test => {
   //

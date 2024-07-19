@@ -1,5 +1,5 @@
-import makeAcyclic, { findSpanningTree, nodeRelationship } from '../../src/assignRanks/make-acyclic'
-import { Graph, alg } from 'graphlib'
+import makeAcyclic, { findSpanningTree, nodeRelationship } from '../../src/assignRanks/make-acyclic.js'
+import pkg from '@dagrejs/graphlib'; const { Graph, alg } = pkg
 import tape from 'tape'
 
 tape('rank assignment: makeAcyclic()', tape => {

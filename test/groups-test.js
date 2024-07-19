@@ -1,7 +1,7 @@
-import sankeyDiagram from '../src/diagram';
+import sankeyDiagram from '../src/diagram.js';
 import sankey from '../src/sankey.js'
 
-import getBody from './get-document-body';
+import getBody from './get-document-body.js';
 import { select } from 'd3-selection';
 import { timerFlush } from 'd3-timer'
 import test from 'tape';

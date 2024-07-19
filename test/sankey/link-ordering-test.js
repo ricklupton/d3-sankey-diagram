@@ -1,7 +1,7 @@
 import orderLinks from '../../src/sankeyLayout/link-ordering.js'
 import prepareNodePorts from '../../src/sankeyLayout/prepare-subdivisions.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 
 tape('orderLinks() works between neighbouring layers', test => {
   const graph = new Graph({ directed: true, multigraph: true })

@@ -4,7 +4,7 @@
  * @module link-positioning
  */
 
-import { findFirst, sweepCurvatureInwards } from './utils'
+import { findFirst, sweepCurvatureInwards } from './utils.js'
 
 /*
  * Requires incoming and outgoing attributes on nodes

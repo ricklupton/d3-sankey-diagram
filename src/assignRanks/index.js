@@ -1,6 +1,6 @@
-import groupedGraph from './grouped-graph'
-import makeAcyclic from './make-acyclic'
-import assignInitialRanks from './initial-ranks'
+import groupedGraph from './grouped-graph.js'
+import makeAcyclic from './make-acyclic.js'
+import assignInitialRanks from './initial-ranks.js'
 import { min } from 'd3-array'
 
 /**

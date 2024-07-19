@@ -1,4 +1,4 @@
-import countCrossings from './count-crossings'
+import countCrossings from './count-crossings.js'
 
 export default function swapNodes (G, order) {
   let improved = true

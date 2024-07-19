@@ -1,4 +1,4 @@
-import { Graph } from 'graphlib';
+import { Graph } from '@dagrejs/graphlib';
 
 
 export function exampleTwoLevel() {

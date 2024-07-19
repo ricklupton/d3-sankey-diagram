@@ -1,4 +1,4 @@
-import positionGroup from '../src/positionGroup';
+import positionGroup from '../src/positionGroup.js';
 
 import test from 'tape';
 

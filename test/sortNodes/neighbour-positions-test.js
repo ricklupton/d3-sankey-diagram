@@ -1,6 +1,6 @@
 import neighbourPositions from '../../src/sortNodes/neighbour-positions.js'
-import { exampleTwoLevel, exampleTwoLevelMultigraph } from './examples'
-import { Graph } from 'graphlib'
+import { exampleTwoLevel, exampleTwoLevelMultigraph } from './examples.js'
+import { Graph } from '@dagrejs/graphlib'
 import tape from 'tape'
 
 tape('neighbourPositions', test => {

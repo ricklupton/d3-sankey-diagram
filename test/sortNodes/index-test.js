@@ -1,6 +1,6 @@
 import sortNodes from '../../src/sortNodes/index.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 
 tape('sortNodes()', test => {
   //

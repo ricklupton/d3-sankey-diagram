@@ -1,6 +1,6 @@
-import groupedGraph from '../../src/assignRanks/grouped-graph'
+import groupedGraph from '../../src/assignRanks/grouped-graph.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 
 // XXX reversing edges into Smin and out of Smax?
 // XXX reversing edges marked as "right to left"?

@@ -1,6 +1,6 @@
 /** @module edge-ordering */
 
-import linkDirection from './link-direction'
+import linkDirection from './link-direction.js'
 
 /**
  * Order the edges at all nodes.

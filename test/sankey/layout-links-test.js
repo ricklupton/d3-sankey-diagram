@@ -1,8 +1,8 @@
 import layoutLinks from '../../src/sankeyLayout/layout-links.js'
 import prepareSubdivisions from '../../src/sankeyLayout/prepare-subdivisions.js'
 import tape from 'tape'
-import { Graph } from 'graphlib'
-import { assertAlmostEqual, assertNotAlmostEqual } from '../assert-almost-equal'
+import { Graph } from '@dagrejs/graphlib'
+import { assertAlmostEqual, assertNotAlmostEqual } from '../assert-almost-equal.js'
 
 tape('linkLayout: link attributes', test => {
   const graph = example2to1(0)

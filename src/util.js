@@ -1,4 +1,4 @@
-import { Graph } from 'graphlib'
+import pkg from '@dagrejs/graphlib'; const { Graph } = pkg;
 
 export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue) {
   var G = new Graph({ directed: true, multigraph: true })

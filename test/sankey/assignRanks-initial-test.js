@@ -1,5 +1,5 @@
-import assignInitialRanks from '../../src/assignRanks/initial-ranks'
-import { Graph } from 'graphlib'
+import assignInitialRanks from '../../src/assignRanks/initial-ranks.js'
+import { Graph } from '@dagrejs/graphlib'
 import tape from 'tape'
 
 tape('rank assignment: assignInitialRanks', test => {

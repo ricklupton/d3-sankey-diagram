@@ -1,5 +1,5 @@
 import swapNodes from '../../src/sortNodes/swap-nodes.js'
-import { exampleTwoLevel } from './examples'
+import { exampleTwoLevel } from './examples.js'
 import tape from 'tape'
 
 tape('iterateSwappingNodes', test => {

@@ -1,4 +1,4 @@
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 import { map } from 'd3-collection'
 /**
  * Create a new graph where nodes in the same rank set are merged into one node.

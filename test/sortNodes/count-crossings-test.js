@@ -1,7 +1,7 @@
 import { countBetweenCrossings, countLoopCrossings } from '../../src/sortNodes/count-crossings.js'
-import { exampleTwoLevel, exampleTwoLevelWithLoops } from './examples'
+import { exampleTwoLevel, exampleTwoLevelWithLoops } from './examples.js'
 
-import { Graph } from 'graphlib'
+import { Graph } from '@dagrejs/graphlib'
 import tape from 'tape'
 
 tape('countBetweenCrossings', test => {
