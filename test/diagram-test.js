@@ -3,7 +3,6 @@ import sankey from '../src/sankey.js'
 
 import getBody from './get-document-body.js'
 import { select } from 'd3-selection'
-import { schemeCategory10, scaleOrdinal } from 'd3-scale'
 import test from 'tape'
 
 test('diagram: renders something and updates', t => {
@@ -49,7 +48,6 @@ test('diagram: types', t => {
   const graph = exampleLinkTypes()
   sankey()(graph)
 
-  const color = scaleOrdinal(schemeCategory10)
   const diagram = sankeyDiagram()
 
   const el = render(graph, diagram)
@@ -67,7 +65,6 @@ test('diagram: types 2', t => {
   const example = exampleLinkTypes2()
   sankey()(example)
 
-  const color = scaleOrdinal(schemeCategory10)
   const diagram = sankeyDiagram()
 
   const el = render(example, diagram)

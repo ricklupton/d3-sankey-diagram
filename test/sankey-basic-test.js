@@ -13,14 +13,13 @@ tape('sankey() has the expected defaults', test => {
 
 tape('sankey(graph) builds the graph structure', test => {
   const s = sankey()
-  let l
   const graph = s({
     nodes: [
       { id: 'a' },
       { id: 'b' }
     ],
     links: [
-      (l = { source: 'a', target: 'b', type: 'c' })
+      { source: 'a', target: 'b', type: 'c' }
     ]
   })
 

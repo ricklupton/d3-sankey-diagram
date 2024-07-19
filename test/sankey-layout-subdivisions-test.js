@@ -80,6 +80,6 @@ tape('sankey() aligns ports', test => {
 //   test.end()
 // })
 
-function pointsY (link) {
-  return link.points.map(d => d.y)
-}
+// function pointsY (link) {
+//   return link.points.map(d => d.y)
+// }

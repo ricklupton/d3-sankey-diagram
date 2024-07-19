@@ -36,9 +36,11 @@ const reNumber = /[-+]?(?:\d+\.\d+|\d+\.|\.\d+|\d+)(?:[eE][-]?\d+)?/g
 function parsePath (path) {
   const parts = []
   reNumber.lastIndex = 0
-  for (var i = 0, s0 = 0, s1, m; m = reNumber.exec(path); ++i) {
+  let s0 = 0
+  // eslint-disable-next-line no-cond-assign
+  for (let i = 0, m; m = reNumber.exec(path); ++i) {
     if (m.index) {
-      const part = path.substring(s0, s1 = m.index)
+      const part = path.substring(s0, m.index)
       if (!/^[, ]$/.test(part)) parts.push(part)
     }
     parts.push(parseFloat(m[0]))
@@ -48,7 +50,7 @@ function parsePath (path) {
   return parts
 }
 
-function formatPath (path) {
+export function formatPath (path) {
   return path.replace(reNumber, formatNumber)
 }
 

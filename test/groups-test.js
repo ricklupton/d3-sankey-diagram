@@ -58,7 +58,7 @@ function render (datum, diagram) {
 }
 
 /* Make animations synchronous for testing */
-var flushAnimationFrames = function () {
+function flushAnimationFrames () {
   const now = Date.now
   Date.now = function () { return Infinity }
   timerFlush()
