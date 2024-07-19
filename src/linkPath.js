@@ -8,26 +8,26 @@ function defaultMinWidth (d) {
   return (d.dy === 0) ? 0 : 2
 }
 
-export default function sankeyLink() {
+export default function sankeyLink () {
   // var segments = defaultSegments
-  var minWidth = defaultMinWidth
+  let minWidth = defaultMinWidth
 
-  function radiusBounds(d) {
-    var Dx = d.x1 - d.x0,
-        Dy = d.y1 - d.y0,
-        Rmin = d.dy / 2,
-        Rmax = (Dx*Dx + Dy*Dy) / Math.abs(4*Dy);
-    return [Rmin, Rmax];
+  function radiusBounds (d) {
+    const Dx = d.x1 - d.x0
+    const Dy = d.y1 - d.y0
+    const Rmin = d.dy / 2
+    const Rmax = (Dx * Dx + Dy * Dy) / Math.abs(4 * Dy)
+    return [Rmin, Rmax]
   }
 
-  function link(d) {
+  function link (d) {
     if (d.points.length === 1) {
       return toOrFromElsewherePath(d)
     }
 
-    var path = ''
-    var seg
-    for (var i = 0; i < d.points.length - 1; ++i) {
+    let path = ''
+    let seg
+    for (let i = 0; i < d.points.length - 1; ++i) {
       seg = {
         x0: d.points[i].x,
         y0: d.points[i].y,
@@ -45,281 +45,281 @@ export default function sankeyLink() {
   }
 
   function segmentPath (d) {
-    var dir = (d.d0 || 'r') + (d.d1 || 'r');
+    const dir = (d.d0 || 'r') + (d.d1 || 'r')
     if (d.source && d.source === d.target) {
-      return selfLink(d);
+      return selfLink(d)
     }
     if (dir === 'rl') {
-      return fbLink(d);
+      return fbLink(d)
     }
     if (dir === 'rd') {
-      return fdLink(d);
+      return fdLink(d)
     }
     if (dir === 'dr') {
-      return dfLink(d);
+      return dfLink(d)
     }
     if (dir === 'lr') {
-      return bfLink(d);
+      return bfLink(d)
     }
 
     // Minimum thickness 2px
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        x0 = d.x0,
-        x1 = d.x1,
-        y0 = d.y0,
-        y1 = d.y1;
+    const h = Math.max(minWidth(d), d.dy) / 2
+    let x0 = d.x0
+    let x1 = d.x1
+    let y0 = d.y0
+    let y1 = d.y1
 
     if (x1 < x0) {
       [x0, x1] = [x1, x0];
-      [y0, y1] = [y1, y0];
+      [y0, y1] = [y1, y0]
     }
 
-    let f = y1 > y0 ? 1 : -1,
-        fx = 1;  // dir === 'll' ? -1 : 1;
+    const f = y1 > y0 ? 1 : -1
+    const fx = 1 // dir === 'll' ? -1 : 1;
 
-    const Rlim = radiusBounds(d),
-          defaultRadius = Math.max(Rlim[0], Math.min(Rlim[1], (x1 - x0)/3));
+    const Rlim = radiusBounds(d)
+    const defaultRadius = Math.max(Rlim[0], Math.min(Rlim[1], (x1 - x0) / 3))
 
-    let r0 = Math.max(Rlim[0], Math.min(Rlim[1], (d.r0 || defaultRadius))),
-        r1 = Math.max(Rlim[0], Math.min(Rlim[1], (d.r1 || defaultRadius)));
+    let r0 = Math.max(Rlim[0], Math.min(Rlim[1], (d.r0 || defaultRadius)))
+    let r1 = Math.max(Rlim[0], Math.min(Rlim[1], (d.r1 || defaultRadius)))
 
-    const dcx = (x1 - x0),
-          dcy = (y1 - y0) - f * (r0 + r1),
-          D = Math.sqrt(dcx*dcx + dcy*dcy);
+    const dcx = (x1 - x0)
+    const dcy = (y1 - y0) - f * (r0 + r1)
+    const D = Math.sqrt(dcx * dcx + dcy * dcy)
 
-    const phi = -f * Math.acos(Math.min(1, (r0 + r1) / D)),
-          psi = Math.atan2(dcy, dcx);
+    const phi = -f * Math.acos(Math.min(1, (r0 + r1) / D))
+    const psi = Math.atan2(dcy, dcx)
 
-    let theta = Math.PI/2 + f * (psi + phi);
+    let theta = Math.PI / 2 + f * (psi + phi)
 
-    let hs = h * f * Math.sin(theta),
-        hc = h * Math.cos(theta),
-        x2 = x0 + fx * r0 * Math.sin(Math.abs(theta)),
-        x3 = x1 - fx * r1 * Math.sin(Math.abs(theta)),
-        y2 = y0 + r0 * f * (1 - Math.cos(theta)),
-        y3 = y1 - r1 * f * (1 - Math.cos(theta));
+    let hs = h * f * Math.sin(theta)
+    let hc = h * Math.cos(theta)
+    let x2 = x0 + fx * r0 * Math.sin(Math.abs(theta))
+    let x3 = x1 - fx * r1 * Math.sin(Math.abs(theta))
+    let y2 = y0 + r0 * f * (1 - Math.cos(theta))
+    let y3 = y1 - r1 * f * (1 - Math.cos(theta))
 
     if (isNaN(theta) || Math.abs(theta) < 1e-3) {
-      theta = r0 = r1 = 0;
-      x2 = x0;
-      x3 = x1;
-      y2 = y0;
-      y3 = y1;
-      hs = 0;
-      hc = h;
+      theta = r0 = r1 = 0
+      x2 = x0
+      x3 = x1
+      y2 = y0
+      y3 = y1
+      hs = 0
+      hc = h
     }
 
-    function arc(dir, r) {
-      var f = ( dir * (y1-y0) > 0) ? 1 : 0,
-          rr = (fx * dir * (y1-y0) > 0) ? (r + h) : (r - h);
+    function arc (dir, r) {
+      const f = (dir * (y1 - y0) > 0) ? 1 : 0
+      let rr = (fx * dir * (y1 - y0) > 0) ? (r + h) : (r - h)
       // straight line
-      if (theta === 0) { rr = r; }
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 0 " + f + " ";
+      if (theta === 0) { rr = r }
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    var path;
+    let path
     // if (fx * (x2 - x3) < 0 || Math.abs(y1 - y0) > 4*h) {
     // XXX this causes juddering during transitions
 
-    path =  ("M"     + [x0,    y0-h ] + " " +
-              arc(+1, r0) + [x2+hs, y2-hc] + " " +
-            "L"     + [x3+hs, y3-hc] + " " +
-              arc(-1, r1) + [x1,    y1-h ] + " " +
-            "L"     + [x1,    y1+h ] + " " +
-              arc(+1, r1) + [x3-hs, y3+hc] + " " +
-            "L"     + [x2-hs, y2+hc] + " " +
-              arc(-1, r0) + [x0,    y0+h ] + " " +
-            "Z");
-    
+    path = ('M' + [x0, y0 - h] + ' ' +
+              arc(+1, r0) + [x2 + hs, y2 - hc] + ' ' +
+            'L' + [x3 + hs, y3 - hc] + ' ' +
+              arc(-1, r1) + [x1, y1 - h] + ' ' +
+            'L' + [x1, y1 + h] + ' ' +
+              arc(+1, r1) + [x3 - hs, y3 + hc] + ' ' +
+            'L' + [x2 - hs, y2 + hc] + ' ' +
+              arc(-1, r0) + [x0, y0 + h] + ' ' +
+            'Z')
+
     if (/NaN/.test(path)) {
-      console.error('path NaN', d, path);
+      console.error('path NaN', d, path)
     }
-    return path;
+    return path
   }
 
-  function selfLink(d) {
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        r = h*1.5,
-        theta = 2 * Math.PI,
-        x0 = d.x0,
-        y0 = d.y0;
+  function selfLink (d) {
+    const h = Math.max(minWidth(d), d.dy) / 2
+    const r = h * 1.5
+    const theta = 2 * Math.PI
+    const x0 = d.x0
+    const y0 = d.y0
 
-    function arc(dir) {
-      var f = (dir > 0) ? 1 : 0,
-          rr = (dir > 0) ? (r + h) : (r - h);
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 1 " + f + " ";
+    function arc (dir) {
+      const f = (dir > 0) ? 1 : 0
+      const rr = (dir > 0) ? (r + h) : (r - h)
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 1 ' + f + ' '
     }
 
-    return ("M"     + [x0+0.1, y0-h] + " " +
-            arc(+1) + [x0-0.1, y0-h] + " " +
-            "L"     + [x0-0.1, y0+h] + " " +
-            arc(-1) + [x0+0.1, y0+h] + " " +
-            "Z");
+    return ('M' + [x0 + 0.1, y0 - h] + ' ' +
+            arc(+1) + [x0 - 0.1, y0 - h] + ' ' +
+            'L' + [x0 - 0.1, y0 + h] + ' ' +
+            arc(-1) + [x0 + 0.1, y0 + h] + ' ' +
+            'Z')
   }
 
-  function fbLink(d) {
+  function fbLink (d) {
     // Minimum thickness 2px
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        x0 = d.x0,
-        x1 = d.x1,
-        y0 = d.y0,
-        y1 = d.y1,
-        Dx = d.x1 - d.x0,
-        Dy = d.y1 - d.y0,
-        //Rlim = radiusBounds(d),
-        defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h), //Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
-        r = Math.min(Math.abs(y1-y0)/2.1, defaultRadius), //2*(d.r || defaultRadius),
-        theta = Math.atan2(Dy - 2*r, Dx),
-        l = Math.sqrt(Math.max(0, Dx*Dx + (Dy-2*r)*(Dy-2*r))),
-        f = d.y1 > d.y0 ? 1 : -1,
-        hs = h * Math.sin(theta),
-        hc = h * Math.cos(theta),
-        x2 = d.x0 + r * Math.sin(Math.abs(theta)),
-        x3 = d.x1 + r * Math.sin(Math.abs(theta)),
-        y2 = d.y0 + r * f * (1 - Math.cos(theta)),
-        y3 = d.y1 - r * f * (1 - Math.cos(theta));
+    const h = Math.max(minWidth(d), d.dy) / 2
+    const x0 = d.x0
+    const x1 = d.x1
+    const y0 = d.y0
+    const y1 = d.y1
+    const Dx = d.x1 - d.x0
+    const Dy = d.y1 - d.y0
+    // Rlim = radiusBounds(d),
+    const defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h) // Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
+    const r = Math.min(Math.abs(y1 - y0) / 2.1, defaultRadius) // 2*(d.r || defaultRadius),
+    const theta = Math.atan2(Dy - 2 * r, Dx)
+    const l = Math.sqrt(Math.max(0, Dx * Dx + (Dy - 2 * r) * (Dy - 2 * r)))
+    const f = d.y1 > d.y0 ? 1 : -1
+    const hs = h * Math.sin(theta)
+    const hc = h * Math.cos(theta)
+    const x2 = d.x0 + r * Math.sin(Math.abs(theta))
+    const x3 = d.x1 + r * Math.sin(Math.abs(theta))
+    const y2 = d.y0 + r * f * (1 - Math.cos(theta))
+    const y3 = d.y1 - r * f * (1 - Math.cos(theta))
 
-    function arc(dir) {
-      var f = (dir * theta > 0) ? 1 : 0,
-          rr = (dir * theta > 0) ? (r + h) : (r - h);
+    function arc (dir) {
+      const f = (dir * theta > 0) ? 1 : 0
+      let rr = (dir * theta > 0) ? (r + h) : (r - h)
       // straight line
-      if (theta === 0) { rr = r; }
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 0 " + f + " ";
+      if (theta === 0) { rr = r }
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    return ("M"     + [x0,    y0-h ] + " " +
-            arc(+1) + [x2+hs, y2-hc] + " " +
-            "L"     + [x3+hs, y3-hc] + " " +
-            arc(+1) + [x1,    y1+h ] + " " +
-            "L"     + [x1,    y1-h ] + " " +
-            arc(-1) + [x3-hs, y3+hc] + " " +
-            "L"     + [x2-hs, y2+hc] + " " +
-            arc(-1) + [x0,    y0+h ] + " " +
-            "Z");
+    return ('M' + [x0, y0 - h] + ' ' +
+            arc(+1) + [x2 + hs, y2 - hc] + ' ' +
+            'L' + [x3 + hs, y3 - hc] + ' ' +
+            arc(+1) + [x1, y1 + h] + ' ' +
+            'L' + [x1, y1 - h] + ' ' +
+            arc(-1) + [x3 - hs, y3 + hc] + ' ' +
+            'L' + [x2 - hs, y2 + hc] + ' ' +
+            arc(-1) + [x0, y0 + h] + ' ' +
+            'Z')
   }
 
-  function fdLink(d) {
+  function fdLink (d) {
     // Minimum thickness 2px
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        x0 = d.x0,
-        x1 = d.x1,
-        y0 = d.y0,
-        y1 = d.y1,
-        Dx = d.x1 - d.x0,
-        Dy = d.y1 - d.y0,
-        theta = Math.PI / 2,
-        r = Math.max(0, x1 - x0),
-        f = d.y1 > d.y0,  // = 1
-        y2 = y0 + r;
+    const h = Math.max(minWidth(d), d.dy) / 2
+    const x0 = d.x0
+    const x1 = d.x1
+    const y0 = d.y0
+    const y1 = d.y1
+    const Dx = d.x1 - d.x0
+    const Dy = d.y1 - d.y0
+    const theta = Math.PI / 2
+    const r = Math.max(0, x1 - x0)
+    const f = d.y1 > d.y0 // = 1
+    const y2 = y0 + r
 
-    function arc(dir) {
-      var f = (dir * theta > 0) ? 1 : 0,
-          rr = (dir * theta > 0) ? (r + h) : (r - h);
+    function arc (dir) {
+      const f = (dir * theta > 0) ? 1 : 0
+      let rr = (dir * theta > 0) ? (r + h) : (r - h)
       // straight line
-      if (theta === 0) { rr = r; }
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 0 " + f + " ";
+      if (theta === 0) { rr = r }
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    return ("M"     + [x0,    y0-h ] + " " +
-            arc(+1) + [x1+h,  y2   ] + " " +
-            "L"     + [x1+h,  y1   ] + " " +
-            ""      + [x1-h,  y1   ] + " " +
-            ""      + [x1-h,  y2   ] + " " +
-            arc(-1) + [x0,    y0+h ] + " " +
-            "Z");
+    return ('M' + [x0, y0 - h] + ' ' +
+            arc(+1) + [x1 + h, y2] + ' ' +
+            'L' + [x1 + h, y1] + ' ' +
+            '' + [x1 - h, y1] + ' ' +
+            '' + [x1 - h, y2] + ' ' +
+            arc(-1) + [x0, y0 + h] + ' ' +
+            'Z')
   }
 
-  function dfLink(d) {
+  function dfLink (d) {
     // Minimum thickness 2px
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        x0 = d.x0,
-        x1 = d.x1,
-        y0 = d.y0,
-        y1 = d.y1,
-        Dx = d.x1 - d.x0,
-        Dy = d.y1 - d.y0,
-        theta = Math.PI / 2,
-        r = Math.max(0, x1 - x0),
-        f = d.y1 > d.y0,  // = 1
-        y2 = y1 - r;
+    const h = Math.max(minWidth(d), d.dy) / 2
+    const x0 = d.x0
+    const x1 = d.x1
+    const y0 = d.y0
+    const y1 = d.y1
+    const Dx = d.x1 - d.x0
+    const Dy = d.y1 - d.y0
+    const theta = Math.PI / 2
+    const r = Math.max(0, x1 - x0)
+    const f = d.y1 > d.y0 // = 1
+    const y2 = y1 - r
 
-    function arc(dir) {
-      var f = (dir * theta > 0) ? 1 : 0,
-          rr = (dir * theta > 0) ? (r + h) : (r - h);
+    function arc (dir) {
+      const f = (dir * theta > 0) ? 1 : 0
+      let rr = (dir * theta > 0) ? (r + h) : (r - h)
       // straight line
-      if (theta === 0) { rr = r; }
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 0 " + f + " ";
+      if (theta === 0) { rr = r }
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    return ("M"     + [x0-h,  y0   ] + " " +
-            "L"     + [x0+h,  y0   ] + " " +
-            ""      + [x0+h,  y2   ] + " " +
-            arc(-1) + [x1  ,  y1-h ] + " " +
-            "L"     + [x1  ,  y1+h ] + " " +
-            arc(+1) + [x0-h,  y2   ] + " " +
-            "Z");
+    return ('M' + [x0 - h, y0] + ' ' +
+            'L' + [x0 + h, y0] + ' ' +
+            '' + [x0 + h, y2] + ' ' +
+            arc(-1) + [x1, y1 - h] + ' ' +
+            'L' + [x1, y1 + h] + ' ' +
+            arc(+1) + [x0 - h, y2] + ' ' +
+            'Z')
   }
 
-  function bfLink(d) {
+  function bfLink (d) {
     // Minimum thickness 2px
-    var h = Math.max(minWidth(d), d.dy) / 2,
-        x0 = d.x0,
-        x1 = d.x1,
-        y0 = d.y0,
-        y1 = d.y1,
-        Dx = d.x1 - d.x0,
-        Dy = d.y1 - d.y0,
-        //Rlim = radiusBounds(d),
-        defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h), //Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
-        r = Math.min(Math.abs(Dy)/2.1, defaultRadius), //2*(d.r || defaultRadius),
-        theta = Math.atan2(Dy - 2*r, Dx),
-        l = Math.sqrt(Math.max(0, Dx*Dx + (Dy-2*r)*(Dy-2*r))),
-        f = d.y1 > d.y0 ? 1 : -1,
-        hs = h * Math.sin(theta),
-        hc = h * Math.cos(theta),
-        x2 = d.x0 - r * Math.sin(Math.abs(theta)),
-        x3 = d.x1 - r * Math.sin(Math.abs(theta)),
-        y2 = d.y0 + r * f * (1 - Math.cos(theta)),
-        y3 = d.y1 - r * f * (1 - Math.cos(theta));
+    const h = Math.max(minWidth(d), d.dy) / 2
+    const x0 = d.x0
+    const x1 = d.x1
+    const y0 = d.y0
+    const y1 = d.y1
+    const Dx = d.x1 - d.x0
+    const Dy = d.y1 - d.y0
+    // Rlim = radiusBounds(d),
+    const defaultRadius = ((d.r0 + d.r1) / 2) || (5 + h) // Math.max(Rlim[0], Math.min(Rlim[1], Dx/3)),
+    const r = Math.min(Math.abs(Dy) / 2.1, defaultRadius) // 2*(d.r || defaultRadius),
+    const theta = Math.atan2(Dy - 2 * r, Dx)
+    const l = Math.sqrt(Math.max(0, Dx * Dx + (Dy - 2 * r) * (Dy - 2 * r)))
+    const f = d.y1 > d.y0 ? 1 : -1
+    const hs = h * Math.sin(theta)
+    const hc = h * Math.cos(theta)
+    const x2 = d.x0 - r * Math.sin(Math.abs(theta))
+    const x3 = d.x1 - r * Math.sin(Math.abs(theta))
+    const y2 = d.y0 + r * f * (1 - Math.cos(theta))
+    const y3 = d.y1 - r * f * (1 - Math.cos(theta))
 
-    function arc(dir) {
-      var f = (dir * theta > 0) ? 1 : 0,
-          rr = (-dir * theta > 0) ? (r + h) : (r - h);
+    function arc (dir) {
+      const f = (dir * theta > 0) ? 1 : 0
+      let rr = (-dir * theta > 0) ? (r + h) : (r - h)
       // straight line
-      if (theta === 0) { rr = r; }
-      return "A" + rr + " " + rr + " " + Math.abs(theta) + " 0 " + f + " ";
+      if (theta === 0) { rr = r }
+      return 'A' + rr + ' ' + rr + ' ' + Math.abs(theta) + ' 0 ' + f + ' '
     }
 
-    return ("M"     + [x0,    y0-h ] + " " +
-            arc(-1) + [x2-hs, y2-hc] + " " +
-            "L"     + [x3-hs, y3-hc] + " " +
-            arc(-1) + [x1,    y1+h ] + " " +
-            "L"     + [x1,    y1-h ] + " " +
-            arc(+1) + [x3+hs, y3-hc] + " " +
-            "L"     + [x2+hs, y2-hc] + " " +
-            arc(+1) + [x0,    y0+h ] + " " +
-            "Z");
+    return ('M' + [x0, y0 - h] + ' ' +
+            arc(-1) + [x2 - hs, y2 - hc] + ' ' +
+            'L' + [x3 - hs, y3 - hc] + ' ' +
+            arc(-1) + [x1, y1 + h] + ' ' +
+            'L' + [x1, y1 - h] + ' ' +
+            arc(+1) + [x3 + hs, y3 - hc] + ' ' +
+            'L' + [x2 + hs, y2 - hc] + ' ' +
+            arc(+1) + [x0, y0 + h] + ' ' +
+            'Z')
   }
 
-  function toOrFromElsewherePath(d) {
+  function toOrFromElsewherePath (d) {
     const p = d.points[0]
     const h = Math.max(minWidth(d), d.dy) / 2
 
     // XXX draw these properly with curves and appropriate radii
 
-    if (p.style === "down-right") {
-      return ("M" + [p.x - 20, p.y-h] + " " +
-              "L" + [p.x, p.y-h] + " " +
-              "L" + [p.x, p.y+h] + " " +
-              "L" + [p.x - 20, p.y+h] + " " +
-              "Z")
+    if (p.style === 'down-right') {
+      return ('M' + [p.x - 20, p.y - h] + ' ' +
+              'L' + [p.x, p.y - h] + ' ' +
+              'L' + [p.x, p.y + h] + ' ' +
+              'L' + [p.x - 20, p.y + h] + ' ' +
+              'Z')
     }
-    if (p.style === "right-down") {
-      return ("M" + [p.x, p.y-h] + " " +
-              "L" + [p.x + 20, p.y-h] + " " +
-              "L" + [p.x + 20, p.y+h] + " " +
-              "L" + [p.x, p.y+h] + " " +
-              "Z")
+    if (p.style === 'right-down') {
+      return ('M' + [p.x, p.y - h] + ' ' +
+              'L' + [p.x + 20, p.y - h] + ' ' +
+              'L' + [p.x + 20, p.y + h] + ' ' +
+              'L' + [p.x, p.y + h] + ' ' +
+              'Z')
     }
   }
 
@@ -331,7 +331,7 @@ export default function sankeyLink() {
     return minWidth
   }
 
-  return link;
+  return link
 }
 
 function required (f) {

@@ -57,36 +57,36 @@ function defaultSortPorts (a, b) {
 // function defaultNodeSubdivisions
 
 export default function sankeyLayout () {
-  var nodes = defaultNodes
-  var links = defaultLinks
-  var nodeId = defaultNodeId
-  var nodeBackwards = defaultNodeBackwards
-  var sourceId = defaultSourceId
-  var targetId = defaultTargetId
-  var linkType = defaultLinkType
-  var ordering = null
-  var rankSets = []
-  var maxIterations = 25 // XXX setter/getter
-  var nodePosition = null
-  var sortPorts = defaultSortPorts
+  let nodes = defaultNodes
+  let links = defaultLinks
+  let nodeId = defaultNodeId
+  let nodeBackwards = defaultNodeBackwards
+  let sourceId = defaultSourceId
+  let targetId = defaultTargetId
+  let linkType = defaultLinkType
+  let ordering = null
+  let rankSets = []
+  const maxIterations = 25 // XXX setter/getter
+  let nodePosition = null
+  let sortPorts = defaultSortPorts
 
   // extent
-  var x0 = 0
-  var y0 = 0
-  var x1 = 1
-  var y1 = 1
+  let x0 = 0
+  let y0 = 0
+  let x1 = 1
+  let y1 = 1
 
   // node width
-  var dx = 1
+  let dx = 1
 
-  var scale = null
-  var linkValue = function (e) { return e.value }
-  var whitespace = 0.5
-  var verticalLayout = positionVertically()
+  let scale = null
+  let linkValue = function (e) { return e.value }
+  let whitespace = 0.5
+  let verticalLayout = positionVertically()
 
   function sankey () {
-    var graph = {nodes: nodes.apply(null, arguments), links: links.apply(null, arguments)}
-    var G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
+    const graph = { nodes: nodes.apply(null, arguments), links: links.apply(null, arguments) }
+    const G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
 
     setNodeValues(G, linkValue)
 
@@ -149,7 +149,7 @@ export default function sankeyLayout () {
   }
 
   sankey.update = function (graph, doOrderLinks) {
-    var G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
+    const G = buildGraph(graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue)
     setNodeValues(G, linkValue)
     const nested = nestGraph(G.nodes().map(u => G.node(u)))
     maybeScaleToFit(G, nested)
@@ -369,13 +369,13 @@ function setWidths (G, scale) {
     node.toElsewhere = (node.toElsewhere || [])
     node.fromElsewhere.forEach(link => {
       link.dy = link.value * scale
-      link.source = { id: "__from_elsewhere_" + u }
+      link.source = { id: '__from_elsewhere_' + u }
       link.target = node.data
     })
     node.toElsewhere.forEach(link => {
       link.dy = link.value * scale
       link.source = node.data
-      link.target = { id: "__to_elsewhere_" + u }
+      link.target = { id: '__to_elsewhere_' + u }
     })
   })
 }
@@ -388,17 +388,17 @@ function required (f) {
 function addLinkEndpoints (G) {
   G.edges().forEach(e => {
     const edge = G.edge(e)
-    edge.points.unshift({x: edge.x0, y: edge.y0, ro: edge.r0, d: edge.d0})
-    edge.points.push({x: edge.x1, y: edge.y1, ri: edge.r1, d: edge.d1})
+    edge.points.unshift({ x: edge.x0, y: edge.y0, ro: edge.r0, d: edge.d0 })
+    edge.points.push({ x: edge.x1, y: edge.y1, ri: edge.r1, d: edge.d1 })
   })
 
   G.nodes().forEach(u => {
     const node = G.node(u)
     node.fromElsewhere.forEach(link => {
-      link.points = [{x: link.x1, y: link.y1, ri: link.r1, d: link.d1, style: "down-right"}]
+      link.points = [{ x: link.x1, y: link.y1, ri: link.r1, d: link.d1, style: 'down-right' }]
     })
     node.toElsewhere.forEach(link => {
-      link.points = [{x: link.x0, y: link.y0, ri: link.r0, d: link.d0, style: "right-down"}]
+      link.points = [{ x: link.x0, y: link.y0, ri: link.r0, d: link.d0, style: 'right-down' }]
     })
   })
 }

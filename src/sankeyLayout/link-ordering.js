@@ -26,9 +26,9 @@ function orderEdgesOne (G, v) {
  */
 function compareDirection (G, node, head = true) {
   return function (a, b) {
-    var da = linkDirection(G, a, head)
-    var db = linkDirection(G, b, head)
-    var c = head ? 1 : -1
+    const da = linkDirection(G, a, head)
+    const db = linkDirection(G, b, head)
+    const c = head ? 1 : -1
 
     // links between same node, sort on type
     if (a.v === b.v && a.w === b.w && Math.abs(da - db) < 1e-3) {

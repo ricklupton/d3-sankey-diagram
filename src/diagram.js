@@ -4,12 +4,12 @@ import sankeyLink from './linkPath.js'
 import sankeyNode from './node.js'
 import positionGroup from './positionGroup.js'
 
-import {select, event} from 'd3-selection'
-import {transition} from 'd3-transition'
-import {dispatch} from 'd3-dispatch'
-import {format} from 'd3-format'
-import {interpolate} from 'd3-interpolate'
-import {map} from 'd3-collection'
+import { select, event } from 'd3-selection'
+import { transition } from 'd3-transition'
+import { dispatch } from 'd3-dispatch'
+import { format } from 'd3-format'
+import { interpolate } from 'd3-interpolate'
+import { map } from 'd3-collection'
 
 export function linkTitleGenerator (nodeTitle, typeTitle, fmt) {
   return function (d) {
@@ -26,7 +26,7 @@ export function linkTitleGenerator (nodeTitle, typeTitle, fmt) {
 }
 
 export default function sankeyDiagram () {
-  let margin = {top: 0, right: 0, bottom: 0, left: 0}
+  let margin = { top: 0, right: 0, bottom: 0, left: 0 }
 
   let selectedNode = null
   let selectedEdge = null
@@ -53,16 +53,16 @@ export default function sankeyDiagram () {
       const svg = select(this)
 
       let sankey = svg.selectAll('.sankey')
-            .data([{type: 'sankey'}])
+        .data([{ type: 'sankey' }])
 
       const sankeyEnter = sankey.enter()
-            .append('g')
-            .classed('sankey', true)
+        .append('g')
+        .classed('sankey', true)
 
       sankeyEnter.append('g').classed('groups', true)
-      sankeyEnter.append('g').classed('links', true)  // Links below nodes
+      sankeyEnter.append('g').classed('links', true) // Links below nodes
       sankeyEnter.append('g').classed('nodes', true)
-      sankeyEnter.append('g').classed('slice-titles', true)  // Slice titles
+      sankeyEnter.append('g').classed('slice-titles', true) // Slice titles
 
       sankey = sankey.merge(sankeyEnter)
 
@@ -75,7 +75,6 @@ export default function sankeyDiagram () {
       // Groups of nodes
       const nodeMap = map(G.nodes, n => n.id)
       const groupsPositioned = (groups || []).map(g => positionGroup(nodeMap, g))
-
 
       // All links -- including "from elsewhere" and "to elsewhere" ones
       const links = Array.from(G.links)
@@ -99,10 +98,10 @@ export default function sankeyDiagram () {
   }
 
   function updateNodes (sankey, context, nodes) {
-    var nodeSel = sankey
-        .select('.nodes')
-        .selectAll('.node')
-        .data(nodes, d => d.id)
+    let nodeSel = sankey
+      .select('.nodes')
+      .selectAll('.node')
+      .data(nodes, d => d.id)
 
     // EXIT
     nodeSel.exit().remove()
@@ -123,10 +122,10 @@ export default function sankeyDiagram () {
   }
 
   function updateLinks (sankey, context, edges) {
-    var linkSel = sankey
-        .select('.links')
-        .selectAll('.link')
-        .data(edges, d => d.source.id + '-' + d.target.id + '-' + d.type)
+    let linkSel = sankey
+      .select('.links')
+      .selectAll('.link')
+      .data(edges, d => d.source.id + '-' + d.target.id + '-' + d.type)
 
     // EXIT
 
@@ -134,10 +133,10 @@ export default function sankeyDiagram () {
 
     // ENTER
 
-    var linkEnter = linkSel.enter()
-        .append('g')
-        .attr('class', 'link')
-        .on('click', selectLink)
+    const linkEnter = linkSel.enter()
+      .append('g')
+      .attr('class', 'link')
+      .on('click', selectLink)
 
     linkEnter.append('path')
       .attr('d', link)
@@ -227,8 +226,8 @@ export default function sankeyDiagram () {
 
     // ENTER
     const enter = group.enter().append('g')
-            .attr('class', 'group')
-            // .on('click', selectGroup);
+      .attr('class', 'group')
+    // .on('click', selectGroup);
 
     enter.append('rect')
     enter.append('text')
@@ -256,8 +255,8 @@ export default function sankeyDiagram () {
       if (p.ri > 1e3) p.ri = 1e3
       if (p.ro > 1e3) p.ro = 1e3
     })
-    var interp = interpolate(linkGeom(this._current), b)
-    var that = this
+    const interp = interpolate(linkGeom(this._current), b)
+    const that = this
     return function (t) {
       that._current = interp(t)
       return link(that._current)
@@ -283,13 +282,13 @@ export default function sankeyDiagram () {
 
   function selectLink (d) {
     event.stopPropagation()
-    var el = select(this).node()
+    const el = select(this).node()
     listeners.call('selectLink', el, d)
   }
 
   function selectNode (d) {
     event.stopPropagation()
-    var el = select(this).node()
+    const el = select(this).node()
     listeners.call('selectNode', el, d)
   }
 
@@ -366,7 +365,7 @@ export default function sankeyDiagram () {
   }
 
   exports.on = function () {
-    var value = listeners.on.apply(listeners, arguments)
+    const value = listeners.on.apply(listeners, arguments)
     return value === listeners ? exports : value
   }
 

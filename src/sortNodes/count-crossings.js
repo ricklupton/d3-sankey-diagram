@@ -41,7 +41,7 @@ export function countBetweenCrossings (G, orderA, orderB) {
   q = south.length
 
   // lexicographically sorted edges from north to south
-  let southSeq = []
+  const southSeq = []
   north.forEach(u => {
     south.forEach((v, j) => {
       if (G.hasEdge(u, v) || G.hasEdge(v, u)) southSeq.push(j)
@@ -51,10 +51,10 @@ export function countBetweenCrossings (G, orderA, orderB) {
   // build accumulator tree
   let firstIndex = 1
   while (firstIndex < q) firstIndex *= 2
-  const treeSize = 2 * firstIndex - 1  // number of tree nodes
-  firstIndex -= 1                      // index of leftmost leaf
+  const treeSize = 2 * firstIndex - 1 // number of tree nodes
+  firstIndex -= 1 // index of leftmost leaf
 
-  let tree = new Array(treeSize)
+  const tree = new Array(treeSize)
   for (let i = 0; i < treeSize; i++) tree[i] = 0
 
   // count the crossings
@@ -85,13 +85,13 @@ export function countLoopCrossings (G, orderA, orderB) {
   // and on the left of orderB (reverse edges)
 
   // how many edges pass across?
-  let crossA = orderA.map(d => 0)
-  let crossB = orderB.map(d => 0)
+  const crossA = orderA.map(d => 0)
+  const crossB = orderB.map(d => 0)
 
   orderA.forEach((u, i) => {
     G.outEdges(u).forEach(e => {
       if (e.v !== e.w && !G.edge(e).reverse) {
-        let index = orderA.indexOf(e.w)
+        const index = orderA.indexOf(e.w)
         if (index >= 0) {
           if (i > index) {
             let j = index + 1
@@ -112,7 +112,7 @@ export function countLoopCrossings (G, orderA, orderB) {
   orderB.forEach((u, i) => {
     G.outEdges(u).forEach(e => {
       if (e.v !== e.w && G.edge(e).reverse) {
-        let index = orderB.indexOf(e.w)
+        const index = orderB.indexOf(e.w)
         if (index >= 0) {
           if (i > index) {
             let j = index + 1

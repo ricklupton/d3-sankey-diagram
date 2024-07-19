@@ -1,7 +1,7 @@
-import pkg from '@dagrejs/graphlib'; const { Graph } = pkg;
+import pkg from '@dagrejs/graphlib'; const { Graph } = pkg
 
 export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, linkType, linkValue) {
-  var G = new Graph({ directed: true, multigraph: true })
+  const G = new Graph({ directed: true, multigraph: true })
   graph.nodes.forEach(function (node, i) {
     const id = nodeId(node, i)
     if (G.hasNode(id)) throw new Error('duplicate: ' + id)
@@ -21,7 +21,7 @@ export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, li
   graph.links.forEach(function (link, i) {
     const v = idAndPort(sourceId(link, i))
     const w = idAndPort(targetId(link, i))
-    var label = {
+    const label = {
       data: link,
       sourcePortId: v.port,
       targetPortId: w.port,
@@ -42,5 +42,5 @@ export function buildGraph (graph, nodeId, nodeBackwards, sourceId, targetId, li
 
 function idAndPort (x) {
   if (typeof x === 'object') return x
-  return {id: x, port: undefined}
+  return { id: x, port: undefined }
 }

@@ -12,8 +12,8 @@ import sortNodesOnce from './weighted-median-sort.js'
  *
  */
 export default function sortNodes (G, maxIterations = 25) {
-  let ranks = getRanks(G)
-  let order = initialOrdering(G, ranks)
+  const ranks = getRanks(G)
+  const order = initialOrdering(G, ranks)
   let best = order
   let i = 0
 
@@ -55,7 +55,7 @@ function allCrossings (G, order) {
 }
 
 function copy (order) {
-  let result = []
+  const result = []
   order.forEach(rank => {
     result.push(rank.map(d => d))
   })
