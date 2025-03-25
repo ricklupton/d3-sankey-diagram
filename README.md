@@ -424,6 +424,10 @@ MIT licence.
 
 ### Unreleased
 
+### v0.9.0
+
+- Update many dependencies.
+
 ### v0.8.0
 
 - Modified code to assign `type` and `value` attributes to `link` objects
