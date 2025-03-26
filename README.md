@@ -424,6 +424,10 @@ MIT licence.
 
 ### Unreleased
 
+### v0.9.1
+
+- Fix package.json metadata from ESM module import.
+
 ### v0.9.0
 
 - Update many dependencies.

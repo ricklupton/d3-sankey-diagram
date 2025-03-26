@@ -1,6 +1,6 @@
 {
   "name": "d3-sankey-diagram",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Sankey diagram d3 plugin",
   "author": "Rick Lupton",
   "keywords": [
@@ -11,6 +11,10 @@
   ],
   "license": "MIT",
   "type": "module",
+  "exports": {
+    "import": "./build/d3-sankey-diagram.esm.js",
+    "require": "./build/d3-sankey-diagram.cjs.js"
+  },
   "main": "build/d3-sankey-diagram.cjs.js",
   "module": "build/d3-sankey-diagram.esm.js",
   "browser": "build/d3-sankey-diagram.umd.js",
@@ -51,6 +55,7 @@
     "standard": "^17.1.0",
     "tape": "^5.8.1",
     "tape-watch": "^2.3.0",
-    "terser": "^5.31.3"
+    "terser": "^5.31.3",
+    "uglify-js": "^3.19.3"
   }
 }
