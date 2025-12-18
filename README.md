@@ -377,6 +377,44 @@ If *linkMinWidth* is specified, sets the minimum link width accessor to the
 specified function, otherwise return the current accessor, which by default
 returns `1`.
 
+<a name="linkImportance" href="#linkImportance">#</a> diagram.<b>linkImportance</b>([<i>linkImportance</i>])
+
+If *linkImportance* is specified, sets the link importance accessor to the
+specified function, otherwise return the current accessor, which defaults to:
+```js
+function linkImportance(d) {
+  // Return negative values for special cases to put them at the bottom
+  if (!d.source || (d.target && d.target.direction === 'd')) return -2
+  if (!d.target || (d.source && d.source.direction === 'd')) return -1
+  // Return dy (visual width) for normal links
+  return d.dy
+}
+```
+
+The link importance determines the z-order (stacking order) of links in the
+diagram. Links are grouped by source-target pair, and groups are sorted by their
+aggregated importance (see [linkImportanceAgg](#linkImportanceAgg) below). This
+ensures that multiple links between the same nodes are always rendered together,
+avoiding a "woven" pattern where some links from one group go over and others go
+under links from another group.
+
+<a name="linkImportanceAgg" href="#linkImportanceAgg">#</a> diagram.<b>linkImportanceAgg</b>([<i>linkImportanceAgg</i>])
+
+If *linkImportanceAgg* is specified, sets the link importance aggregation
+function to the specified function, otherwise return the current function, which
+defaults to:
+```js
+function linkImportanceAgg(values) {
+  // Sum of importance values for all links in the group
+  return values.reduce((a, b) => a + b, 0)
+}
+```
+
+This function aggregates the individual link importance values (from
+[linkImportance](#linkImportance)) for all links between the same source and
+target nodes. The aggregated value is used to determine the z-order of link
+groups.
+
 #### Node groups
 
 <a name="groups" href="#groups">#</a> diagram.<b>groups</b>([<i>groups</i>])
@@ -423,6 +461,10 @@ MIT licence.
 ## Changelog
 
 ### Unreleased
+
+- Add `linkImportance` and `linkImportanceAgg`: links between the same source
+  and target node are now kept grouped together in the SVG so they have similar
+  Z-orders, avoiding the effect of links "weaving" through each other.
 
 ### v0.9.1
 

@@ -41,6 +41,8 @@ export default function sankeyDiagram () {
   let linkColor = d => null
   let linkTitle = linkTitleGenerator(node.nodeTitle(), d => d.type, fmt)
   let linkLabel = defaultLinkLabel
+  let linkImportance = defaultLinkImportance
+  let linkImportanceAgg = defaultLinkImportanceAgg
 
   const listeners = dispatch('selectNode', 'selectGroup', 'selectLink')
 
@@ -156,6 +158,9 @@ export default function sankeyDiagram () {
 
     linkSel = linkSel.merge(linkEnter)
 
+    // Calculate group importance for sorting
+    calculateGroupImportance(edges)
+
     // Non-transition updates
     linkSel.classed('selected', (d) => d.id === selectedEdge)
     linkSel.sort(linkOrder)
@@ -185,6 +190,31 @@ export default function sankeyDiagram () {
       .text(linkLabel)
       .attr('x', d => d.points[0].x + 4)
       .attr('y', d => d.points[0].y)
+  }
+
+  function calculateGroupImportance (edges) {
+    // Group links by source-target pair
+    const groups = new Map()
+
+    // Calculate individual importance for each link
+    edges.forEach(edge => {
+      const groupKey = edge.source.id + '-' + edge.target.id
+      if (!groups.has(groupKey)) {
+        groups.set(groupKey, [])
+      }
+      const importance = linkImportance(edge)
+      edge._importance = importance
+      groups.get(groupKey).push({ edge, importance })
+    })
+
+    // Calculate aggregated importance for each group and assign to all links in group
+    groups.forEach(linkGroup => {
+      const importanceValues = linkGroup.map(item => item.importance)
+      const groupImportance = linkImportanceAgg(importanceValues)
+      linkGroup.forEach(item => {
+        item.edge._groupImportance = groupImportance
+      })
+    })
   }
 
   // function updateSlices(svg, slices) {
@@ -272,13 +302,11 @@ export default function sankeyDiagram () {
   }
 
   function linkOrder (a, b) {
+    // Selected links always on top
     if (a.id === selectedEdge) return +1
     if (b.id === selectedEdge) return -1
-    if (!a.source || (a.target && a.target.direction === 'd')) return -1
-    if (!b.source || (b.target && b.target.direction === 'd')) return +1
-    if (!a.target || (a.source && a.source.direction === 'd')) return -1
-    if (!b.target || (b.source && b.source.direction === 'd')) return +1
-    return a.dy - b.dy
+    // All other sorting based on group importance
+    return a._groupImportance - b._groupImportance
   }
 
   function selectLink (d) {
@@ -355,6 +383,18 @@ export default function sankeyDiagram () {
     return this
   }
 
+  exports.linkImportance = function (_x) {
+    if (!arguments.length) return linkImportance
+    linkImportance = _x
+    return this
+  }
+
+  exports.linkImportanceAgg = function (_x) {
+    if (!arguments.length) return linkImportanceAgg
+    linkImportanceAgg = _x
+    return this
+  }
+
   exports.selectNode = function (_x) {
     selectedNode = _x
     return this
@@ -375,4 +415,17 @@ export default function sankeyDiagram () {
 
 function defaultLinkLabel (d) {
   return null
+}
+
+function defaultLinkImportance (d) {
+  // Return negative values for special cases to put them at the bottom
+  if (!d.source || (d.target && d.target.direction === 'd')) return -2
+  if (!d.target || (d.source && d.source.direction === 'd')) return -1
+  // Return dy (visual width) for normal links
+  return d.dy
+}
+
+function defaultLinkImportanceAgg (values) {
+  // Sum of importance values for all links in the group
+  return values.reduce((a, b) => a + b, 0)
 }

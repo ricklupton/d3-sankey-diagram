@@ -288,3 +288,65 @@ function exampleLinkTypes2 () {
     ]
   }
 }
+
+test('diagram: link z-order keeps groups together', t => {
+  // Test that links between the same source-target pair are kept together
+  // even when their individual widths would cause them to be interleaved
+  const graph = exampleLinkGrouping()
+  sankey()(graph)
+
+  const diagram = sankeyDiagram()
+  const el = render(graph, diagram)
+
+  // Get the DOM order of links
+  const linkOrder = []
+  el.selectAll('.link').each(function (d) {
+    linkOrder.push({
+      source: d.source.id,
+      target: d.target.id,
+      type: d.type,
+      value: d.value
+    })
+  })
+
+  // Find positions of the three links
+  const ab1Pos = linkOrder.findIndex(d => d.source === 'a' && d.target === 'b' && d.type === 'type1')
+  const ab2Pos = linkOrder.findIndex(d => d.source === 'a' && d.target === 'b' && d.type === 'type2')
+  const cdPos = linkOrder.findIndex(d => d.source === 'c' && d.target === 'd')
+
+  // The two A->B links should be adjacent (no other link between them)
+  t.equal(Math.abs(ab1Pos - ab2Pos), 1,
+    'A->B links should be adjacent in DOM order')
+
+  // C->D should not be between the two A->B links
+  const minAB = Math.min(ab1Pos, ab2Pos)
+  const maxAB = Math.max(ab1Pos, ab2Pos)
+  const cdBetween = cdPos > minAB && cdPos < maxAB
+
+  t.notOk(cdBetween,
+    'C->D link should not be between A->B links (no weaving)')
+
+  t.end()
+})
+
+function exampleLinkGrouping () {
+  // 4 nodes, 3 links designed to expose weaving problem
+  // Two links A->B with values 10 and 5
+  // One link C->D with value 7
+  // Without grouping, sort by dy would give: [5, 7, 10] (weaving)
+  // With grouping, A->B group (sum=15) > C->D group (sum=7), so C->D first, then both A->B
+  const nodes = [
+    { id: 'a' },
+    { id: 'b' },
+    { id: 'c' },
+    { id: 'd' }
+  ]
+
+  const links = [
+    { source: 'a', target: 'b', value: 10, type: 'type1' },
+    { source: 'a', target: 'b', value: 5, type: 'type2' },
+    { source: 'c', target: 'd', value: 7, type: 'type1' }
+  ]
+
+  return { nodes, links }
+}
