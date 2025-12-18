@@ -462,6 +462,8 @@ MIT licence.
 
 ### Unreleased
 
+### v0.9.2
+
 - Add `linkImportance` and `linkImportanceAgg`: links between the same source
   and target node are now kept grouped together in the SVG so they have similar
   Z-orders, avoiding the effect of links "weaving" through each other.
