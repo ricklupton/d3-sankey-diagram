@@ -12,10 +12,12 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": "./build/d3-sankey-diagram.esm.js",
-    "require": "./build/d3-sankey-diagram.cjs.js"
+    ".": {
+      "import": "./build/d3-sankey-diagram.esm.js",
+      "require": "./build/d3-sankey-diagram.cjs"
+    }
   },
-  "main": "build/d3-sankey-diagram.cjs.js",
+  "main": "build/d3-sankey-diagram.cjs",
   "module": "build/d3-sankey-diagram.esm.js",
   "browser": "build/d3-sankey-diagram.umd.js",
   "homepage": "https://github.com/ricklupton/d3-sankey-diagram",
@@ -29,7 +31,7 @@
     "test": "tape 'test/**/*-test.js' && standard src test",
     "test:watch": "tape-watch 'test/**/*-test.js'",
     "prepublishOnly": "npm run test && uglifyjs build/d3-sankey-diagram.umd.js -c -m -o build/d3-sankey-diagram.min.js",
-    "postpublish": "zip -j build/d3-sankey-diagram.zip -- LICENSE README.md build/d3-sankey-diagram.cjs.js build/d3-sankey-diagram.esm.js build/d3-sankey-diagram.umd.js build/d3-sankey-diagram.min.js"
+    "postpublish": "zip -j build/d3-sankey-diagram.zip -- LICENSE README.md build/d3-sankey-diagram.cjs build/d3-sankey-diagram.esm.js build/d3-sankey-diagram.umd.js build/d3-sankey-diagram.min.js"
   },
   "dependencies": {
     "d3-array": "^1.0.2",
