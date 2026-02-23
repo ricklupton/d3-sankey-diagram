@@ -200,6 +200,40 @@ tape('sankey.linkType(id) tests that id is a function', test => {
   test.end()
 })
 
+tape('sankey(graph) includes toElsewhere links in node value', test => {
+  const s = sankey()
+  const graph = s({
+    nodes: [
+      { id: 'a', toElsewhere: [{ value: 5 }] },
+      { id: 'b' }
+    ],
+    links: [
+      { source: 'a', target: 'b', value: 3 }
+    ]
+  })
+
+  // Node 'a' has 3 outgoing via regular link plus 5 via toElsewhere → value should be 8
+  test.equal(graph.nodes[0].value, 8, 'node a value includes toElsewhere')
+  test.end()
+})
+
+tape('sankey(graph) includes fromElsewhere links in node value', test => {
+  const s = sankey()
+  const graph = s({
+    nodes: [
+      { id: 'a' },
+      { id: 'b', fromElsewhere: [{ value: 5 }] }
+    ],
+    links: [
+      { source: 'a', target: 'b', value: 3 }
+    ]
+  })
+
+  // Node 'b' has 3 incoming via regular link plus 5 via fromElsewhere → value should be 8
+  test.equal(graph.nodes[1].value, 8, 'node b value includes fromElsewhere')
+  test.end()
+})
+
 tape('sankey(graph) throws an error if a node is missing', test => {
   const s = sankey()
   test.throws(function () {

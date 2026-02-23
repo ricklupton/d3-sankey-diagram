@@ -350,7 +350,7 @@ function setNodeValues (G, linkValue) {
     let incoming = sum(G.inEdges(u), e => G.edge(e).value)
     let outgoing = sum(G.outEdges(u), e => G.edge(e).value)
     incoming += sum(d.fromElsewhere || [], link => linkValue(link))
-    outgoing += sum(d.toElsewhere | [], link => linkValue(link))
+    outgoing += sum(d.toElsewhere || [], link => linkValue(link))
     d.value = Math.max(incoming, outgoing)
   })
 }
