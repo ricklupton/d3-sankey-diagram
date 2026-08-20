@@ -462,6 +462,8 @@ MIT licence.
 
 ### Unreleased
 
+### v0.9.4
+
 - Fix link ordering between the same source and target node, when one node is
   backwards and one is forwards. Previously the same link was sorted to the top,
   causing them to cross over as they turned around to enter the backwards node;
