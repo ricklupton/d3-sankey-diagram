@@ -110,6 +110,76 @@ tape('orderLinks() puts self-loops at the bottom', test => {
   test.end()
 })
 
+tape('orderLinks() keeps parallel links non-crossing as they turn around at a backwards node', test => {
+  //        x = 0..1
+  //
+  //        +---+
+  //   ---> | A |>-.   (r)   y=0
+  //        +-+-+   \
+  //                | types (p, q)
+  //        +-+-+   /
+  //        | B |<-`   (l)   y=5
+  //        +---+
+  //
+  // For the curve to be non-crossing, p (the outer/wider loop) must sort
+  // first (top) leaving A, and last (bottom) arriving at B; q (the
+  // inner/tighter loop) is the mirror image.
+  const graph = new Graph({ directed: true, multigraph: true })
+  graph.setNode('A', { x0: 0, x1: 1, y: 0 })
+  graph.setNode('B', { x0: 0, x1: 1, y: 5, direction: 'l', backwards: true })
+  graph.setEdge('A', 'B', { dy: 1 }, 'p')
+  graph.setEdge('A', 'B', { dy: 1 }, 'q')
+  prepareNodePorts(graph)
+  orderLinks(graph)
+
+  test.deepEqual(outgoing(graph.node('A'), 0), ['B/p', 'B/q'], 'A outgoing: p on top')
+  test.deepEqual(incoming(graph.node('B'), 0), ['A/q', 'A/p'], 'B incoming: p on bottom')
+  test.end()
+})
+
+tape('orderLinks() keeps the flipped order through a run of backwards nodes, flipping back on return', test => {
+  //        x = -4..-3              x = 0..1
+  //
+  //                              +---+
+  //                         ---> | A +--.   (r)         y=0
+  //                              +---+   \
+  //        (l)                           |
+  //       +---+                  +---+   /
+  //    .--+ D |<-----------------+ B |<-`   (l)         y=5
+  //   /   +---+                  +---+
+  //   |
+  //   \   +---+
+  //    `->| E |  (r)                                    y=10
+  //       +---+
+  //
+  // A (r) -> B (l) -> D (l) -> E (r) traces a backwards-S.
+  //
+  // p/q should flip order turning into B, stay flipped for the straight B -> D
+  // run (still both backwards nodes), then flip back to their original order
+  // turning into E.
+  const graph = new Graph({ directed: true, multigraph: true })
+  graph.setNode('A', { x0: 0, x1: 1, y: 0 })
+  graph.setNode('B', { x0: 0, x1: 1, y: 5, direction: 'l', backwards: true })
+  graph.setNode('D', { x0: -4, x1: -3, y: 5, direction: 'l', backwards: true })
+  graph.setNode('E', { x0: -4, x1: -3, y: 10 })
+  graph.setEdge('A', 'B', { dy: 1 }, 'p')
+  graph.setEdge('A', 'B', { dy: 1 }, 'q')
+  graph.setEdge('B', 'D', { dy: 1 }, 'p')
+  graph.setEdge('B', 'D', { dy: 1 }, 'q')
+  graph.setEdge('D', 'E', { dy: 1 }, 'p')
+  graph.setEdge('D', 'E', { dy: 1 }, 'q')
+  prepareNodePorts(graph)
+  orderLinks(graph)
+
+  test.deepEqual(outgoing(graph.node('A'), 0), ['B/p', 'B/q'], 'A outgoing: unflipped')
+  test.deepEqual(incoming(graph.node('B'), 0), ['A/q', 'A/p'], 'B incoming: flipped')
+  test.deepEqual(outgoing(graph.node('B'), 1), ['D/q', 'D/p'], 'B outgoing: still flipped')
+  test.deepEqual(incoming(graph.node('D'), 0), ['B/q', 'B/p'], 'D incoming: still flipped')
+  test.deepEqual(outgoing(graph.node('D'), 1), ['E/q', 'E/p'], 'D outgoing: still flipped')
+  test.deepEqual(incoming(graph.node('E'), 0), ['D/p', 'D/q'], 'E incoming: flipped back')
+  test.end()
+})
+
 function exampleTypes (types) {
   //
   //  0 --|

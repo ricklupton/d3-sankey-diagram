@@ -32,13 +32,19 @@ function compareDirection (G, node, head = true) {
 
     // links between same node, sort on type
     if (a.v === b.v && a.w === b.w && Math.abs(da - db) < 1e-3) {
+      let byName
       if (typeof a.name === 'number' && typeof b.name === 'number') {
-        return a.name - b.name
+        byName = a.name - b.name
       } else if (typeof a.name === 'string' && typeof b.name === 'string') {
-        return a.name.localeCompare(b.name)
+        byName = a.name.localeCompare(b.name)
       } else {
-        return 0
+        byName = 0
       }
+
+      // Backwards ('l') nodes read right-to-left, so parallel links must be
+      // sorted in the opposite order to keep the same physical link on the
+      // outside of the bend as it turns around.
+      return node.backwards ? -byName : byName
     }
 
     // loops to same slice based on y-position
