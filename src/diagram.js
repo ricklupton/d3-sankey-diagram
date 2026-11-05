@@ -33,6 +33,7 @@ export default function sankeyDiagram () {
   let selectedEdge = null
 
   let groups = []
+  let scaleBar = null
 
   const fmt = format('.3s')
   const node = sankeyNode()
@@ -90,6 +91,7 @@ export default function sankeyDiagram () {
       updateNodes(sankey, context, G.nodes)
       updateLinks(sankey, context, links)
       updateGroups(svg, groupsPositioned)
+      updateScaleBar(sankey, context, G)
       // updateSlices(svg, layout.slices(nodes));
 
       // Events
@@ -280,6 +282,26 @@ export default function sankeyDiagram () {
       .text(d => d.title)
   }
 
+  function updateScaleBar (sankey, context, G) {
+    let bar = sankey.selectAll('.scale-bar')
+      .data(scaleBar ? [G] : [])
+
+    bar.exit().remove()
+    if (!scaleBar) return
+
+    bar = bar.merge(bar.enter()
+      .append('g')
+      .attr('class', 'scale-bar'))
+
+    // The scale bar is drawn inside the margins, but positioned by default
+    // relative to the canvas
+    if (context instanceof transition) {
+      bar.transition(context).call(scaleBar, margin)
+    } else {
+      bar.call(scaleBar, margin)
+    }
+  }
+
   function interpolateLink (b) {
     // XXX should limit radius better
     b.points.forEach(function (p) {
@@ -335,6 +357,15 @@ export default function sankeyDiagram () {
       bottom: _x.bottom === undefined ? margin.bottom : _x.bottom,
       right: _x.right === undefined ? margin.right : _x.right
     }
+    return this
+  }
+
+  exports.scaleBar = function (_x) {
+    if (!arguments.length) return scaleBar
+    if (_x !== null && typeof _x !== 'function') {
+      throw new Error('scaleBar must be a sankeyScaleBar() or null')
+    }
+    scaleBar = _x
     return this
   }
 

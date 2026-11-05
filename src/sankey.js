@@ -144,6 +144,7 @@ export default function sankeyLayout () {
     addLinkEndpoints(G)
 
     copyResultsToGraph(G, graph)
+    graph.scale = scale
 
     return graph
   }
@@ -163,6 +164,7 @@ export default function sankeyLayout () {
     addLinkEndpoints(G)
 
     copyResultsToGraph(G, graph)
+    graph.scale = scale
 
     return graph
   }

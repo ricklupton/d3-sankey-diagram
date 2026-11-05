@@ -63,10 +63,10 @@
  // Render
  var color = d3.scaleOrdinal(d3.schemeCategory10);
  var diagram = d3.sankeyDiagram()
+                 .scaleBar(d3.sankeyScaleBar())
                  .linkColor(function(d) { return color(d.type); });
 
- layout(graph);
  svg
-   .datum(graph)
+   .datum(layout(graph))
    .call(diagram);
 </script>

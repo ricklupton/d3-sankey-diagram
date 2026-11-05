@@ -65,6 +65,7 @@ Lower-level components:
 - [d3.sankeyNode](#sankeyNode): SVG Sankey node component
 - [d3.sankeyLink](#sankeyLink): SVG path generator for Sankey diagram links
 - [d3.sankeyLinkTitle](#sankeyLinkTitle): Helper function to generate link titles
+- [d3.sankeyScaleBar](#sankeyScaleBar): SVG scale bar showing link widths
 
 ### Sankey layout
 
@@ -249,6 +250,10 @@ calculated the next time the diagram is called, to achieve the desired
 whitespace fraction (below). If *scale* is not specified, return the current
 scale.
 
+The scale used is also recorded as `graph.scale` on the graph object returned
+by the layout, so that a [scale bar](#scaleBar) can be drawn without further
+configuration.
+
 <a name="layout-whitespace" href="#layout-whitespace">#</a> diagram.<b>whitespace</b>([<i>whitespace</i>])
 
 If *whitespace* is specified as a number, sets the layout's whitespace fraction,
@@ -430,6 +435,87 @@ around the specified nodes, and should be given in the following format:
 ]
 ```
 
+#### Scale bar
+
+<a name="scaleBar" href="#scaleBar">#</a> diagram.<b>scaleBar</b>([<i>scaleBar</i>])
+
+If *scaleBar* is specified, sets the scale bar component used to draw a scale
+bar on the diagram, and returns the diagram. It should be a
+[d3.sankeyScaleBar](#sankeyScaleBar), or `null` (the default) for no scale bar.
+If *scaleBar* is not specified, returns the current scale bar component.
+
+```js
+var diagram = d3.sankeyDiagram()
+    .scaleBar(d3.sankeyScaleBar());
+```
+
+The scale bar is drawn in a `g.scale-bar` element inside the diagram (so it
+moves with the diagram content if that is transformed, e.g. when zooming), and
+uses the scale from the layout result (`graph.scale`) unless one is set
+explicitly. By default it is placed in the bottom-left corner of the SVG
+canvas; increase the diagram's bottom or left [margins](#margin) if it overlaps
+the node titles.
+
+<a name="sankeyScaleBar" href="#sankeyScaleBar">#</a> <b>sankeyScaleBar</b>()
+
+Creates a new scale bar component. A "nice" value is chosen (by default 1, 2 or
+5 times a power of 10) so that the bar is as long as possible without exceeding
+the [target length](#scaleBar-targetLength).
+
+<a name="scaleBar-scale" href="#scaleBar-scale">#</a> scaleBar.<b>scale</b>([<i>scale</i>])
+
+If *scale* is specified, sets the scale (pixels per unit of value) and returns
+the component. If *scale* is `null` (the default), the scale is taken from the
+`scale` property of the bound data (the graph returned by the layout). If
+*scale* is not specified, returns the current value.
+
+<a name="scaleBar-targetLength" href="#scaleBar-targetLength">#</a> scaleBar.<b>targetLength</b>([<i>length</i>])
+
+Maximum length of the bar in pixels (default 50). The bar will be between 40%
+and 100% of this length with the default steps.
+
+<a name="scaleBar-steps" href="#scaleBar-steps">#</a> scaleBar.<b>steps</b>([<i>steps</i>])
+
+The leading digits allowed for the value shown by the scale bar (default `[1,
+2, 5]`).
+
+<a name="scaleBar-value" href="#scaleBar-value">#</a> scaleBar.<b>value</b>([<i>value</i>])
+
+If *value* is specified as a number, always show this value rather than
+choosing a nice value automatically -- useful for comparing several diagrams.
+Defaults to `null` (automatic).
+
+<a name="scaleBar-orientation" href="#scaleBar-orientation">#</a> scaleBar.<b>orientation</b>([<i>orientation</i>])
+
+Either `"vertical"` (the default) or `"horizontal"`.
+
+<a name="scaleBar-position" href="#scaleBar-position">#</a> scaleBar.<b>position</b>([<i>position</i>])
+
+If *position* is specified as `[x, y]`, places the start of the bar (the bottom
+end of a vertical bar, or the left end of a horizontal bar) at this point, in
+the diagram's coordinates (the same as the nodes, i.e. inside the margins: use
+negative values to place the bar in the left or top margin). If *position* is
+`null` (the default), the bar is placed in the bottom-left corner of the SVG
+canvas, inset by [padding](#scaleBar-padding). The canvas size is taken from the
+SVG element's `viewBox` attribute, or else its `height` attribute, or else its
+size on the page.
+
+<a name="scaleBar-padding" href="#scaleBar-padding">#</a> scaleBar.<b>padding</b>([<i>padding</i>])
+
+Distance from the edges of the canvas when using the default position (default
+10).
+
+<a name="scaleBar-labelAlign" href="#scaleBar-labelAlign">#</a> scaleBar.<b>labelAlign</b>([<i>align</i>])
+
+Position of the label along the bar: `"start"` (the default), `"middle"` or
+`"end"`.
+
+<a name="scaleBar-format" href="#scaleBar-format">#</a> scaleBar.<b>format</b>([<i>format</i>])
+
+Function used to format the label. The default formats to 3 significant figures
+with an SI prefix, dropping trailing zeros. For example, to add units:
+`.format(v => d3.format('.2s')(v) + ' t')`.
+
 #### Events
 
 <a name="on" href="#on">#</a> diagram.<b>on</b>(<i>type</i>[, <i>listener</i>])
@@ -461,6 +547,10 @@ MIT licence.
 ## Changelog
 
 ### Unreleased
+
+- Add optional scale bar: [diagram.scaleBar](#scaleBar) and
+  [d3.sankeyScaleBar](#sankeyScaleBar).
+- The layout now records its scale as `graph.scale` on the returned graph.
 
 ### v0.9.4
 
