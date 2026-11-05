@@ -548,6 +548,8 @@ MIT licence.
 
 ### Unreleased
 
+### v0.9.5
+
 - Add optional scale bar: [diagram.scaleBar](#scaleBar) and
   [d3.sankeyScaleBar](#sankeyScaleBar).
 - The layout now records its scale as `graph.scale` on the returned graph.
